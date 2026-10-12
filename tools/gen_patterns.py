@@ -132,7 +132,12 @@ def readmes():
         root.append(f'\n## {cat} — {CAT_NAME[cat]} ({len(items)}개)\n\n| 문양 | 파일 |\n|---|---|')
         for s, ko, fn in items:
             root.append(f'| {ko} | `{cat}/{fn}` |')
-        write(os.path.join(ROOT, cat, 'README.md'), f'# {CAT_NAME[cat]}\n\n' + '\n'.join(f'- {ko} (`{fn}`)' for s, ko, fn in items) + '\n')
+        alive = sorted(fn for fn in os.listdir(os.path.join(ROOT, cat)) if fn.endswith('_alive.svg')) if os.path.isdir(os.path.join(ROOT, cat)) else []
+        extra = ''
+        if alive:
+            extra = '\n\n## 살아 있는 버전 (점→커짐→숨쉬기·눈깜빡임 등 움직임→화면 밖으로, 12초)\n\n' + '\n'.join(f'- `{fn}` / `{fn[:-4]}.mp4`' for fn in alive)
+            root.append('\n살아 있는 버전: ' + ', '.join(f'`{cat}/{fn}`' for fn in alive))
+        write(os.path.join(ROOT, cat, 'README.md'), f'# {CAT_NAME[cat]}\n\n' + '\n'.join(f'- {ko} (`{fn}`)' for s, ko, fn in items) + extra + '\n')
     root.append(f'\n총 {total}개.\n')
     root.append('\n※ 십장생·사군자는 다른 분류와 겹치는 문양(소나무, 거북, 학, 매·난·국·죽 등)을 작게 모은 구성작입니다. 개별 문양은 각 분류 폴더에 있습니다.')
     root.append('\n※ 문양은 제가 직접 도안한 단순화된 해석입니다. 시대·용도별 전통 도상과 세부가 다를 수 있습니다. 수·복·희 등 글자 문양은 폰트 윤곽선을 경로로 변환한 것입니다.')

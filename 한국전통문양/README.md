@@ -42,6 +42,8 @@
 | 해태 | `02_동물문/haetae.svg` |
 | 봉황 | `02_동물문/bonghwang_laser.svg` |
 
+살아 있는 버전: `02_동물문/bakjwi_alive.svg`, `02_동물문/bonghwang_alive.svg`, `02_동물문/geobuk_alive.svg`, `02_동물문/girin_alive.svg`, `02_동물문/haetae_alive.svg`, `02_동물문/hak_alive.svg`, `02_동물문/horangi_alive.svg`, `02_동물문/ingeo_alive.svg`, `02_동물문/nabi_alive.svg`, `02_동물문/saseum_alive.svg`, `02_동물문/yong_alive.svg`
+
 ## 03_자연문 — 자연문 (7개)
 
 | 문양 | 파일 |
