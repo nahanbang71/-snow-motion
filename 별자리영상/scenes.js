@@ -114,10 +114,10 @@ function drawFrame(i,t){ctx.setTransform(1,0,0,1,0,0);ctx.globalAlpha=1;ctx.glob
  const V=S.verts.map(v=>toS(v.x,v.y)),n=S.edges.length,dt=D_DRAW/n;ctx.globalCompositeOperation='lighter';
  const done=t>T_FLASH,fl=clamp((t-T_FLASH)/1.3,0,1),pulse=done?Math.sin(Math.PI*fl):0;
  S.edges.forEach(([a,b],k)=>{const e=clamp((t-T_DRAW-k*dt)/dt,0,1);if(e<=0)return;const[x1,y1]=V[a],[x2,y2]=V[b],ex=lerp(x1,x2,e),ey=lerp(y1,y2,e);
-  const la=done?(.55+.45*pulse):.9;ctx.lineCap='round';ctx.strokeStyle=`rgba(80,225,255,${la*.5})`;ctx.lineWidth=7;ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(ex,ey);ctx.stroke();ctx.strokeStyle=`rgba(210,250,255,${la})`;ctx.lineWidth=1.8;ctx.stroke();if(e<1)glow(ex,ey,26,'130,240,255',1)});
+  const la=done?(.55+.45*pulse):.9;ctx.lineCap='round';ctx.strokeStyle=`rgba(80,225,255,${la*.5})`;ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(ex,ey);ctx.stroke();ctx.strokeStyle=`rgba(210,250,255,${la})`;ctx.lineWidth=1.5;ctx.stroke();if(e<1)glow(ex,ey,16,'130,240,255',1)});
  S.verts.forEach((v,j)=>{const[x,y]=V[j];let reach=-1;S.edges.forEach(([a,b],k)=>{if(a===j||b===j){const tt=T_DRAW+k*dt+(b===j?dt:0);if(reach<0||tt<reach)reach=tt}});if(reach<0||t<reach)return;
-  const age=t-reach,sparkle=clamp(1-age/.8,0,1),base=clamp(1.3+(5-v.mag)*.5,1.6,4.2);glow(x,y,(16+base*5)*(1+sparkle*.8),'255,255,255',.55+.4*sparkle);
-  if(done){const big=Math.sin(Math.PI*fl)*1.0;glow(x,y,(30+base*14)*(1+big*2.4),'210,245,255',.4+.6*big);if(big>.05){ctx.fillStyle=`rgba(255,255,255,${.9*big})`;const L=(34+base*18)*big;ctx.fillRect(x-L,y-.8,2*L,1.6);ctx.fillRect(x-.8,y-L,1.6,2*L)}}else glow(x,y,10+base*3,'255,255,255',.7)});
+  const age=t-reach,sparkle=clamp(1-age/.8,0,1),base=clamp(1.3+(5-v.mag)*.5,1.6,4.2);glow(x,y,(7+base*2.2)*(1+sparkle*.9),'255,255,255',.5+.4*sparkle);
+  if(done){const big=Math.sin(Math.PI*fl)*1.0;glow(x,y,(11+base*4.5)*(1+big*1.7),'210,245,255',.3+.55*big);if(big>.05){ctx.fillStyle=`rgba(255,255,255,${.9*big})`;const L=(16+base*8)*big;ctx.fillRect(x-L,y-.8,2*L,1.6);ctx.fillRect(x-.8,y-L,1.6,2*L)}}else glow(x,y,5+base*1.6,'255,255,255',.6)});
  if(done&&fl<1){ctx.fillStyle=`rgba(180,235,255,${.1*pulse})`;ctx.fillRect(0,0,W,H)}ctx.globalCompositeOperation='source-over';
  place.fg(t,cam.x*.6);
  // names
