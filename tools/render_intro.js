@@ -1,11 +1,12 @@
-// usage: node tools/render_intro.js <out.mp4> [seconds=6]
+// usage: node tools/render_intro.js <out.mp4> [seconds=6] [svg=flowers/intro.svg]
 const { chromium } = require('playwright');
 const { spawn } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 const out = process.argv[2], SEC = +(process.argv[3] || 6), FPS = 30;
+const svgPath = path.resolve(process.argv[4] || path.join(__dirname, '..', 'flowers', 'intro.svg'));
 (async () => {
-  const svg = fs.readFileSync(path.join(__dirname, '..', 'flowers', 'intro.svg'), 'utf8');
+  const svg = fs.readFileSync(svgPath, 'utf8');
   const browser = await chromium.launch();
   const page = await browser.newPage({ viewport: { width: 1920, height: 1080 } });
   await page.setContent(`<body style="margin:0;background:#080a1a;overflow:hidden">${svg}</body>`);
