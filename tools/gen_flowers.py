@@ -394,6 +394,9 @@ def main():
             fh.write(render(*f, flip=bool(i % 2)))
     with open(os.path.join(ROOT, 'index.html'), 'w', encoding='utf-8') as fh:
         fh.write(gallery())
+    import json
+    with open(os.path.join(ROOT, 'manifest.json'), 'w', encoding='utf-8') as fh:
+        json.dump([dict(slug=f[0], name=f[1], meaning=f[3]) for f in F], fh, indent=1)
     print(len(F), 'flowers')
 
 

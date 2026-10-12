@@ -1,0 +1,907 @@
+[
+ {
+  "slug": "lavender",
+  "name": "Lavender",
+  "meaning": "Silence & devotion"
+ },
+ {
+  "slug": "daffodil",
+  "name": "Daffodil",
+  "meaning": "Self-love & respect"
+ },
+ {
+  "slug": "camellia",
+  "name": "Camellia",
+  "meaning": "Modest beauty"
+ },
+ {
+  "slug": "peony",
+  "name": "Peony",
+  "meaning": "Wealth & honor"
+ },
+ {
+  "slug": "rose-of-sharon",
+  "name": "Rose of Sharon",
+  "meaning": "Unchanging devotion"
+ },
+ {
+  "slug": "pansy",
+  "name": "Pansy",
+  "meaning": "Think of me"
+ },
+ {
+  "slug": "chrysanthemum",
+  "name": "Chrysanthemum",
+  "meaning": "Nobility & truth"
+ },
+ {
+  "slug": "cosmos",
+  "name": "Cosmos",
+  "meaning": "Innocent love"
+ },
+ {
+  "slug": "lily",
+  "name": "Lily",
+  "meaning": "Purity"
+ },
+ {
+  "slug": "freesia",
+  "name": "Freesia",
+  "meaning": "Innocence"
+ },
+ {
+  "slug": "azalea",
+  "name": "Azalea",
+  "meaning": "Joy of love"
+ },
+ {
+  "slug": "forsythia",
+  "name": "Forsythia",
+  "meaning": "Hope"
+ },
+ {
+  "slug": "magnolia",
+  "name": "Magnolia",
+  "meaning": "Nobility"
+ },
+ {
+  "slug": "lilac",
+  "name": "Lilac",
+  "meaning": "First love"
+ },
+ {
+  "slug": "iris",
+  "name": "Iris",
+  "meaning": "Good news"
+ },
+ {
+  "slug": "carnation",
+  "name": "Carnation",
+  "meaning": "Gratitude & respect"
+ },
+ {
+  "slug": "hydrangea",
+  "name": "Hydrangea",
+  "meaning": "Sincerity"
+ },
+ {
+  "slug": "herbaceous-peony",
+  "name": "Herbaceous Peony",
+  "meaning": "Shyness"
+ },
+ {
+  "slug": "dahlia",
+  "name": "Dahlia",
+  "meaning": "Gratitude"
+ },
+ {
+  "slug": "gerbera",
+  "name": "Gerbera",
+  "meaning": "Hope & challenge"
+ },
+ {
+  "slug": "babys-breath",
+  "name": "Baby's Breath",
+  "meaning": "Pure heart"
+ },
+ {
+  "slug": "forget-me-not",
+  "name": "Forget-me-not",
+  "meaning": "Do not forget me"
+ },
+ {
+  "slug": "violet",
+  "name": "Violet",
+  "meaning": "Modesty"
+ },
+ {
+  "slug": "dandelion",
+  "name": "Dandelion",
+  "meaning": "Happiness"
+ },
+ {
+  "slug": "moss-rose",
+  "name": "Moss Rose",
+  "meaning": "Innocence"
+ },
+ {
+  "slug": "balsam",
+  "name": "Balsam",
+  "meaning": "Don't touch me"
+ },
+ {
+  "slug": "cockscomb",
+  "name": "Cockscomb",
+  "meaning": "Passion"
+ },
+ {
+  "slug": "morning-glory",
+  "name": "Morning Glory",
+  "meaning": "Fleeting love"
+ },
+ {
+  "slug": "rugosa-rose",
+  "name": "Rugosa Rose",
+  "meaning": "Gentleness"
+ },
+ {
+  "slug": "royal-azalea",
+  "name": "Royal Azalea",
+  "meaning": "Passion"
+ },
+ {
+  "slug": "plum-blossom",
+  "name": "Plum Blossom",
+  "meaning": "Nobility & endurance"
+ },
+ {
+  "slug": "apricot-blossom",
+  "name": "Apricot Blossom",
+  "meaning": "Shyness of a maiden"
+ },
+ {
+  "slug": "peach-blossom",
+  "name": "Peach Blossom",
+  "meaning": "Captive of love"
+ },
+ {
+  "slug": "pear-blossom",
+  "name": "Pear Blossom",
+  "meaning": "Comfort"
+ },
+ {
+  "slug": "apple-blossom",
+  "name": "Apple Blossom",
+  "meaning": "Temptation"
+ },
+ {
+  "slug": "acacia",
+  "name": "Acacia",
+  "meaning": "Friendship"
+ },
+ {
+  "slug": "trumpet-creeper",
+  "name": "Trumpet Creeper",
+  "meaning": "Honor"
+ },
+ {
+  "slug": "crape-myrtle",
+  "name": "Crape Myrtle",
+  "meaning": "Longing for a lost friend"
+ },
+ {
+  "slug": "aster-wild",
+  "name": "Wild Aster",
+  "meaning": "Longing"
+ },
+ {
+  "slug": "korean-chrysanthemum",
+  "name": "Korean Chrysanthemum",
+  "meaning": "Mother's love"
+ },
+ {
+  "slug": "rudbeckia",
+  "name": "Rudbeckia",
+  "meaning": "Eternal happiness"
+ },
+ {
+  "slug": "echinacea",
+  "name": "Echinacea",
+  "meaning": "Deep affection"
+ },
+ {
+  "slug": "calendula",
+  "name": "Calendula",
+  "meaning": "Sorrow of parting"
+ },
+ {
+  "slug": "zinnia",
+  "name": "Zinnia",
+  "meaning": "Bonds"
+ },
+ {
+  "slug": "china-aster",
+  "name": "China Aster",
+  "meaning": "Faithful love"
+ },
+ {
+  "slug": "evening-primrose",
+  "name": "Evening Primrose",
+  "meaning": "Waiting"
+ },
+ {
+  "slug": "dianthus",
+  "name": "Dianthus",
+  "meaning": "Pure love"
+ },
+ {
+  "slug": "shasta-daisy",
+  "name": "Shasta Daisy",
+  "meaning": "Patience"
+ },
+ {
+  "slug": "anemone",
+  "name": "Anemone",
+  "meaning": "Anticipation"
+ },
+ {
+  "slug": "ranunculus",
+  "name": "Ranunculus",
+  "meaning": "Charm"
+ },
+ {
+  "slug": "hyacinth",
+  "name": "Hyacinth",
+  "meaning": "Humble love"
+ },
+ {
+  "slug": "crocus",
+  "name": "Crocus",
+  "meaning": "Joy of youth"
+ },
+ {
+  "slug": "snowdrop",
+  "name": "Snowdrop",
+  "meaning": "Hope"
+ },
+ {
+  "slug": "primrose",
+  "name": "Primrose",
+  "meaning": "Eternal love"
+ },
+ {
+  "slug": "delphinium",
+  "name": "Delphinium",
+  "meaning": "I bring you happiness"
+ },
+ {
+  "slug": "snapdragon",
+  "name": "Snapdragon",
+  "meaning": "Desire"
+ },
+ {
+  "slug": "sweet-pea",
+  "name": "Sweet Pea",
+  "meaning": "Pleasant memories"
+ },
+ {
+  "slug": "stock",
+  "name": "Stock",
+  "meaning": "Eternal beauty"
+ },
+ {
+  "slug": "lisianthus",
+  "name": "Lisianthus",
+  "meaning": "Unchanging love"
+ },
+ {
+  "slug": "gladiolus",
+  "name": "Gladiolus",
+  "meaning": "Passionate love"
+ },
+ {
+  "slug": "canna",
+  "name": "Canna",
+  "meaning": "Respect"
+ },
+ {
+  "slug": "oleander",
+  "name": "Oleander",
+  "meaning": "Caution"
+ },
+ {
+  "slug": "bougainvillea",
+  "name": "Bougainvillea",
+  "meaning": "Passion"
+ },
+ {
+  "slug": "hibiscus",
+  "name": "Hibiscus",
+  "meaning": "Delicate beauty"
+ },
+ {
+  "slug": "plumeria",
+  "name": "Plumeria",
+  "meaning": "Health & hospitality"
+ },
+ {
+  "slug": "bird-of-paradise",
+  "name": "Bird of Paradise",
+  "meaning": "Freedom & great journeys"
+ },
+ {
+  "slug": "anthurium",
+  "name": "Anthurium",
+  "meaning": "Agony of the heart"
+ },
+ {
+  "slug": "orchid",
+  "name": "Orchid",
+  "meaning": "Noble character"
+ },
+ {
+  "slug": "phalaenopsis",
+  "name": "Phalaenopsis",
+  "meaning": "I love you"
+ },
+ {
+  "slug": "cyclamen",
+  "name": "Cyclamen",
+  "meaning": "Shyness"
+ },
+ {
+  "slug": "poinsettia",
+  "name": "Poinsettia",
+  "meaning": "Blessing"
+ },
+ {
+  "slug": "double-cherry",
+  "name": "Double Cherry Blossom",
+  "meaning": "Spiritual love"
+ },
+ {
+  "slug": "cotton-flower",
+  "name": "Cotton Flower",
+  "meaning": "Mother's love"
+ },
+ {
+  "slug": "balloon-flower",
+  "name": "Balloon Flower",
+  "meaning": "Eternal love"
+ },
+ {
+  "slug": "daylily",
+  "name": "Daylily",
+  "meaning": "Waiting heart"
+ },
+ {
+  "slug": "hosta",
+  "name": "Hosta",
+  "meaning": "Fate from heaven"
+ },
+ {
+  "slug": "pasque-flower",
+  "name": "Pasque Flower",
+  "meaning": "Sad memories"
+ },
+ {
+  "slug": "trout-lily",
+  "name": "Trout Lily",
+  "meaning": "Jealousy"
+ },
+ {
+  "slug": "adonis",
+  "name": "Adonis",
+  "meaning": "Eternal happiness"
+ },
+ {
+  "slug": "bleeding-heart",
+  "name": "Bleeding Heart",
+  "meaning": "I will follow you"
+ },
+ {
+  "slug": "cornflower",
+  "name": "Cornflower",
+  "meaning": "Happiness"
+ },
+ {
+  "slug": "poppy",
+  "name": "Poppy",
+  "meaning": "Consolation"
+ },
+ {
+  "slug": "gentian",
+  "name": "Gentian",
+  "meaning": "Justice"
+ },
+ {
+  "slug": "lily-of-the-valley",
+  "name": "Lily of the Valley",
+  "meaning": "Return of happiness"
+ },
+ {
+  "slug": "hellebore",
+  "name": "Hellebore",
+  "meaning": "Consolation"
+ },
+ {
+  "slug": "clematis",
+  "name": "Clematis",
+  "meaning": "Spiritual beauty"
+ },
+ {
+  "slug": "wisteria",
+  "name": "Wisteria",
+  "meaning": "Welcome"
+ },
+ {
+  "slug": "honeysuckle",
+  "name": "Honeysuckle",
+  "meaning": "Devoted love"
+ },
+ {
+  "slug": "jasmine",
+  "name": "Jasmine",
+  "meaning": "Loveliness"
+ },
+ {
+  "slug": "gardenia",
+  "name": "Gardenia",
+  "meaning": "Purity & joy"
+ },
+ {
+  "slug": "orange-blossom",
+  "name": "Orange Blossom",
+  "meaning": "Purity & happiness"
+ },
+ {
+  "slug": "mimosa",
+  "name": "Mimosa",
+  "meaning": "Sensitivity"
+ },
+ {
+  "slug": "angels-trumpet",
+  "name": "Angel's Trumpet",
+  "meaning": "Gentle heart"
+ },
+ {
+  "slug": "hollyhock",
+  "name": "Hollyhock",
+  "meaning": "Abundance"
+ },
+ {
+  "slug": "nasturtium",
+  "name": "Nasturtium",
+  "meaning": "Patriotism"
+ },
+ {
+  "slug": "petunia",
+  "name": "Petunia",
+  "meaning": "I feel at ease with you"
+ },
+ {
+  "slug": "begonia",
+  "name": "Begonia",
+  "meaning": "Unrequited love"
+ },
+ {
+  "slug": "geranium",
+  "name": "Geranium",
+  "meaning": "Unwavering trust"
+ },
+ {
+  "slug": "spirea",
+  "name": "Spirea",
+  "meaning": "Charm"
+ },
+ {
+  "slug": "poinsettia-pink",
+  "name": "Christmas Star",
+  "meaning": "Love through hardship"
+ },
+ {
+  "slug": "rose-red",
+  "name": "Red Rose",
+  "meaning": "Passionate love"
+ },
+ {
+  "slug": "rose-pink",
+  "name": "Pink Rose",
+  "meaning": "Gratitude & happy love"
+ },
+ {
+  "slug": "rose-white",
+  "name": "White Rose",
+  "meaning": "Purity & respect"
+ },
+ {
+  "slug": "rose-yellow",
+  "name": "Yellow Rose",
+  "meaning": "Friendship & jealousy"
+ },
+ {
+  "slug": "rose-purple",
+  "name": "Purple Rose",
+  "meaning": "Enchantment & eternal love"
+ },
+ {
+  "slug": "tulip-red",
+  "name": "Red Tulip",
+  "meaning": "Declaration of love"
+ },
+ {
+  "slug": "tulip-yellow",
+  "name": "Yellow Tulip",
+  "meaning": "Hopeless love"
+ },
+ {
+  "slug": "tulip-white",
+  "name": "White Tulip",
+  "meaning": "Forgiveness & new start"
+ },
+ {
+  "slug": "tulip-purple",
+  "name": "Purple Tulip",
+  "meaning": "Eternal love"
+ },
+ {
+  "slug": "tulip-pink",
+  "name": "Pink Tulip",
+  "meaning": "Caring & affection"
+ },
+ {
+  "slug": "sunflower-yellow",
+  "name": "Sunflower",
+  "meaning": "Unwavering devotion"
+ },
+ {
+  "slug": "sunflower-orange",
+  "name": "Orange Sunflower",
+  "meaning": "Warmth & energy"
+ },
+ {
+  "slug": "cherry-pink",
+  "name": "Cherry Blossom",
+  "meaning": "The beauty of life"
+ },
+ {
+  "slug": "cherry-white",
+  "name": "White Cherry Blossom",
+  "meaning": "Purity & innocence"
+ },
+ {
+  "slug": "lotus-pink",
+  "name": "Lotus",
+  "meaning": "Purity of heart"
+ },
+ {
+  "slug": "lotus-white",
+  "name": "White Lotus",
+  "meaning": "Enlightenment"
+ },
+ {
+  "slug": "lotus-blue",
+  "name": "Blue Lotus",
+  "meaning": "Wisdom"
+ },
+ {
+  "slug": "daisy-white",
+  "name": "Daisy",
+  "meaning": "Peace and hope"
+ },
+ {
+  "slug": "daisy-pink",
+  "name": "Pink Daisy",
+  "meaning": "Sweet innocence"
+ },
+ {
+  "slug": "daisy-yellow",
+  "name": "Yellow Daisy",
+  "meaning": "Cheerfulness"
+ },
+ {
+  "slug": "daisy-blue",
+  "name": "Blue Daisy",
+  "meaning": "Trust & loyalty"
+ },
+ {
+  "slug": "marigold",
+  "name": "Marigold",
+  "meaning": "Passion & creativity"
+ },
+ {
+  "slug": "tuberose",
+  "name": "Tuberose",
+  "meaning": "Dangerous pleasure"
+ },
+ {
+  "slug": "amaryllis",
+  "name": "Amaryllis",
+  "meaning": "Radiant beauty"
+ },
+ {
+  "slug": "protea",
+  "name": "Protea",
+  "meaning": "Courage"
+ },
+ {
+  "slug": "camellia-white",
+  "name": "White Camellia",
+  "meaning": "Adoration"
+ },
+ {
+  "slug": "camellia-pink",
+  "name": "Pink Camellia",
+  "meaning": "Longing for you"
+ },
+ {
+  "slug": "peony-red",
+  "name": "Red Peony",
+  "meaning": "Honor & prosperity"
+ },
+ {
+  "slug": "sweet-william",
+  "name": "Sweet William",
+  "meaning": "Gallantry"
+ },
+ {
+  "slug": "columbine",
+  "name": "Columbine",
+  "meaning": "Resolve"
+ },
+ {
+  "slug": "veronica",
+  "name": "Veronica",
+  "meaning": "Fidelity"
+ },
+ {
+  "slug": "salvia",
+  "name": "Salvia",
+  "meaning": "Wisdom"
+ },
+ {
+  "slug": "verbena",
+  "name": "Verbena",
+  "meaning": "Sensibility"
+ },
+ {
+  "slug": "heather",
+  "name": "Heather",
+  "meaning": "Admiration"
+ },
+ {
+  "slug": "larkspur",
+  "name": "Larkspur",
+  "meaning": "Lightness of heart"
+ },
+ {
+  "slug": "lupine",
+  "name": "Lupine",
+  "meaning": "Imagination"
+ },
+ {
+  "slug": "phlox",
+  "name": "Phlox",
+  "meaning": "Unity"
+ },
+ {
+  "slug": "fuchsia",
+  "name": "Fuchsia",
+  "meaning": "Humble love"
+ },
+ {
+  "slug": "bellflower",
+  "name": "Bellflower",
+  "meaning": "Gratitude"
+ },
+ {
+  "slug": "tiger-lily",
+  "name": "Tiger Lily",
+  "meaning": "Confidence"
+ },
+ {
+  "slug": "oriental-lily",
+  "name": "Oriental Lily",
+  "meaning": "Majesty"
+ },
+ {
+  "slug": "calla-lily",
+  "name": "Calla Lily",
+  "meaning": "Magnificent beauty"
+ },
+ {
+  "slug": "alstroemeria",
+  "name": "Alstroemeria",
+  "meaning": "Devotion"
+ },
+ {
+  "slug": "coreopsis",
+  "name": "Coreopsis",
+  "meaning": "Cheerfulness"
+ },
+ {
+  "slug": "sulphur-cosmos",
+  "name": "Sulphur Cosmos",
+  "meaning": "Joy"
+ },
+ {
+  "slug": "blue-aster",
+  "name": "Blue Aster",
+  "meaning": "Patience"
+ },
+ {
+  "slug": "chamomile",
+  "name": "Chamomile",
+  "meaning": "Patience in adversity"
+ },
+ {
+  "slug": "feverfew",
+  "name": "Feverfew",
+  "meaning": "Protection"
+ },
+ {
+  "slug": "gazania",
+  "name": "Gazania",
+  "meaning": "Radiance"
+ },
+ {
+  "slug": "osteospermum",
+  "name": "Osteospermum",
+  "meaning": "Serenity"
+ },
+ {
+  "slug": "zinnia-pink",
+  "name": "Pink Zinnia",
+  "meaning": "Lasting affection"
+ },
+ {
+  "slug": "chrysanthemum-white",
+  "name": "White Chrysanthemum",
+  "meaning": "Truth"
+ },
+ {
+  "slug": "chrysanthemum-red",
+  "name": "Red Chrysanthemum",
+  "meaning": "I love you"
+ },
+ {
+  "slug": "dahlia-pink",
+  "name": "Pink Dahlia",
+  "meaning": "Elegance"
+ },
+ {
+  "slug": "dahlia-purple",
+  "name": "Purple Dahlia",
+  "meaning": "Dignity"
+ },
+ {
+  "slug": "ranunculus-pink",
+  "name": "Pink Ranunculus",
+  "meaning": "Radiant charm"
+ },
+ {
+  "slug": "rose-orange",
+  "name": "Orange Rose",
+  "meaning": "Enthusiasm"
+ },
+ {
+  "slug": "rose-blue",
+  "name": "Blue Rose",
+  "meaning": "The mysterious"
+ },
+ {
+  "slug": "rose-lavender",
+  "name": "Lavender Rose",
+  "meaning": "Love at first sight"
+ },
+ {
+  "slug": "rose-peach",
+  "name": "Peach Rose",
+  "meaning": "Modesty"
+ },
+ {
+  "slug": "tulip-orange",
+  "name": "Orange Tulip",
+  "meaning": "Enchantment"
+ },
+ {
+  "slug": "tulip-peach",
+  "name": "Peach Tulip",
+  "meaning": "Gratitude"
+ },
+ {
+  "slug": "weeping-cherry",
+  "name": "Weeping Cherry",
+  "meaning": "Elegance"
+ },
+ {
+  "slug": "magnolia-pink",
+  "name": "Pink Magnolia",
+  "meaning": "Gentle love"
+ },
+ {
+  "slug": "lotus-yellow",
+  "name": "Yellow Lotus",
+  "meaning": "Spirituality"
+ },
+ {
+  "slug": "lotus-red",
+  "name": "Red Lotus",
+  "meaning": "Compassion"
+ },
+ {
+  "slug": "water-lily",
+  "name": "Water Lily",
+  "meaning": "Peace of mind"
+ },
+ {
+  "slug": "daisy-orange",
+  "name": "Orange Daisy",
+  "meaning": "Joyful spirit"
+ },
+ {
+  "slug": "gerbera-pink",
+  "name": "Pink Gerbera",
+  "meaning": "Cheerfulness"
+ },
+ {
+  "slug": "gerbera-red",
+  "name": "Red Gerbera",
+  "meaning": "Deep love"
+ },
+ {
+  "slug": "gerbera-yellow",
+  "name": "Yellow Gerbera",
+  "meaning": "Friendship"
+ },
+ {
+  "slug": "anemone-white",
+  "name": "White Anemone",
+  "meaning": "Sincerity"
+ },
+ {
+  "slug": "anemone-blue",
+  "name": "Blue Anemone",
+  "meaning": "Trust"
+ },
+ {
+  "slug": "poppy-orange",
+  "name": "Orange Poppy",
+  "meaning": "Imagination"
+ },
+ {
+  "slug": "poppy-white",
+  "name": "White Poppy",
+  "meaning": "Peaceful sleep"
+ },
+ {
+  "slug": "hibiscus-yellow",
+  "name": "Yellow Hibiscus",
+  "meaning": "New beginnings"
+ },
+ {
+  "slug": "hibiscus-pink",
+  "name": "Pink Hibiscus",
+  "meaning": "Gentleness"
+ },
+ {
+  "slug": "morning-glory-pink",
+  "name": "Pink Morning Glory",
+  "meaning": "Love"
+ },
+ {
+  "slug": "petunia-purple",
+  "name": "Purple Petunia",
+  "meaning": "Soothing presence"
+ },
+ {
+  "slug": "viola",
+  "name": "Viola",
+  "meaning": "Faithfulness"
+ },
+ {
+  "slug": "pansy-blue",
+  "name": "Blue Pansy",
+  "meaning": "Loving thoughts"
+ }
+]
