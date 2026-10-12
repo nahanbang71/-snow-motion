@@ -51,17 +51,20 @@ def lobed(R, n, amp, steps=120):
 class B:
     """Sequential SVG builder; every element gets a staggered animation delay."""
 
-    def __init__(s, t0=2.0):
+    def __init__(s, t0=2.0, k=1.0):
         s.t = t0
+        s.k = k  # time compression factor (intro mosaic draws flowers quickly)
         s.o = []
 
     def p(s, d, cls='pet', step=.07, dur=.7, at=None):
+        step, dur = step * s.k, dur * s.k
         t = s.t if at is None else at
         s.o.append(f'<path class="d {cls}" pathLength="1" style="--s:{t:.2f}s;--t:{dur}s" d="{d}"/>')
         if at is None:
             s.t += step
 
     def dot(s, x, y, r=2, cls='dotc', step=.006):
+        step *= s.k
         s.o.append(f'<circle class="fi {cls}" cx="{a(x)}" cy="{a(y)}" r="{r}" style="--s:{s.t:.2f}s"/>')
         s.t += step
 
