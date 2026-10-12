@@ -4,6 +4,7 @@
 usage: python3 tools/gen_flowers.py
 """
 import html
+import math
 import os
 import random
 import sys
@@ -189,16 +190,82 @@ HEAD = '''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="8
 <g filter="url(#glow)"{tf}>'''
 
 
-def leaves(style):
-    L = B(0)
-    if style == 'lance':
-        L.p("M229 540 C190 500 160 440 150 380 C190 410 225 470 229 540", 'stem', at=1.5, dur=1)
-        L.p("M231 520 C270 480 300 420 312 360 C268 395 235 455 231 520", 'stem', at=1.7, dur=1)
-        L.p("M230 470 C205 440 195 400 192 360", 'stem', at=1.9, dur=.8)
+def bez(P, t):
+    u = 1 - t
+    x = u**3 * P[0][0] + 3*u*u*t * P[1][0] + 3*u*t*t * P[2][0] + t**3 * P[3][0]
+    y = u**3 * P[0][1] + 3*u*u*t * P[1][1] + 3*u*t*t * P[2][1] + t**3 * P[3][1]
+    return x, y
+
+
+def blade(L, base, tip, w, at):
+    """Pointed grass-like leaf from base to tip (outline)."""
+    dx, dy = tip[0] - base[0], tip[1] - base[1]
+    n = math.hypot(dx, dy) or 1
+    nx, ny = -dy / n, dx / n
+    def pt(f, k):
+        return f"{base[0] + dx*f + nx*w*k:.0f} {base[1] + dy*f + ny*w*k:.0f}"
+    d = (f"M{base[0]:.0f} {base[1]:.0f} C{pt(.35, 1)} {pt(.7, .6)} {tip[0]:.0f} {tip[1]:.0f} "
+         f"C{pt(.7, -.6)} {pt(.35, -1)} {base[0]:.0f} {base[1]:.0f}Z")
+    L.p(d, 'stem', at=at, dur=1)
+
+
+def oval_leaf(L, x, y, side, ang, ln, wd, at):
+    deg = -ang if side > 0 else -180 + ang
+    d = (f"M0 0 C{ln*.3:.0f} {-wd*.55:.0f} {ln*.8:.0f} {-wd*.5:.0f} {ln:.0f} 0 "
+         f"C{ln*.8:.0f} {wd*.5:.0f} {ln*.3:.0f} {wd*.55:.0f} 0 0Z")
+    L.o.append(f'<g transform="translate({x:.0f} {y:.0f}) rotate({deg:.0f})">')
+    L.p(d, 'stem', at=at, dur=.9)
+    L.p(f"M0 0 L{ln*.8:.0f} 0", 'pet2', at=at + .3, dur=.5)
+    L.e()
+
+
+def stem_and_leaves(slug, shape, yt, has_stem, flip_ok=True):
+    """Return (svg, head_dx). Stem path, curvature, lean and leaves vary per flower."""
+    rnd = random.Random('stem-' + slug)
+    out = B(0)
+    dx = 0
+    if has_stem:
+        kind = rnd.choice(['straight', 'arc', 'arc', 'S', 'S', 'lean'])
+        h = 560 - yt
+        if kind == 'straight':
+            dx, b1, b2 = rnd.randint(-8, 8), rnd.randint(-6, 6), rnd.randint(-6, 6)
+        elif kind == 'arc':
+            sg = rnd.choice([-1, 1]); dx = sg * rnd.randint(8, 24)
+            b1, b2 = sg * rnd.randint(18, 34), sg * rnd.randint(14, 30)
+        elif kind == 'S':
+            sg = rnd.choice([-1, 1]); dx = -sg * rnd.randint(0, 14)
+            b1, b2 = sg * rnd.randint(30, 46), -sg * rnd.randint(30, 46)
+        else:
+            sg = rnd.choice([-1, 1]); dx = sg * rnd.randint(24, 36)
+            b1, b2 = sg * rnd.randint(2, 10), sg * rnd.randint(26, 40)
+        P = [(230, 560), (230 + b1, 560 - h * .35), (230 + dx + b2, 560 - h * .7), (230 + dx, yt)]
+        out.p("M230 560 C{:.0f} {:.0f} {:.0f} {:.0f} {:.0f} {:.0f}".format(
+            P[1][0], P[1][1], P[2][0], P[2][1], P[3][0], P[3][1]), 'stem', at=0, dur=2)
+        if LEAF.get(shape, 'oval') == 'oval':
+            n = rnd.choice([2, 2, 3, 3, 4])
+            ts = sorted(rnd.sample([.12, .2, .3, .4, .5, .62], n))
+            side = rnd.choice([-1, 1])
+            for t in ts:
+                x, y = bez(P, t)
+                big = 1.15 - t * .5
+                oval_leaf(out, x, y, side, rnd.randint(28, 58), rnd.randint(78, 108) * big,
+                          rnd.randint(38, 50) * big, 2 * t * .9 + .3)
+                side = -side if rnd.random() < .8 else side
+        else:
+            n = rnd.choice([3, 4, 5])
+            for k in range(n):
+                sg = -1 if k % 2 == 0 else 1
+                tipx = 230 + sg * rnd.randint(25, 95)
+                tipy = rnd.randint(360, 470)
+                blade(out, (230 + rnd.randint(-5, 5), rnd.randint(520, 556)), (tipx, tipy),
+                      rnd.randint(9, 17), 1.4 + k * .2)
     else:
-        L.p("M230 480 C190 495 158 465 152 425 C192 422 226 440 230 480Z", 'stem', at=1.4, dur=1)
-        L.p("M230 440 C268 452 300 425 306 388 C266 388 234 404 230 440Z", 'stem', at=1.7, dur=1)
-    return L.out()
+        n = rnd.choice([3, 4, 5])
+        for k in range(n):
+            sg = -1 if k % 2 == 0 else 1
+            blade(out, (230 + rnd.randint(-5, 5), rnd.randint(520, 556)),
+                  (230 + sg * rnd.randint(25, 95), rnd.randint(360, 470)), rnd.randint(9, 17), 1.4 + k * .2)
+    return out.out(), dx
 
 
 def render(slug, en, ko, men, mko, shape, kw, color, flip=False):
@@ -210,14 +277,12 @@ def render(slug, en, ko, men, mko, shape, kw, color, flip=False):
     parts = [HEAD.format(c=c, c2=c2, en=html.escape(en), tf=' transform="translate(800 0) scale(-1 1)"' if flip else '')]
     top = meta.get('top')
     if top is not None:
-        yt = hy + top * sc
-        m1 = 560 - (560 - yt) * .35
-        m2 = 560 - (560 - yt) * .7
-        s = B(0)
-        s.p(f"M230 560 C226 {m1:.0f} 234 {m2:.0f} 230 {yt:.0f}", 'stem', at=0, dur=2)
-        parts.append(s.out())
-    if meta.get('leaves', True):
-        parts.append(leaves(LEAF.get(shape, 'oval')))
+        sv, dx = stem_and_leaves(slug, shape, hy + top * sc, True)
+        tx += dx
+        parts.append(sv)
+    elif meta.get('leaves', True):
+        sv, _ = stem_and_leaves(slug, shape, 0, False)
+        parts.append(sv)
     parts.append(meta.get('extra', ''))
     parts.append(f'<g transform="translate({tx} {hy}) scale({sc})">{b.out()}</g></g>')
     t = max(b.t + .3, 3.4)
