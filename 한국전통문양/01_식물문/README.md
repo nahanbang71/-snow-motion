@@ -1,6 +1,6 @@
 # 식물문
 
-- [ ] 연화문 (`yeonhwa.svg`)
+- [x] 연화문 (`yeonhwa.svg`)
 - [ ] 모란문 (`moran.svg`)
 - [ ] 국화문 (`gukhwa.svg`)
 - [ ] 매화문 (`maehwa.svg`)
