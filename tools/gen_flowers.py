@@ -178,7 +178,6 @@ HEAD = '''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="8
 .dotc{{fill:var(--c2)}}
 .title{{font-family:'Poppins','Helvetica Neue',Arial,sans-serif;font-weight:600;fill:none;stroke:var(--c);stroke-width:1.6;opacity:0;animation:fade 1s ease-out var(--s) forwards}}
 .sub{{font-family:'Poppins','Helvetica Neue',Arial,sans-serif;font-weight:500;fill:var(--c2);opacity:0;animation:fade 1s ease-out calc(var(--s) + .6s) forwards}}
-.ko{{font-family:'Noto Sans KR','Malgun Gothic','Apple SD Gothic Neo',sans-serif;fill:#aab0d6;opacity:0;animation:fade 1s ease-out calc(var(--s) + 1.1s) forwards}}
 .sp{{fill:var(--c2);opacity:0;animation:tw 3s ease-in-out infinite}}
 @keyframes draw{{to{{stroke-dashoffset:0}}}}
 @keyframes fade{{to{{opacity:1}}}}
@@ -226,8 +225,6 @@ def render(slug, en, ko, men, mko, shape, kw, color):
     msize = min(22, 430 / (.55 * len(men)))
     parts.append(f'<text class="title" x="360" y="270" font-size="{size:.0f}" style="--s:{t:.1f}s">{html.escape(en)}</text>')
     parts.append(f'<text class="sub" x="364" y="315" font-size="{msize:.0f}" style="--s:{t:.1f}s">{html.escape(men)}</text>')
-    ksize = min(20, 400 / max(len(ko) + len(mko) + 3, 1) * 1.6)
-    parts.append(f'<text class="ko" x="364" y="352" font-size="{ksize:.0f}" style="--s:{t:.1f}s">{html.escape(ko)} · {html.escape(mko)}</text>')
     rnd = random.Random(slug)
     for i in range(7):
         parts.append(f'<circle class="sp" cx="{rnd.randint(60, 760)}" cy="{rnd.randint(80, 540)}" r="{rnd.choice([1.5, 2, 2.5])}" '
@@ -239,21 +236,21 @@ def render(slug, en, ko, men, mko, shape, kw, color):
 def gallery():
     cards = ''.join(
         f'<figure><img loading="lazy" src="svg/{s}.svg" alt="{html.escape(en)}"><figcaption><b>{html.escape(en)}</b>'
-        f'<span>{html.escape(ko)} · {html.escape(mko)}</span></figcaption></figure>'
+        f'<span>{html.escape(men)}</span></figcaption></figure>'
         for s, en, ko, men, mko, *_ in F)
     return f'''<!doctype html>
-<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Neon Flowers</title>
 <style>
 :root{{--bg:#080a1a;--fg:#e6e9ff;--mut:#8f95c4}}
-body{{margin:0;padding:24px 16px;background:var(--bg);color:var(--fg);font-family:'Noto Sans KR','Malgun Gothic',system-ui,sans-serif}}
+body{{margin:0;padding:24px 16px;background:var(--bg);color:var(--fg);font-family:system-ui,sans-serif}}
 h1{{text-align:center;font-weight:600}}p.n{{text-align:center;color:var(--mut)}}
 .g{{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;max-width:1400px;margin:24px auto}}
 figure{{margin:0;background:#0d1030;border-radius:12px;overflow:hidden}}
 img{{width:100%;display:block}}
 figcaption{{padding:10px 12px;display:flex;flex-direction:column;gap:2px;font-size:14px}}figcaption span{{color:var(--mut);font-size:12px}}
 </style></head><body>
-<h1>Neon Flowers · {len(F)}</h1><p class="n">flowers/svg/*.svg — 클릭 없이 열면 바로 애니메이션이 재생됩니다</p>
+<h1>Neon Flowers · {len(F)}</h1><p class="n">flowers/svg/*.svg</p>
 <div class="g">{cards}</div></body></html>'''
 
 

@@ -13,7 +13,6 @@
 .dotc{fill:var(--c2)}
 .title{font-family:'Poppins','Helvetica Neue',Arial,sans-serif;font-weight:600;fill:none;stroke:var(--c);stroke-width:1.6;opacity:0;animation:fade 1s ease-out var(--s) forwards}
 .sub{font-family:'Poppins','Helvetica Neue',Arial,sans-serif;font-weight:500;fill:var(--c2);opacity:0;animation:fade 1s ease-out calc(var(--s) + .6s) forwards}
-.ko{font-family:'Noto Sans KR','Malgun Gothic','Apple SD Gothic Neo',sans-serif;fill:#aab0d6;opacity:0;animation:fade 1s ease-out calc(var(--s) + 1.1s) forwards}
 .sp{fill:var(--c2);opacity:0;animation:tw 3s ease-in-out infinite}
 @keyframes draw{to{stroke-dashoffset:0}}
 @keyframes fade{to{opacity:1}}
@@ -28,7 +27,6 @@
 <g transform="translate(230 190) scale(1.2)"><path class="d pet" pathLength="1" style="--s:2.00s;--t:1.4s" d="M-58.3 -11.2 A10.0 10.0 0 0 1 -49.2 -27.7 A10.0 10.0 0 0 1 -35.6 -40.8 A10.0 10.0 0 0 1 -18.6 -49.1 A10.0 10.0 0 0 1 0.0 -52.0 A10.0 10.0 0 0 1 18.6 -49.1 A10.0 10.0 0 0 1 35.6 -40.8 A10.0 10.0 0 0 1 49.2 -27.7 A10.0 10.0 0 0 1 58.3 -11.2 L26 52 L-26 52Z"/><path class="d pet2" pathLength="1" style="--s:2.50s;--t:1s" d="M-43.2 -5.7 A9.9 9.9 0 0 1 -33.5 -21.6 A9.9 9.9 0 0 1 -18.2 -32.2 A9.9 9.9 0 0 1 0.0 -36.0 A9.9 9.9 0 0 1 18.2 -32.2 A9.9 9.9 0 0 1 33.5 -21.6 A9.9 9.9 0 0 1 43.2 -5.7"/><path class="d pet2" pathLength="1" style="--s:2.80s;--t:1s" d="M-28.2 -0.3 A9.6 9.6 0 0 1 -17.2 -14.6 A9.6 9.6 0 0 1 0.0 -20.0 A9.6 9.6 0 0 1 17.2 -14.6 A9.6 9.6 0 0 1 28.2 -0.3"/></g></g>
 <text class="title" x="360" y="270" font-size="54" style="--s:3.4s">Cockscomb</text>
 <text class="sub" x="364" y="315" font-size="22" style="--s:3.4s">Passion</text>
-<text class="ko" x="364" y="352" font-size="20" style="--s:3.4s">맨드라미 · 열정</text>
 <circle class="sp" cx="76" cy="348" r="2" style="animation-delay:0.0s"/>
 <circle class="sp" cx="370" cy="444" r="1.5" style="animation-delay:0.5s"/>
 <circle class="sp" cx="214" cy="319" r="2" style="animation-delay:1.0s"/>
