@@ -1,36 +1,31 @@
-# 별자리 영상 (장소 10곳 × 별자리 4개 = 40클립)
+# Constellation videos — 10 places × 4 constellations = 40 clips
 
-각 클립 16초, 1920×1080, 30fps. 한 장면의 흐름은 모두 같습니다.
+Each clip: 16 s, 1920×1080, 30 fps, English text only, no audio.
 
-1. 장소의 밤하늘이 서서히 밝아짐 (별은 실제 히파르코스 별 위치 약 4만 개)
-2. 별자리 선이 레이저처럼 별에서 별로 이어지며 그려짐
-3. 다 그려지면 별들이 **반짝** 빛나며 번쩍임
-4. 위쪽에 별자리 이름(한글 + 라틴어), 이어서 이름이 있는 별마다 이름(한글 + 영문)이 하나씩 나타남
+1. A wide, far-away night sky over the place (about 40,000 real Hipparcos stars). Only the *rooftops* of buildings / tops of objects show above the horizon.
+2. The constellation lines are drawn star to star like a laser.
+3. When the last line closes, the stars **twinkle** (cross-shaped flares).
+4. The constellation name appears at the top (Latin, with the common English name underneath), then each named star gets its name.
 
-## 장소와 별자리
-
-| 장소 | 별자리 |
+| Place | Constellations |
 |---|---|
-| 01 사막 | 전갈자리, 사자자리, 남십자자리, 게자리 |
-| 02 설산 | 큰곰자리, 작은곰자리, 카시오페이아자리, 케페우스자리 |
-| 03 해변 | 돌고래자리, 물고기자리, 물병자리, 남쪽물고기자리 |
-| 04 숲 | 거문고자리, 백조자리, 독수리자리, 화살자리 |
-| 05 도시 | 오리온자리, 쌍둥이자리, 큰개자리, 작은개자리 |
-| 06 초원 | 목동자리, 처녀자리, 천칭자리, 북쪽왕관자리 |
-| 07 호수 | 페가수스자리, 안드로메다자리, 페르세우스자리, 양자리 |
-| 08 한옥마을 | 황소자리, 마차부자리, 토끼자리, 고래자리 |
-| 09 화산 | 궁수자리, 염소자리, 뱀주인자리, 까마귀자리 |
-| 10 극지 | 용자리, 헤라클레스자리, 센타우루스자리, 도마뱀자리 |
+| 01 desert | Scorpius, Leo, Crux, Cancer |
+| 02 snow_mountain | Ursa Major, Ursa Minor, Cassiopeia, Cepheus |
+| 03 beach | Delphinus, Pisces, Aquarius, Piscis Austrinus |
+| 04 forest | Lyra, Cygnus, Aquila, Sagitta |
+| 05 city | Orion, Gemini, Canis Major, Canis Minor |
+| 06 grassland | Bootes, Virgo, Libra, Corona Borealis |
+| 07 lake | Pegasus, Andromeda, Perseus, Aries |
+| 08 hanok_village | Taurus, Auriga, Lepus, Cetus |
+| 09 volcano | Sagittarius, Capricornus, Ophiuchus, Corvus |
+| 10 polar | Draco, Hercules, Centaurus, Lacerta |
 
-- `장소별/NN_장소/N_별자리.mp4` : 클립
-- `별자리_전체_1.mp4`, `별자리_전체_2.mp4` : 장소 01–05, 06–10을 이어 붙인 영상 (각 약 5분 20초, 클립 사이 페이드)
+Files
+- `clips/NN_place/N_Constellation.mp4` — the 40 clips
+- `constellations_part1_places01-05.mp4`, `constellations_part2_places06-10.mp4` — places 01–05 and 06–10 joined (5:20 each, short fades between clips)
 
-## 만드는 법
+Rebuild
+- `python3 tools/prep_constellations.py <d3-celestial/data>` → `data.js`
+- `node tools/render_constellation.js <0-39>` renders one clip (see `scenes.js` for the places and the drawing code)
 
-- `tools/prep_constellations.py` : 별/별자리 데이터(`data.js`) 생성
-- `constellations.html` + `scenes.js` : 캔버스로 장면 그리기
-- `node tools/render_constellation.js <0-39>` : 클립 하나 렌더
-
-## 데이터 출처
-
-별 위치·별자리 선·별/별자리 이름(한글 포함)은 d3-celestial(Copyright (c) 2015, Olaf Frohn, BSD-3-Clause) 데이터를 사용했습니다. 이 데이터는 Hipparcos 카탈로그 등을 바탕으로 합니다.
+Data credit: star positions, constellation lines and names come from d3-celestial (Copyright (c) 2015, Olaf Frohn, BSD-3-Clause), which is based on the Hipparcos catalogue.
