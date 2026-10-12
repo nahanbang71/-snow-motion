@@ -59,7 +59,7 @@ for code in CODES:
     ra0 = math.degrees(math.atan2(c[1], c[0])) % 360
     dec0 = math.degrees(math.asin(c[2]))
     pr = cons[code]['properties']
-    out_cons.append({'code': code, 'ko': pr['ko'], 'en': pr['name'], 'ra': ra0, 'dec': dec0, 'rad': rad, 'verts': verts, 'polys': polys})
+    out_cons.append({'code': code, 'ko': pr['ko'], 'la': pr['name'], 'en': pr['en'], 'ra': ra0, 'dec': dec0, 'rad': rad, 'verts': verts, 'polys': polys})
 data = {'stars': [[round(float(a), 3), round(float(b), 3), round(float(m), 2), round(bv, 2)] for (a, b, m), bv in zip(S, BV)], 'cons': out_cons}
 with open(OUT, 'w', encoding='utf-8') as fh:
     fh.write('window.SKY=' + json.dumps(data, ensure_ascii=False, separators=(',', ':')) + ';')

@@ -3,16 +3,17 @@ const { chromium } = require('playwright');
 const { spawn } = require('child_process');
 const fs = require('fs');
 const path = require('path');
-const idx = +process.argv[2], FPS = 30, SEC = 16;
+const idx = +process.argv[2], FPS = 30, SEC = 16, custom = process.argv[3], outArg = process.argv[4];
 (async () => {
   const browser = await chromium.launch();
   const page = await browser.newPage({ viewport: { width: 1920, height: 1080 } });
   page.on('pageerror', e => console.log('ERR', e.message));
   await page.goto('file://' + path.resolve(__dirname, '..', '별자리영상', 'constellations.html'));
+  if (custom) { const [pi, code] = custom.split(','); await page.evaluate(([a, b]) => window.customScene(+a, b), [pi, code]); }
   const m = await page.evaluate(i => window.meta(i), idx);
   const dir = path.resolve(__dirname, '..', '별자리영상', '장소별', String(m.placeIdx + 1).padStart(2, '0') + '_' + m.place);
-  fs.mkdirSync(dir, { recursive: true });
-  const out = path.join(dir, `${m.nth}_${m.ko}.mp4`);
+  fs.mkdirSync(outArg ? path.dirname(path.resolve(outArg)) : dir, { recursive: true });
+  const out = outArg ? path.resolve(outArg) : path.join(dir, `${m.nth}_${m.ko}.mp4`);
   const ff = spawn('ffmpeg', ['-v', 'error', '-y', '-f', 'image2pipe', '-framerate', String(FPS), '-c:v', 'mjpeg', '-i', '-',
     '-c:v', 'libx264', '-preset', 'medium', '-crf', '23', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', out], { stdio: ['pipe', 'inherit', 'inherit'] });
   const done = new Promise(r => ff.on('close', r));
