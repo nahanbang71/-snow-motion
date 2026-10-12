@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Samtaegeuk intro: starts as a dot at the centre, grows and expands past the screen edges.
-No text. -> patterns/svg/samtaegeuk.svg   (1920x1080, 8 s)
+No text. -> 한국전통문양/04_기하문/samtaegeuk.svg   (1920x1080, 8 s)
 """
 import math
 import os
@@ -71,7 +71,7 @@ def main():
         A(f'<path class="l" stroke="{c}" stroke-width="4.4" d="M{f(ex - 13)} {f(ey)} a13 13 0 1 0 26 0 a13 13 0 1 0 -26 0"/>')
         A(f'<path class="l" stroke="{l}" stroke-width="9" d="M{f(ex)} {f(ey)} l0 0"/>')
     A('</g></g></g></g></svg>')
-    p = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'patterns', 'svg', 'samtaegeuk.svg')
+    p = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '한국전통문양', '04_기하문', 'samtaegeuk.svg')
     open(p, 'w', encoding='utf-8').write('\n'.join(o))
 
 

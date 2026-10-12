@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Laser (neon-tube) version of the twin-phoenix line drawing (patterns/source/phoenix_line.png).
+"""Laser (neon-tube) version of the twin-phoenix line drawing (한국전통문양/_source/bonghwang_line.png).
 
 The centre-lines of the drawing are extracted (skeleton), smoothed and re-drawn as glowing neon strokes
 with a vertical obangsaek-style colour gradient (red head -> gold -> teal -> blue -> violet -> magenta tail).
-Strokes are drawn on one after another from the top. -> patterns/svg/phoenix_laser.svg
+Strokes are drawn on one after another from the top. -> 한국전통문양/02_동물문/bonghwang_laser.svg
 """
 import os
 
@@ -14,8 +14,8 @@ from skan import Skeleton
 from skimage.morphology import skeletonize
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-SRC = os.path.join(HERE, '..', 'patterns', 'source', 'phoenix_line.png')
-OUT = os.path.join(HERE, '..', 'patterns', 'svg', 'phoenix_laser.svg')
+SRC = os.path.join(HERE, '..', '한국전통문양', '_source', 'bonghwang_line.png')
+OUT = os.path.join(HERE, '..', '한국전통문양', '02_동물문', 'bonghwang_laser.svg')
 N = 1000
 
 
