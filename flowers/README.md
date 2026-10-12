@@ -1,8 +1,8 @@
 # Neon Flowers
 
-121 animated neon line-art SVGs (`flowers/svg/*.svg`) + gallery (`flowers/index.html`).
+181 animated neon line-art SVGs (`flowers/svg/*.svg`) + gallery (`flowers/index.html`).
 
-- 100 new flowers + colour variants of the reference video's rose / tulip / sunflower / cherry blossom / lotus / daisy
+- 100 new flowers + 60 more + colour variants of the reference video's rose / tulip / sunflower / cherry blossom / lotus / daisy
 - Each file is self-contained: stem draws first, then the head, then English name and meaning
 - Colours are CSS variables on the root `<svg>` (`--c`, `--c2`), so recolouring is a one-line edit
 

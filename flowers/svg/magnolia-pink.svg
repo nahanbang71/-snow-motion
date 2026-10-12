@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" style="--c:#ffb8d6;--c2:#fff0f6">
+<title>Pink Magnolia - neon line art</title>
+<defs>
+<radialGradient id="bg" cx="50%" cy="45%" r="70%"><stop offset="0" stop-color="#14183a"/><stop offset="1" stop-color="#080a1a"/></radialGradient>
+<filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<style>
+.d{fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;animation:draw var(--t,1s) ease-out var(--s,0s) forwards}
+.stem{stroke:#3df2c0;stroke-width:3}
+.pet{stroke:var(--c);stroke-width:2}
+.pet2{stroke:var(--c2);stroke-width:1.6}
+.rip{stroke:#5ad7ff;stroke-width:2.4}
+.fi{opacity:0;animation:fade .5s ease-out var(--s,0s) forwards}
+.dotc{fill:var(--c2)}
+.title{font-family:'Poppins','Helvetica Neue',Arial,sans-serif;font-weight:600;fill:none;stroke:var(--c);stroke-width:1.6;clip-path:inset(0 100% 0 0);animation:wipe 1.1s ease-out var(--s) forwards}
+.sub{font-family:'Poppins','Helvetica Neue',Arial,sans-serif;font-weight:500;fill:var(--c2);clip-path:inset(0 100% 0 0);animation:wipe 1s ease-out calc(var(--s) + .7s) forwards}
+.sp{fill:var(--c2);opacity:0;animation:tw 3s ease-in-out infinite}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes wipe{to{clip-path:inset(0 0 0 0)}}
+@keyframes fade{to{opacity:1}}
+@keyframes tw{0%,100%{opacity:0;transform:translateY(0)}50%{opacity:.9;transform:translateY(-14px)}}
+</style>
+</defs>
+<rect width="800" height="600" fill="url(#bg)"/>
+<g filter="url(#glow)" transform="translate(800 0) scale(-1 1)">
+<path class="d stem" pathLength="1" style="--s:0.00s;--t:2s" d="M230 560 C201 450 188 340 216 245"/><g transform="translate(215 494) rotate(-46)"><path class="d stem" pathLength="1" style="--s:0.66s;--t:0.9s" d="M0 0 C34 -26 91 -24 113 0 C91 24 34 26 0 0Z"/><path class="d pet2" pathLength="1" style="--s:0.96s;--t:0.5s" d="M0 0 L91 0"/></g><g transform="translate(204 429) rotate(-150)"><path class="d stem" pathLength="1" style="--s:1.02s;--t:0.9s" d="M0 0 C27 -24 72 -22 90 0 C72 22 27 24 0 0Z"/><path class="d pet2" pathLength="1" style="--s:1.32s;--t:0.5s" d="M0 0 L72 0"/></g><g transform="translate(202 397) rotate(-40)"><path class="d stem" pathLength="1" style="--s:1.20s;--t:0.9s" d="M0 0 C29 -21 78 -19 97 0 C78 19 29 21 0 0Z"/><path class="d pet2" pathLength="1" style="--s:1.50s;--t:0.5s" d="M0 0 L78 0"/></g><g transform="translate(200 359) rotate(-57)"><path class="d stem" pathLength="1" style="--s:1.42s;--t:0.9s" d="M0 0 C25 -20 67 -18 84 0 C67 18 25 20 0 0Z"/><path class="d pet2" pathLength="1" style="--s:1.72s;--t:0.5s" d="M0 0 L67 0"/></g>
+
+<g transform="translate(216 190) scale(1.2)"><path class="d pet" pathLength="1" style="--s:2.00s;--t:1s" d="M0 50 C-44 46 -50 0 -40 -62 C-24 -48 -12 -34 -4 -14 C-2 20 0 40 0 50Z"/><path class="d pet" pathLength="1" style="--s:2.25s;--t:1s" d="M0 50 C44 46 50 0 40 -62 C24 -48 12 -34 4 -14 C2 20 0 40 0 50Z"/><path class="d pet" pathLength="1" style="--s:2.50s;--t:1s" d="M0 50 C-26 30 -30 -20 0 -76 C30 -20 26 30 0 50Z"/><path class="d pet2" pathLength="1" style="--s:2.80s;--t:0.7s" d="M0 40 C-10 10 -8 -25 0 -52"/></g></g>
+<text class="title" x="60" y="270" font-size="46" style="--s:3.4s">Pink Magnolia</text>
+<text class="sub" x="64" y="315" font-size="22" style="--s:3.4s">Gentle love</text>
+<circle class="sp" cx="738" cy="471" r="2.5" style="animation-delay:0.0s"/>
+<circle class="sp" cx="760" cy="499" r="2" style="animation-delay:0.5s"/>
+<circle class="sp" cx="389" cy="423" r="2.5" style="animation-delay:1.0s"/>
+<circle class="sp" cx="75" cy="136" r="2.5" style="animation-delay:1.5s"/>
+<circle class="sp" cx="320" cy="460" r="2" style="animation-delay:2.0s"/>
+<circle class="sp" cx="688" cy="83" r="1.5" style="animation-delay:2.5s"/>
+<circle class="sp" cx="475" cy="109" r="2.5" style="animation-delay:3.0s"/>
+</svg>
