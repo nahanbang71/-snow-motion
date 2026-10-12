@@ -155,7 +155,7 @@ add('sunflower-yellow', 'Sunflower', '해바라기', 'Unwavering devotion', '변
 add('sunflower-orange', 'Orange Sunflower', '주황 해바라기', 'Warmth & energy', '따뜻함, 활력', 'daisy', dict(count=26, length=34, width=10, center=34, layers=2), 'orange')
 add('cherry-pink', 'Cherry Blossom', '벚꽃', 'The beauty of life', '삶의 아름다움', 'cherry', {}, 'pink')
 add('cherry-white', 'White Cherry Blossom', '흰 벚꽃', 'Purity & innocence', '순수, 순결', 'cherry', {}, 'white')
-add('lotus-pink', 'Pink Lotus', '분홍 연꽃', 'Purity of heart', '마음의 순수', 'lotus', {}, 'lavender')
+add('lotus-pink', 'Lotus', '분홍 연꽃', 'Purity of heart', '마음의 순수', 'lotus', {}, 'lavender')
 add('lotus-white', 'White Lotus', '흰 연꽃', 'Enlightenment', '깨달음', 'lotus', {}, 'white')
 add('lotus-blue', 'Blue Lotus', '파란 연꽃', 'Wisdom', '지혜', 'lotus', {}, 'blue')
 add('daisy-white', 'Daisy', '데이지', 'Peace and hope', '평화, 희망', 'daisy', dict(count=26, length=54, width=6, center=16), 'white')
@@ -176,16 +176,17 @@ HEAD = '''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="8
 .rip{{stroke:#5ad7ff;stroke-width:2.4}}
 .fi{{opacity:0;animation:fade .5s ease-out var(--s,0s) forwards}}
 .dotc{{fill:var(--c2)}}
-.title{{font-family:'Poppins','Helvetica Neue',Arial,sans-serif;font-weight:600;fill:none;stroke:var(--c);stroke-width:1.6;opacity:0;animation:fade 1s ease-out var(--s) forwards}}
-.sub{{font-family:'Poppins','Helvetica Neue',Arial,sans-serif;font-weight:500;fill:var(--c2);opacity:0;animation:fade 1s ease-out calc(var(--s) + .6s) forwards}}
+.title{{font-family:'Poppins','Helvetica Neue',Arial,sans-serif;font-weight:600;fill:none;stroke:var(--c);stroke-width:1.6;clip-path:inset(0 100% 0 0);animation:wipe 1.1s ease-out var(--s) forwards}}
+.sub{{font-family:'Poppins','Helvetica Neue',Arial,sans-serif;font-weight:500;fill:var(--c2);clip-path:inset(0 100% 0 0);animation:wipe 1s ease-out calc(var(--s) + .7s) forwards}}
 .sp{{fill:var(--c2);opacity:0;animation:tw 3s ease-in-out infinite}}
 @keyframes draw{{to{{stroke-dashoffset:0}}}}
+@keyframes wipe{{to{{clip-path:inset(0 0 0 0)}}}}
 @keyframes fade{{to{{opacity:1}}}}
 @keyframes tw{{0%,100%{{opacity:0;transform:translateY(0)}}50%{{opacity:.9;transform:translateY(-14px)}}}}
 </style>
 </defs>
 <rect width="800" height="600" fill="url(#bg)"/>
-<g filter="url(#glow)">'''
+<g filter="url(#glow)"{tf}>'''
 
 
 def leaves(style):
@@ -200,13 +201,13 @@ def leaves(style):
     return L.out()
 
 
-def render(slug, en, ko, men, mko, shape, kw, color):
+def render(slug, en, ko, men, mko, shape, kw, color, flip=False):
     c, c2 = COL[color]
     b = B(2.0)
     meta = SHAPES[shape](b, **kw)
     hy, tx = meta.get('hy', 190), meta.get('tx', 230)
     sc = {'spike': 1.0, 'bell': 1.0, 'lotus': 1.3}.get(shape, 1.2)
-    parts = [HEAD.format(c=c, c2=c2, en=html.escape(en))]
+    parts = [HEAD.format(c=c, c2=c2, en=html.escape(en), tf=' transform="translate(800 0) scale(-1 1)"' if flip else '')]
     top = meta.get('top')
     if top is not None:
         yt = hy + top * sc
@@ -223,8 +224,8 @@ def render(slug, en, ko, men, mko, shape, kw, color):
     t = min(t, 6.5)
     size = min(54, 410 / (.68 * len(en)))
     msize = min(22, 430 / (.55 * len(men)))
-    parts.append(f'<text class="title" x="360" y="270" font-size="{size:.0f}" style="--s:{t:.1f}s">{html.escape(en)}</text>')
-    parts.append(f'<text class="sub" x="364" y="315" font-size="{msize:.0f}" style="--s:{t:.1f}s">{html.escape(men)}</text>')
+    parts.append(f'<text class="title" x="{60 if flip else 360}" y="270" font-size="{size:.0f}" style="--s:{t:.1f}s">{html.escape(en)}</text>')
+    parts.append(f'<text class="sub" x="{64 if flip else 364}" y="315" font-size="{msize:.0f}" style="--s:{t:.1f}s">{html.escape(men)}</text>')
     rnd = random.Random(slug)
     for i in range(7):
         parts.append(f'<circle class="sp" cx="{rnd.randint(60, 760)}" cy="{rnd.randint(80, 540)}" r="{rnd.choice([1.5, 2, 2.5])}" '
@@ -259,11 +260,11 @@ def main():
     slugs = [f[0] for f in F]
     assert len(slugs) == len(set(slugs)), 'duplicate slug'
     only = set(sys.argv[1:])
-    for f in F:
+    for i, f in enumerate(F):
         if only and f[0] not in only:
             continue
         with open(os.path.join(OUT, f[0] + '.svg'), 'w', encoding='utf-8') as fh:
-            fh.write(render(*f))
+            fh.write(render(*f, flip=bool(i % 2)))
     with open(os.path.join(ROOT, 'index.html'), 'w', encoding='utf-8') as fh:
         fh.write(gallery())
     print(len(F), 'flowers')
