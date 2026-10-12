@@ -31,7 +31,7 @@ g[class^="a-"]{transform-origin:0 0}
 .a-spin{animation:spin 6s linear infinite}
 .a-spinr{animation:spinr 6s linear infinite}
 .a-ripple{transform-box:fill-box;transform-origin:center;animation:ripple 3.6s ease-out infinite}
-.fly{fill:#fff1c4;opacity:0;animation:twinkle 3s ease-in-out infinite}
+.fly{fill:var(--fly,#fff1c4);opacity:0;animation:twinkle 3s ease-in-out infinite}
 .seed{opacity:1;animation:seed 1.6s ease-in forwards}
 @keyframes seed{to{opacity:0}}
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
@@ -52,7 +52,7 @@ def scale_at(t, hold):
     return (hold + .3) * (S1 * 1.2 / (hold + .3)) ** (((t - 9) / 3) ** 1.5)
 
 
-def alive_svg(inner, title, css='', hold=3.9, width_mul=1.9, flies=True, seed='#ffd1e6'):
+def alive_svg(inner, title, css='', hold=3.9, width_mul=1.9, flies=True, seed='#ffd1e6', bg=('#14183a', '#080a1a'), fr=('gold', GOLD), hue=0, flycol='#fff1c4'):
     stops = ''.join(f"{t / DUR * 100:.2f}%{{transform:scale({scale_at(t, hold):.4f})}}" for t in [i * .25 for i in range(int(DUR / .25) + 1)])
     rnd = random.Random(title)
     fl = ''
@@ -60,12 +60,14 @@ def alive_svg(inner, title, css='', hold=3.9, width_mul=1.9, flies=True, seed='#
         for i in range(14):
             x, y = pt(rnd.uniform(66, 98), rnd.uniform(0, 360))
             fl += f'<circle class="fly" cx="{f(x)}" cy="{f(y)}" r="1.6" style="animation-delay:{rnd.uniform(0, 3):.2f}s;animation-duration:{rnd.uniform(2.2, 4):.2f}s"/>'
-    body = frame() + inner + fl
+    body = make_frame(fr[0], fr[1]) + inner + fl
+    if hue:
+        body = f'<g style="filter:hue-rotate({hue}deg)">{body}</g>'
     body = re.sub(r'stroke-width="([\d.]+)"', lambda m: f'stroke-width="{float(m.group(1)) * width_mul:.1f}"', body)
     return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1920" height="1080"><title>{title}</title>'
-            f'<defs>{DEFS_COMMON}<filter id="glow" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="5" result="b"/>'
+            f'<defs>{DEFS_COMMON.replace("#14183a", bg[0]).replace("#080a1a", bg[1])}<filter id="glow" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="5" result="b"/>'
             '<feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>'
-            f'<style>{BASE_CSS}\n.grow{{transform-origin:0 0;animation:grow {DUR}s linear forwards}}\n@keyframes grow{{{stops}}}\n{css}</style></defs>'
+            f'<style>:root{{--fly:{flycol}}}\n{BASE_CSS}\n.grow{{transform-origin:0 0;animation:grow {DUR}s linear forwards}}\n@keyframes grow{{{stops}}}\n{css}</style></defs>'
             '<rect width="1600" height="900" fill="url(#bg)"/><g filter="url(#glow)"><g transform="translate(800 450)">'
             f'<path class="l seed" stroke="{seed}" stroke-width="12" d="M0 0 l0 0"/><g class="grow">{body}</g></g></g></svg>')
 

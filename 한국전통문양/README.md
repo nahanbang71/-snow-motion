@@ -56,6 +56,8 @@
 | 바위 | `03_자연문/bawi.svg` |
 | 불꽃 | `03_자연문/bulkkot.svg` |
 
+살아 있는 버전: `03_자연문/bawi_alive.svg`, `03_자연문/bulkkot_alive.svg`, `03_자연문/dal_alive.svg`, `03_자연문/hae_alive.svg`, `03_자연문/san_alive.svg`, `03_자연문/supamun_alive.svg`, `03_자연문/unmun_alive.svg`
+
 ## 04_기하문 — 기하문 (9개)
 
 | 문양 | 파일 |
@@ -70,6 +72,8 @@
 | 칠보문 | `04_기하문/chilbomun.svg` |
 | 만(卍)자문 | `04_기하문/manjamun.svg` |
 
+살아 있는 버전: `04_기하문/chilbomun_alive.svg`, `04_기하문/gwigapmun_alive.svg`, `04_기하문/gyeokjamun_alive.svg`, `04_기하문/manjamun_alive.svg`, `04_기하문/neunghyeongmun_alive.svg`, `04_기하문/noemun_alive.svg`, `04_기하문/samtaegeuk_alive.svg`, `04_기하문/taegeuk_alive.svg`, `04_기하문/yeonjumun_alive.svg`
+
 ## 05_문자_길상문 — 문자·길상문 (6개)
 
 | 문양 | 파일 |
@@ -81,12 +85,16 @@
 | 수복강녕 | `05_문자_길상문/subokgangnyeong.svg` |
 | 팔보 | `05_문자_길상문/palbo.svg` |
 
+살아 있는 버전: `05_문자_길상문/bok_alive.svg`, `05_문자_길상문/hui_alive.svg`, `05_문자_길상문/palbo_alive.svg`, `05_문자_길상문/ssanghui_alive.svg`, `05_문자_길상문/su_alive.svg`, `05_문자_길상문/subokgangnyeong_alive.svg`
+
 ## 06_특별묶음 — 특별 묶음 (2개)
 
 | 문양 | 파일 |
 |---|---|
 | 십장생(10) | `06_특별묶음/sipjangsaeng.svg` |
 | 사군자(4) | `06_특별묶음/sagunja.svg` |
+
+살아 있는 버전: `06_특별묶음/sagunja_alive.svg`, `06_특별묶음/sipjangsaeng_alive.svg`
 
 ## 07_단청문양 — 단청 문양 (4개)
 
@@ -96,6 +104,8 @@
 | 금문 | `07_단청문양/geummun.svg` |
 | 연화(단청) | `07_단청문양/yeonhwa-dancheong.svg` |
 | 보상화(단청) | `07_단청문양/bosanghwa-dancheong.svg` |
+
+살아 있는 버전: `07_단청문양/bosanghwa-dancheong_alive.svg`, `07_단청문양/geummun_alive.svg`, `07_단청문양/meoricho_alive.svg`, `07_단청문양/yeonhwa-dancheong_alive.svg`
 
 총 51개.
 

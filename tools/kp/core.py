@@ -181,3 +181,59 @@ def grow_svg(inner, title, seed='#ffd1e6', with_frame=True):
             '<g filter="url(#glow)"><g transform="translate(800 450)">\n'
             f'<path class="l seed" stroke="{seed}" stroke-width="12" d="M0 0 l0 0"/>\n'
             f'<g class="grow">{body}</g></g></g></svg>')
+
+
+# ---------------------------------------------------------------- frame variants (so not every pattern wears the same ring)
+def frame_ticks(col=GOLD, n=72):
+    s = P(circle(126), col[0], 3.2) + P(circle(106), col[0], 2.2)
+    for i in range(n):
+        x0, y0 = pt(110, i * 360 / n)
+        x1, y1 = pt(110 + (9 if i % 6 == 0 else 5), i * 360 / n)
+        s += P(f"M{f(x0)} {f(y0)} L{f(x1)} {f(y1)}", col[1] if i % 6 == 0 else col[0], 2.4)
+    return s
+
+
+def frame_octagon(col=GOLD):
+    s = P(poly([pt(128, a + 22.5) for a in range(0, 360, 45)], True), col[0], 3.4) + P(poly([pt(110, a + 22.5) for a in range(0, 360, 45)], True), col[0], 2.4)
+    for a in range(0, 360, 45):
+        x, y = pt(119, a + 22.5)
+        s += DOT(x, y, col[1], 9)
+        x, y = pt(119, a)
+        s += DOT(x, y, col[0], 5)
+    return s
+
+
+def frame_cloud(col=GOLD, n=24):
+    s = P(circle(104), col[0], 2.4)
+    r = 118
+    for i in range(n):
+        a0, a1 = (i - .5) * 360 / n, (i + .5) * 360 / n
+        x0, y0 = pt(r, a0)
+        x1, y1 = pt(r, a1)
+        s += P(f"M{f(x0)} {f(y0)} A{f(r * math.sin(math.pi / n) * 1.05)} {f(r * math.sin(math.pi / n) * 1.05)} 0 0 1 {f(x1)} {f(y1)}", col[0], 3)
+    return s
+
+
+def frame_petal(col=GOLD, n=32):
+    s = P(circle(104), col[0], 2.6)
+    s += around(n, lambda k: P(lens(20, 5, r0=108), col[0], 2.6))
+    s += around(n, lambda k: DOT(0, -112, col[1], 4), start=180 / n)
+    return s
+
+
+def frame_dancheong():
+    cols = ['#5aa9ff', '#ff3860', '#ffe14a', '#f2f6ff', '#3df2c0']
+    return ''.join(P(circle(r), c, 3.2) for r, c in zip((104, 111, 118, 125, 132), cols))
+
+
+def frame_none(col=WHITE):
+    return P(circle(128), col[0], 1.4)
+
+
+FRAMES = {'gold': frame, 'ticks': frame_ticks, 'octagon': frame_octagon, 'cloud': frame_cloud, 'petal': frame_petal,
+          'dancheong': lambda col=None: frame_dancheong(), 'none': frame_none}
+
+
+def make_frame(kind='gold', col=GOLD):
+    fn = FRAMES[kind]
+    return fn() if kind == 'dancheong' else fn(col)

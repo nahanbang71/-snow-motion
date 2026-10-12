@@ -17,7 +17,7 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, 'kp'))
 import core  # noqa: E402
-from core import frame, grow_svg  # noqa: E402
+from core import frame, grow_svg, make_frame, GOLD, BLUE, TEAL, ORANGE, PINK, RED  # noqa: E402
 import plants, animals, nature, geometry, text, special, dancheong  # noqa: E402
 
 ROOT = os.path.join(HERE, '..', '한국전통문양')
@@ -71,6 +71,8 @@ def main():
     # static preview of the phoenix (from the existing laser svg)
     write(os.path.join(ROOT, '_preview', 'bonghwang.svg'), static_svg(bonghwang_tile(), '봉황').replace('<defs>', GPH_DEFS + '<defs>', 1))
     intro(inners)
+    for cat in CATS:
+        intro(inners, cat, 'intro.svg', seed=CATS.index(cat) + 20)
     readmes()
     gallery()
     print(len(ALL), 'procedural patterns +', len(EXTERNAL), 'external')
@@ -83,12 +85,27 @@ GPH = ('<linearGradient id="gph" gradientUnits="userSpaceOnUse" x1="0" y1="60" x
        '<stop offset="1" stop-color="#ff4fd8"/></linearGradient>')
 
 
-def intro(inners):
+TILE_STYLE = {
+    'hae': ('ticks', ORANGE), 'dal': ('ticks', BLUE), 'unmun': ('cloud', TEAL), 'bawi': ('petal', TEAL), 'bulkkot': ('none', ORANGE),
+    'taegeuk': ('octagon', GOLD), 'samtaegeuk': ('dancheong', None), 'yeonjumun': ('none', GOLD), 'manjamun': ('ticks', GOLD),
+    'su': ('cloud', GOLD), 'bok': ('petal', GOLD), 'hui': ('ticks', PINK), 'ssanghui': ('octagon', GOLD),
+    'subokgangnyeong': ('dancheong', None), 'palbo': ('gold', GOLD), 'sipjangsaeng': ('cloud', GOLD), 'sagunja': ('petal', GOLD),
+    'meoricho': ('dancheong', None), 'geummun': ('octagon', GOLD), 'yeonhwa-dancheong': ('dancheong', None), 'bosanghwa-dancheong': ('petal', RED),
+}
+CAT_BG = {'01_식물문': ('#0e3a24', '#02100a'), '02_동물문': ('#3a2208', '#100803'), '03_자연문': ('#0c3050', '#020a16'),
+          '04_기하문': ('#24104a', '#06030f'), '05_문자_길상문': ('#4a1020', '#120308'), '06_특별묶음': ('#16184a', '#04040f'),
+          '07_단청문양': ('#0c3a2c', '#02110d')}
+
+
+def intro(inners, only_cat=None, out='intro.svg', seed=11, count=140):
     W, H = 1600, 900
-    rnd = random.Random(11)
-    tiles = list(inners.items()) + [('bonghwang', None)]
+    rnd = random.Random(seed)
+    bg = CAT_BG.get(only_cat, ('#14183a', '#080a1a'))
+    tiles = [(sl, inn) for sl, inn in inners.items() if (only_cat is None or ALL[sl][0] == only_cat)]
+    if only_cat is None or only_cat == '02_동물문':
+        tiles += [('bonghwang', None)]
     pool = []
-    while len(pool) < 140:
+    while len(pool) < count:
         t = tiles[:]
         rnd.shuffle(t)
         pool += t
@@ -99,9 +116,9 @@ def intro(inners):
             cells.append((x + rnd.randint(-6, 6), y + rnd.randint(-6, 6)))
     cx, cy = W / 2, H / 2
     maxd = math.hypot(cx, cy)
-    out = [f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="1920" height="1080">
+    outl = [f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="1920" height="1080">
 <title>Korean traditional patterns - intro</title>
-<defs><radialGradient id="bg" cx="50%" cy="50%" r="75%"><stop offset="0" stop-color="#14183a"/><stop offset="1" stop-color="#080a1a"/></radialGradient>
+<defs><radialGradient id="bg" cx="50%" cy="50%" r="75%"><stop offset="0" stop-color="{bg[0]}"/><stop offset="1" stop-color="{bg[1]}"/></radialGradient>
 {GPH}<clipPath id="clipc"><circle r="102"/></clipPath>
 <filter id="glow" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="2.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
 <style>.l{{fill:none;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}}
@@ -114,16 +131,18 @@ def intro(inners):
         slug, inner = pool[i]
         d = math.hypot(x - cx, y - cy) / maxd
         t0 = .1 + d * 3.3 + rnd.random() * .25
-        body = (frame() + inner) if inner is not None else (frame() + bonghwang_tile())
-        out.append(f'<g transform="translate({x} {y}) scale(.47)"><g class="t" style="--s:{t0:.2f}s">{body}</g></g>')
-    out.append('</g></g></svg>')
-    write(os.path.join(ROOT, 'intro.svg'), '\n'.join(out))
+        kind, col = TILE_STYLE.get(slug, ('gold', GOLD))
+        fr = make_frame(kind, col or GOLD)
+        body = (fr + inner) if inner is not None else (fr + bonghwang_tile())
+        outl.append(f'<g transform="translate({x} {y}) scale(.47)"><g class="t" style="--s:{t0:.2f}s">{body}</g></g>')
+    outl.append('</g></g></svg>')
+    write(os.path.join(ROOT, only_cat or '', out) if only_cat else os.path.join(ROOT, out), '\n'.join(outl))
 
 
 def readmes():
     root = ['# 한국 전통문양 (Korean traditional patterns)\n',
             '네온/레이저 라인 아트 SVG 모음. 글자(이름) 없이 문양만, 화면 중앙의 점에서 시작해 커지면서 화면 밖으로 나가는 8초 애니메이션 (1920×1080).\n',
-            '- `intro.svg` / `intro.mp4` : 모든 문양이 화면을 가득 채우는 인트로\n- `index.html` : 전체 갤러리\n- `_preview/` : 문양별 정지 이미지(미리보기)\n- `_source/` : 원본(참고용) 이미지\n- 번호 폴더 : 분류별 SVG\n']
+            '- `intro.svg` / `intro.mp4` : 모든 문양이 화면을 가득 채우는 인트로 (분류별 인트로는 각 폴더의 `intro.svg/mp4`)\n- `<문양>_alive.svg/mp4` : 움직임이 있는 버전 (프레임·배경·움직임을 문양마다 다르게)\n- `index.html` : 전체 갤러리\n- `_preview/` : 문양별 정지 이미지(미리보기)\n- `_source/` : 원본(참고용) 이미지\n- 번호 폴더 : 분류별 SVG\n']
     total = 0
     for cat in CATS:
         items = [(s, ko, f'{s}.svg') for s, (c, ko, _) in ALL.items() if c == cat]
@@ -137,6 +156,7 @@ def readmes():
         if alive:
             extra = '\n\n## 살아 있는 버전 (점→커짐→숨쉬기·눈깜빡임 등 움직임→화면 밖으로, 12초)\n\n' + '\n'.join(f'- `{fn}` / `{fn[:-4]}.mp4`' for fn in alive)
             root.append('\n살아 있는 버전: ' + ', '.join(f'`{cat}/{fn}`' for fn in alive))
+        extra += '\n\n## 카테고리 인트로\n\n- `intro.svg` / `intro.mp4` : 이 분류의 문양으로 화면을 가득 채우는 6초 인트로\n'
         write(os.path.join(ROOT, cat, 'README.md'), f'# {CAT_NAME[cat]}\n\n' + '\n'.join(f'- {ko} (`{fn}`)' for s, ko, fn in items) + extra + '\n')
     root.append(f'\n총 {total}개.\n')
     root.append('\n※ 십장생·사군자는 다른 분류와 겹치는 문양(소나무, 거북, 학, 매·난·국·죽 등)을 작게 모은 구성작입니다. 개별 문양은 각 분류 폴더에 있습니다.')
