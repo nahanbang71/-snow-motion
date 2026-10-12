@@ -25,3 +25,8 @@
 - `nabi_alive.svg` / `nabi_alive.mp4`
 - `saseum_alive.svg` / `saseum_alive.mp4`
 - `yong_alive.svg` / `yong_alive.mp4`
+
+## 카테고리 인트로
+
+- `intro.svg` / `intro.mp4` : 이 분류의 문양으로 화면을 가득 채우는 6초 인트로
+

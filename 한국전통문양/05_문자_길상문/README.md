@@ -15,3 +15,8 @@
 - `ssanghui_alive.svg` / `ssanghui_alive.mp4`
 - `su_alive.svg` / `su_alive.mp4`
 - `subokgangnyeong_alive.svg` / `subokgangnyeong_alive.mp4`
+
+## 카테고리 인트로
+
+- `intro.svg` / `intro.mp4` : 이 분류의 문양으로 화면을 가득 채우는 6초 인트로
+

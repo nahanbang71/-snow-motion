@@ -12,3 +12,8 @@
 - 소나무 (`sonamu.svg`)
 - 난초 (`nancho.svg`)
 - 영지(불로초) (`yeongji.svg`)
+
+## 카테고리 인트로
+
+- `intro.svg` / `intro.mp4` : 이 분류의 문양으로 화면을 가득 채우는 6초 인트로
+

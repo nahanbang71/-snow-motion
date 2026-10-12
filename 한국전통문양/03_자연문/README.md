@@ -17,3 +17,8 @@
 - `san_alive.svg` / `san_alive.mp4`
 - `supamun_alive.svg` / `supamun_alive.mp4`
 - `unmun_alive.svg` / `unmun_alive.mp4`
+
+## 카테고리 인트로
+
+- `intro.svg` / `intro.mp4` : 이 분류의 문양으로 화면을 가득 채우는 6초 인트로
+
