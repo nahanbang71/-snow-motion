@@ -54,8 +54,8 @@ def title_svg():
 def credits_svg():
     cols = BD.CH
     lines = [('CREDITS', 90, 300, cols[0], 'none', 22, 0.2), ('EUROPE FROM ABOVE — LASER LINE ART', 40, 430, cols[4], 'none', 8, 1.0),
-             ('Line art and animation: SVG, created with Claude (Anthropic)', 30, 560, cols[1], cols[1], 2, 2.2),
-             ('Music: created with Suno, used under a commercial-use license', 30, 630, cols[3], cols[3], 2, 3.4),
+             ('ElevenSeoul', 56, 580, cols[1], 'none', 14, 2.2),
+             ('오대산', 44, 660, cols[3], 'none', 14, 3.4),
              ('Thank you for floating with us', 36, 780, cols[2], 'none', 6, 5.0)]
     t = ''
     for txt, size, y, c, fill, ls, d in lines:
