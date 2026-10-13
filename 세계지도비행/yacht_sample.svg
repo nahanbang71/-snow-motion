@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+<title>Yacht sample</title>
+<defs>
+<filter id="glow" filterUnits="userSpaceOnUse" x="0" y="0" width="1920" height="1080"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<style>
+.d{fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;opacity:0;animation:draw 1.4s cubic-bezier(.12,.7,.3,1) both}
+@keyframes draw{0%{stroke-dashoffset:1;opacity:0}1%{opacity:1}100%{stroke-dashoffset:0;opacity:1}}
+.m{stroke:#35f3ff}.p{stroke:#ff4fd8}
+.drift{animation:drift 8s linear both}
+@keyframes drift{from{transform:translate(-170px,0)}to{transform:translate(170px,0)}}
+.bob{animation:bob 3.2s ease-in-out infinite alternate}
+@keyframes bob{from{transform:translateY(-4px) rotate(-2.2deg)}to{transform:translateY(4px) rotate(2.2deg)}}
+.sea{opacity:.28;animation:fade 1.5s ease-out both}
+.wake{fill:none;stroke-width:1.6;stroke-linecap:round;opacity:0;animation:wake 3s ease-out 1.6s infinite}
+@keyframes wake{0%{opacity:0;transform:translateX(0)}20%{opacity:.7}100%{opacity:0;transform:translateX(-34px)}}
+.t{fill:none;stroke-width:1.6;text-anchor:middle;opacity:0;animation:fade .9s ease-out 2.4s both}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.star{fill:#a9bdff;animation:tw 5s ease-in-out infinite alternate}
+@keyframes tw{from{opacity:.15}to{opacity:.55}}
+</style>
+</defs>
+<rect width="1920" height="1080" fill="#05060d"/>
+<g filter="url(#glow)">
+  <!-- faint sea -->
+  <g class="sea" fill="none" stroke="#35f3ff" stroke-width="2" stroke-linecap="round">
+    <path d="M300 640 q30 -14 60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0"/>
+    <path d="M360 690 q30 -14 60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0"/>
+    <path d="M420 740 q30 -14 60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0"/>
+  </g>
+  <g>
+    <circle class="star" cx="420" cy="250" r="2" style="animation-delay:.3s"/><circle class="star" cx="1500" cy="200" r="1.6" style="animation-delay:1.2s"/>
+    <circle class="star" cx="760" cy="150" r="1.4" style="animation-delay:2.1s"/><circle class="star" cx="1260" cy="300" r="2" style="animation-delay:.8s"/>
+    <circle class="star" cx="1640" cy="420" r="1.5" style="animation-delay:1.7s"/><circle class="star" cx="260" cy="430" r="1.5" style="animation-delay:2.6s"/>
+  </g>
+  <!-- yacht: drifts right, bobs, leaves a wake -->
+  <g transform="translate(960 600)">
+    <g class="drift"><g class="bob"><g transform="scale(3.4)">
+      <path class="d m" pathLength="1" stroke-width="1.5" style="animation-delay:0s" d="M-42 0 H42 L30 15 H-30 Z"/>
+      <path class="d m" pathLength="1" stroke-width="1.5" style="animation-delay:.2s" d="M0 0 V-64"/>
+      <path class="d m" pathLength="1" stroke-width="1.5" style="animation-delay:.4s" d="M3 -62 L34 -6 H3 Z"/>
+      <path class="d m" pathLength="1" stroke-width="1.5" style="animation-delay:.6s" d="M-3 -54 L-32 -6 H-3 Z"/>
+      <path class="d p" pathLength="1" stroke-width="1.5" style="animation-delay:.8s" d="M0 -64 L12 -69 L0 -74"/>
+      <g class="wake" stroke="#ff4fd8"><path d="M-46 17 q-8 -6 -16 0 t-16 0 t-16 0"/></g>
+    </g></g></g>
+  </g>
+  <text class="t p" x="960" y="840" font-size="30" letter-spacing="16" font-family="'Helvetica Neue', Arial, sans-serif">YACHT</text>
+</g>
+</svg>
