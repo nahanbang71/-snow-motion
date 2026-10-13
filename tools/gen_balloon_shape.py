@@ -67,12 +67,11 @@ def build():
         k[0] += 1
         return s
     body = p(outline, 'pk', '3.2') + ''.join(p(m, 'gd', '2') for m in mer) + ''.join(p(b, 'gd', '2') for b in bands) + p(mouth, 'pk') + p(ropes, 'gd', '2') + p(basket, 'gd', '3')
-    small = body  # same drawing reused for the distant balloon via <use>
+    bal = body + f'<path class="flame" d="{flame}"/>'     # drawn inline twice: animations inside <use> shadow trees are not seekable
     return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
 <title>Hot-air balloon sample</title>
 <defs>
 <filter id="glow" filterUnits="userSpaceOnUse" x="0" y="0" width="1920" height="1080"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-<g id="balloon">{body}<path class="flame" d="{flame}"/></g>
 <style>
 .d{{fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;opacity:0;animation:draw 1.4s cubic-bezier(.12,.7,.3,1) both}}
 @keyframes draw{{0%{{stroke-dashoffset:1;opacity:0}}1%{{opacity:1}}100%{{stroke-dashoffset:0;opacity:1}}}}
@@ -91,8 +90,8 @@ def build():
 <g filter="url(#glow)">
 <g>{stars}</g>
 <path class="sky" d="{skyline()}"/>
-<g transform="translate(1500 330) scale(.34)"><g class="far"><use href="#balloon"/></g></g>
-<g transform="translate(930 470) scale(1.3)"><g class="main"><g class="bob"><use href="#balloon"/></g></g></g>
+<g transform="translate(1500 330) scale(.34)"><g class="far">{bal}</g></g>
+<g transform="translate(930 470) scale(1.3)"><g class="main"><g class="bob">{bal}</g></g></g>
 <text class="t" x="960" y="1060" font-size="26" letter-spacing="14" {FONT}>HOT-AIR BALLOON</text>
 </g>
 </svg>
