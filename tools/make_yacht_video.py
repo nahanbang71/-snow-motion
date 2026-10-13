@@ -49,7 +49,8 @@ with ThreadPoolExecutor(JOBS) as ex:
     list(ex.map(cutaway, CUTS))
     list(ex.map(chunk, chunks))
 lst = os.path.join(WORK, 'list.txt')
-open(lst, 'w').write(''.join(f"file '{os.path.abspath(os.path.join(WORK, f'map_{i:02d}.mp4')}'\n" for i, _, _ in chunks))
+parts = [os.path.abspath(os.path.join(WORK, 'map_%02d.mp4' % i)) for i, _, _ in chunks]
+open(lst, 'w').write(''.join("file '%s'\n" % p for p in parts))
 mapmp4 = os.path.join(WORK, 'map_full.mp4')
 sh('ffmpeg', '-v', 'error', '-y', '-f', 'concat', '-safe', '0', '-i', lst, '-c', 'copy', mapmp4)
 
