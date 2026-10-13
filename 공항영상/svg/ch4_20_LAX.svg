@@ -1,8 +1,16 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
 <title>LAX LOS ANGELES</title>
-<defs><filter id="glow" filterUnits="userSpaceOnUse" x="0" y="0" width="1920" height="1080"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><style>.m{stroke:#39ff9c}.p{stroke:#4d7cff}.d{fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;opacity:0;animation:draw 1.4s cubic-bezier(.12,.7,.3,1) both}@keyframes draw{0%{stroke-dashoffset:1;opacity:0}1%{opacity:1}100%{stroke-dashoffset:0;opacity:1}}.all{animation:out .8s linear 6.2s both}@keyframes out{from{opacity:1}to{opacity:0}}.t{fill:none;stroke-width:1.6;text-anchor:middle;opacity:0;animation:fade .7s ease-out both}@keyframes fade{from{opacity:0}to{opacity:1}}</style></defs>
+<defs><filter id="glow" filterUnits="userSpaceOnUse" x="0" y="0" width="1920" height="1080"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><style>.m{stroke:#39ff9c}.p{stroke:#4d7cff}.d{fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;opacity:0;animation:draw 1.4s cubic-bezier(.12,.7,.3,1) both}@keyframes draw{0%{stroke-dashoffset:1;opacity:0}1%{opacity:1}100%{stroke-dashoffset:0;opacity:1}}.bg{stroke-width:2}.all{animation:out .8s linear 6.2s both}@keyframes out{from{opacity:1}to{opacity:0}}.t{fill:none;stroke-width:1.6;text-anchor:middle;opacity:0;animation:fade .7s ease-out both}@keyframes fade{from{opacity:0}to{opacity:1}}</style></defs>
 <rect width="1920" height="1080" fill="#05060d"/>
 <g filter="url(#glow)" class="all">
+<g opacity=".4" style="--w:2">
+<path class="d bg p" pathLength="1" style="animation-delay:0.00s" d="M1645 270 a55 55 0 1 0 110 0 a55 55 0 1 0 -110 0"/>
+<path class="d bg m" pathLength="1" style="animation-delay:0.12s" d="M130 726 Q132 600 150 516 M150 516 Q201.1 485.5 235.2 543.1 M150 516 Q180.4 438.5 200.6 516 M150 516 Q145.4 423.7 142.3 507.4 M150 516 Q112.6 447.9 87.6 521.4 M150 516 Q97.3 499.9 62.1 551.5"/>
+<path class="d bg m" pathLength="1" style="animation-delay:0.24s" d="M250 726 Q248.5 624 235 556 M235 556 Q276.4 531.3 304 578 M235 556 Q259.6 493.3 276 556 M235 556 Q231.3 481.3 228.8 549 M235 556 Q204.7 500.9 184.5 560.4 M235 556 Q192.3 542.9 163.9 584.7"/>
+<path class="d bg m" pathLength="1" style="animation-delay:0.36s" d="M370 726 Q371.8 588 388 496 M388 496 Q444 462.6 481.3 525.7 M388 496 Q421.2 411.2 443.4 495.9 M388 496 Q382.9 394.9 379.6 486.5 M388 496 Q347 421.4 319.7 501.9 M388 496 Q330.3 478.3 291.8 534.8"/>
+<path class="d bg m" pathLength="1" style="animation-delay:0.48s" d="M1470 726 Q1508 726 1546 680 Q1578 669 1610 669 Q1655 669 1700 640 Q1734.5 679 1769 679 Q1814.5 679 1860 726"/>
+<path class="d bg p" pathLength="1" style="animation-delay:0.60s" d="M0 726 H480 M1440 726 H1920"/>
+</g>
 <g transform="translate(480 150) scale(1.6)">
 <path class="d p" pathLength="1" style="animation-delay:0.00s" d="M0 360 H600"/>
 <path class="d m" pathLength="1" style="animation-delay:0.22s" d="M180 360 C190 285 280 238 350 215"/>

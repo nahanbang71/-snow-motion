@@ -1,8 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
 <title>PKX BEIJING DAXING</title>
-<defs><filter id="glow" filterUnits="userSpaceOnUse" x="0" y="0" width="1920" height="1080"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><style>.m{stroke:#35f3ff}.p{stroke:#ff4fd8}.d{fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;opacity:0;animation:draw 1.4s cubic-bezier(.12,.7,.3,1) both}@keyframes draw{0%{stroke-dashoffset:1;opacity:0}1%{opacity:1}100%{stroke-dashoffset:0;opacity:1}}.all{animation:out .8s linear 6.2s both}@keyframes out{from{opacity:1}to{opacity:0}}.t{fill:none;stroke-width:1.6;text-anchor:middle;opacity:0;animation:fade .7s ease-out both}@keyframes fade{from{opacity:0}to{opacity:1}}</style></defs>
+<defs><filter id="glow" filterUnits="userSpaceOnUse" x="0" y="0" width="1920" height="1080"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><style>.m{stroke:#35f3ff}.p{stroke:#ff4fd8}.d{fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;opacity:0;animation:draw 1.4s cubic-bezier(.12,.7,.3,1) both}@keyframes draw{0%{stroke-dashoffset:1;opacity:0}1%{opacity:1}100%{stroke-dashoffset:0;opacity:1}}.bg{stroke-width:2}.all{animation:out .8s linear 6.2s both}@keyframes out{from{opacity:1}to{opacity:0}}.t{fill:none;stroke-width:1.6;text-anchor:middle;opacity:0;animation:fade .7s ease-out both}@keyframes fade{from{opacity:0}to{opacity:1}}</style></defs>
 <rect width="1920" height="1080" fill="#05060d"/>
 <g filter="url(#glow)" class="all">
+<g opacity=".4" style="--w:2">
+<path class="d bg p" pathLength="1" style="animation-delay:0.00s" d="M1655 260 a45 45 0 1 0 90 0 a45 45 0 1 0 -90 0"/>
+<path class="d bg p" pathLength="1" style="animation-delay:0.12s" d="M130 220 a20 20 0 0 1 40 0 a28 28 0 0 1 56 0 a20 20 0 0 1 40 0"/>
+<path class="d bg m" pathLength="1" style="animation-delay:0.24s" d="M60 726 V676 H78 V660 H96 V676 H114 V660 H132 V676 H150 V660 H168 V676 H186 V660 H204 V676 H222 V660 H240 V676 H258 V660 H276 V676 H294 V660 H312 V676 H330 V660 H348 V676 H366 V660 H384 V676 H402 V660 H420 V676 H450 V726"/>
+<path class="d bg m" pathLength="1" style="animation-delay:0.36s" d="M1470 726 V676 H1488 V660 H1506 V676 H1524 V660 H1542 V676 H1560 V660 H1578 V676 H1596 V660 H1614 V676 H1632 V660 H1650 V676 H1668 V660 H1686 V676 H1704 V660 H1722 V676 H1740 V660 H1758 V676 H1776 V660 H1794 V676 H1812 V660 H1830 V676 H1860 V726"/>
+<path class="d bg p" pathLength="1" style="animation-delay:0.48s" d="M0 726 H480 M1440 726 H1920"/>
+</g>
 <g transform="translate(480 150) scale(1.6)">
 <path class="d p" pathLength="1" style="animation-delay:0.00s" d="M0 360 H600"/>
 <path class="d m" pathLength="1" style="animation-delay:0.22s" d="M300 147 Q316.7 110.4 377.5 70.8 Q373.6 143.2 350.2 176 Q390.3 172.1 455 205 Q390.3 237.9 350.2 234 Q373.6 266.8 377.5 339.2 Q316.7 299.6 300 263 Q283.3 299.6 222.5 339.2 Q226.4 266.8 249.8 234 Q209.7 237.9 145 205 Q209.7 172.1 249.8 176 Q226.4 143.2 222.5 70.8 Q283.3 110.4 300 147 Z"/>

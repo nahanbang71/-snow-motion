@@ -1,8 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
 <title>EZE BUENOS AIRES EZEIZA</title>
-<defs><filter id="glow" filterUnits="userSpaceOnUse" x="0" y="0" width="1920" height="1080"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><style>.m{stroke:#ff4fd8}.p{stroke:#ffe14d}.d{fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;opacity:0;animation:draw 1.4s cubic-bezier(.12,.7,.3,1) both}@keyframes draw{0%{stroke-dashoffset:1;opacity:0}1%{opacity:1}100%{stroke-dashoffset:0;opacity:1}}.all{animation:out .8s linear 6.2s both}@keyframes out{from{opacity:1}to{opacity:0}}.t{fill:none;stroke-width:1.6;text-anchor:middle;opacity:0;animation:fade .7s ease-out both}@keyframes fade{from{opacity:0}to{opacity:1}}</style></defs>
+<defs><filter id="glow" filterUnits="userSpaceOnUse" x="0" y="0" width="1920" height="1080"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><style>.m{stroke:#ff4fd8}.p{stroke:#ffe14d}.d{fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;opacity:0;animation:draw 1.4s cubic-bezier(.12,.7,.3,1) both}@keyframes draw{0%{stroke-dashoffset:1;opacity:0}1%{opacity:1}100%{stroke-dashoffset:0;opacity:1}}.bg{stroke-width:2}.all{animation:out .8s linear 6.2s both}@keyframes out{from{opacity:1}to{opacity:0}}.t{fill:none;stroke-width:1.6;text-anchor:middle;opacity:0;animation:fade .7s ease-out both}@keyframes fade{from{opacity:0}to{opacity:1}}</style></defs>
 <rect width="1920" height="1080" fill="#05060d"/>
 <g filter="url(#glow)" class="all">
+<g opacity=".4" style="--w:2">
+<path class="d bg p" pathLength="1" style="animation-delay:0.00s" d="M1645 270 a55 55 0 1 0 110 0 a55 55 0 1 0 -110 0"/>
+<path class="d bg p" pathLength="1" style="animation-delay:0.12s" d="M120 240 a22 22 0 0 1 44 0 a30 30 0 0 1 60 0 a22 22 0 0 1 44 0"/>
+<path class="d bg m" pathLength="1" style="animation-delay:0.24s" d="M60 726 V693 H94 V726 V674 H137 V726 V703 H181 V726 V656 H218 V726 V691 H257 V726 V659 H305 V726 V658 H342 V726 V703 H373 V726 V690 H412 V726 V687 H444 V726 V698 H450 V726"/>
+<path class="d bg m" pathLength="1" style="animation-delay:0.36s" d="M1470 712 H1860 M1530 696 H1820"/>
+<path class="d bg p" pathLength="1" style="animation-delay:0.48s" d="M0 726 H480 M1440 726 H1920"/>
+</g>
 <g transform="translate(480 150) scale(1.6)">
 <path class="d p" pathLength="1" style="animation-delay:0.00s" d="M0 360 H600"/>
 <path class="d m" pathLength="1" style="animation-delay:0.22s" d="M282 322 L291 120 L300 88 L309 120 L318 322 Z"/>

@@ -9,6 +9,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from airport_data import A, CH_COLOR, f, circle, wave, palm  # noqa: E402
+import airport_bg  # noqa: E402
 
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '공항영상', 'svg')
 FONT = "font-family=\"'Helvetica Neue', Arial, sans-serif\""
@@ -34,7 +35,7 @@ def airport_svg(a, n):
         '.d{fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;'
         'opacity:0;animation:draw 1.4s cubic-bezier(.12,.7,.3,1) both}'
         '@keyframes draw{0%{stroke-dashoffset:1;opacity:0}1%{opacity:1}100%{stroke-dashoffset:0;opacity:1}}'
-        '.all{animation:out .8s linear 6.2s both}@keyframes out{from{opacity:1}to{opacity:0}}'
+        '.bg{stroke-width:2}.all{animation:out .8s linear 6.2s both}@keyframes out{from{opacity:1}to{opacity:0}}'
         '.t{fill:none;stroke-width:1.6;text-anchor:middle;opacity:0;animation:fade .7s ease-out both}'
         '@keyframes fade{from{opacity:0}to{opacity:1}}')
     els = []
@@ -52,7 +53,11 @@ def airport_svg(a, n):
         path(d, 'p')
     px, py, pa = a['plane']
     path(PLANE_GLYPH, 'p', f' transform="translate({px} {py}) rotate({pa}) scale(0.9)"')
-    body = (f'<g filter="url(#glow)" class="all">\n<g transform="translate(480 150) scale(1.6)">\n' + '\n'.join(els) + '\n</g>\n'
+    sky, ground = airport_bg.build(a['code'])
+    bg = []
+    for j, (d, cls) in enumerate([(d, 'p') for d in sky] + [(d, 'm') for d in ground] + [('M0 726 H480 M1440 726 H1920', 'p')]):
+        bg.append(f'<path class="d bg {cls}" pathLength="1" style="animation-delay:{j * .12:.2f}s" d="{d}"/>')
+    body = (f'<g filter="url(#glow)" class="all">\n<g opacity=".4" style="--w:2">\n' + '\n'.join(bg) + '\n</g>\n<g transform="translate(480 150) scale(1.6)">\n' + '\n'.join(els) + '\n</g>\n'
             f'<text class="t p" x="960" y="800" font-size="30" letter-spacing="14" {FONT} style="animation-delay:2.6s">{a["name"]}</text>\n'
             f'<text class="t m" x="960" y="900" font-size="64" letter-spacing="14" {FONT} style="animation-delay:3s">{a["code"]}</text>\n</g>')
     return svg_wrap(f'{a["code"]} {a["name"]}', body, css)

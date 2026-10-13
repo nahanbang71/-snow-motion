@@ -1,8 +1,16 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
 <title>BKK BANGKOK SUVARNABHUMI</title>
-<defs><filter id="glow" filterUnits="userSpaceOnUse" x="0" y="0" width="1920" height="1080"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><style>.m{stroke:#35f3ff}.p{stroke:#ff4fd8}.d{fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;opacity:0;animation:draw 1.4s cubic-bezier(.12,.7,.3,1) both}@keyframes draw{0%{stroke-dashoffset:1;opacity:0}1%{opacity:1}100%{stroke-dashoffset:0;opacity:1}}.all{animation:out .8s linear 6.2s both}@keyframes out{from{opacity:1}to{opacity:0}}.t{fill:none;stroke-width:1.6;text-anchor:middle;opacity:0;animation:fade .7s ease-out both}@keyframes fade{from{opacity:0}to{opacity:1}}</style></defs>
+<defs><filter id="glow" filterUnits="userSpaceOnUse" x="0" y="0" width="1920" height="1080"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><style>.m{stroke:#35f3ff}.p{stroke:#ff4fd8}.d{fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;opacity:0;animation:draw 1.4s cubic-bezier(.12,.7,.3,1) both}@keyframes draw{0%{stroke-dashoffset:1;opacity:0}1%{opacity:1}100%{stroke-dashoffset:0;opacity:1}}.bg{stroke-width:2}.all{animation:out .8s linear 6.2s both}@keyframes out{from{opacity:1}to{opacity:0}}.t{fill:none;stroke-width:1.6;text-anchor:middle;opacity:0;animation:fade .7s ease-out both}@keyframes fade{from{opacity:0}to{opacity:1}}</style></defs>
 <rect width="1920" height="1080" fill="#05060d"/>
 <g filter="url(#glow)" class="all">
+<g opacity=".4" style="--w:2">
+<path class="d bg p" pathLength="1" style="animation-delay:0.00s" d="M1560 240 a22 22 0 0 1 44 0 a30 30 0 0 1 60 0 a22 22 0 0 1 44 0"/>
+<path class="d bg m" pathLength="1" style="animation-delay:0.12s" d="M124 726 H176 M130 726 V656.0 H170 V726 M135 656.0 V606.0 H165 V656.0 M141 606.0 L150 526 L159 606.0 Z"/>
+<path class="d bg m" pathLength="1" style="animation-delay:0.24s" d="M304 726 H356 M310 726 V673.5 H350 V726 M315 673.5 V636.0 H345 V673.5 M321 636.0 L330 576 L339 636.0 Z"/>
+<path class="d bg m" pathLength="1" style="animation-delay:0.36s" d="M1640 726 Q1643 624 1670 556 M1670 556 Q1711.4 531.3 1739 578 M1670 556 Q1694.6 493.3 1711 556 M1670 556 Q1666.3 481.3 1663.8 549 M1670 556 Q1639.7 500.9 1619.5 560.4 M1670 556 Q1627.3 542.9 1598.9 584.7"/>
+<path class="d bg m" pathLength="1" style="animation-delay:0.48s" d="M1760 726 Q1757.5 648 1735 596 M1735 596 Q1766.6 577.1 1787.7 612.8 M1735 596 Q1753.8 548.1 1766.3 596 M1735 596 Q1732.1 538.9 1730.2 590.7 M1735 596 Q1711.8 553.9 1696.4 599.3 M1735 596 Q1702.4 586 1680.6 618"/>
+<path class="d bg p" pathLength="1" style="animation-delay:0.60s" d="M0 726 H480 M1440 726 H1920"/>
+</g>
 <g transform="translate(480 150) scale(1.6)">
 <path class="d p" pathLength="1" style="animation-delay:0.00s" d="M0 360 H600"/>
 <path class="d m" pathLength="1" style="animation-delay:0.22s" d="M455 360 L462 150 M485 360 L478 150"/>

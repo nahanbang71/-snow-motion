@@ -1,8 +1,19 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
 <title>JFK NEW YORK JFK</title>
-<defs><filter id="glow" filterUnits="userSpaceOnUse" x="0" y="0" width="1920" height="1080"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><style>.m{stroke:#39ff9c}.p{stroke:#4d7cff}.d{fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;opacity:0;animation:draw 1.4s cubic-bezier(.12,.7,.3,1) both}@keyframes draw{0%{stroke-dashoffset:1;opacity:0}1%{opacity:1}100%{stroke-dashoffset:0;opacity:1}}.all{animation:out .8s linear 6.2s both}@keyframes out{from{opacity:1}to{opacity:0}}.t{fill:none;stroke-width:1.6;text-anchor:middle;opacity:0;animation:fade .7s ease-out both}@keyframes fade{from{opacity:0}to{opacity:1}}</style></defs>
+<defs><filter id="glow" filterUnits="userSpaceOnUse" x="0" y="0" width="1920" height="1080"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><style>.m{stroke:#39ff9c}.p{stroke:#4d7cff}.d{fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;opacity:0;animation:draw 1.4s cubic-bezier(.12,.7,.3,1) both}@keyframes draw{0%{stroke-dashoffset:1;opacity:0}1%{opacity:1}100%{stroke-dashoffset:0;opacity:1}}.bg{stroke-width:2}.all{animation:out .8s linear 6.2s both}@keyframes out{from{opacity:1}to{opacity:0}}.t{fill:none;stroke-width:1.6;text-anchor:middle;opacity:0;animation:fade .7s ease-out both}@keyframes fade{from{opacity:0}to{opacity:1}}</style></defs>
 <rect width="1920" height="1080" fill="#05060d"/>
 <g filter="url(#glow)" class="all">
+<g opacity=".4" style="--w:2">
+<path class="d bg p" pathLength="1" style="animation-delay:0.00s" d="M149 226 H161 M155 220 V232"/>
+<path class="d bg p" pathLength="1" style="animation-delay:0.12s" d="M247 153 H259 M253 147 V159"/>
+<path class="d bg p" pathLength="1" style="animation-delay:0.24s" d="M79 217 H91 M85 211 V223"/>
+<path class="d bg p" pathLength="1" style="animation-delay:0.36s" d="M1705 178 H1717 M1711 172 V184"/>
+<path class="d bg p" pathLength="1" style="animation-delay:0.48s" d="M1780 244 H1792 M1786 238 V250"/>
+<path class="d bg p" pathLength="1" style="animation-delay:0.60s" d="M1698 267 H1710 M1704 261 V273"/>
+<path class="d bg m" pathLength="1" style="animation-delay:0.72s" d="M60 726 V480 H95 V726 V580 H136 V726 V491 H180 V726 V642 H221 V726 V600 H255 V726 V608 H282 V726 V471 H315 V726 V596 H350 V726 V477 H388 V726 V604 H416 V726 V535 H450 V726"/>
+<path class="d bg m" pathLength="1" style="animation-delay:0.84s" d="M1470 726 V509 H1508 V726 V531 H1549 V726 V503 H1589 V726 V498 H1622 V726 V639 H1656 V726 V536 H1689 V726 V645 H1719 V726 V528 H1759 V726 V661 H1794 V726 V596 H1825 V726 V588 H1860 V726"/>
+<path class="d bg p" pathLength="1" style="animation-delay:0.96s" d="M0 726 H480 M1440 726 H1920"/>
+</g>
 <g transform="translate(480 150) scale(1.6)">
 <path class="d p" pathLength="1" style="animation-delay:0.00s" d="M0 360 H600"/>
 <path class="d m" pathLength="1" style="animation-delay:0.22s" d="M60 350 C110 262 210 217 300 230"/>

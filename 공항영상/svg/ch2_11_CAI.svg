@@ -1,8 +1,19 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
 <title>CAI CAIRO INTERNATIONAL</title>
-<defs><filter id="glow" filterUnits="userSpaceOnUse" x="0" y="0" width="1920" height="1080"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><style>.m{stroke:#ffb03a}.p{stroke:#ff5a8a}.d{fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;opacity:0;animation:draw 1.4s cubic-bezier(.12,.7,.3,1) both}@keyframes draw{0%{stroke-dashoffset:1;opacity:0}1%{opacity:1}100%{stroke-dashoffset:0;opacity:1}}.all{animation:out .8s linear 6.2s both}@keyframes out{from{opacity:1}to{opacity:0}}.t{fill:none;stroke-width:1.6;text-anchor:middle;opacity:0;animation:fade .7s ease-out both}@keyframes fade{from{opacity:0}to{opacity:1}}</style></defs>
+<defs><filter id="glow" filterUnits="userSpaceOnUse" x="0" y="0" width="1920" height="1080"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><style>.m{stroke:#ffb03a}.p{stroke:#ff5a8a}.d{fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;opacity:0;animation:draw 1.4s cubic-bezier(.12,.7,.3,1) both}@keyframes draw{0%{stroke-dashoffset:1;opacity:0}1%{opacity:1}100%{stroke-dashoffset:0;opacity:1}}.bg{stroke-width:2}.all{animation:out .8s linear 6.2s both}@keyframes out{from{opacity:1}to{opacity:0}}.t{fill:none;stroke-width:1.6;text-anchor:middle;opacity:0;animation:fade .7s ease-out both}@keyframes fade{from{opacity:0}to{opacity:1}}</style></defs>
 <rect width="1920" height="1080" fill="#05060d"/>
 <g filter="url(#glow)" class="all">
+<g opacity=".4" style="--w:2">
+<path class="d bg p" pathLength="1" style="animation-delay:0.00s" d="M1677 308 H1689 M1683 302 V314"/>
+<path class="d bg p" pathLength="1" style="animation-delay:0.12s" d="M1753 281 H1765 M1759 275 V287"/>
+<path class="d bg p" pathLength="1" style="animation-delay:0.24s" d="M1579 156 H1591 M1585 150 V162"/>
+<path class="d bg p" pathLength="1" style="animation-delay:0.36s" d="M1538 236 H1550 M1544 230 V242"/>
+<path class="d bg p" pathLength="1" style="animation-delay:0.48s" d="M1666 177 H1678 M1672 171 V183"/>
+<path class="d bg m" pathLength="1" style="animation-delay:0.60s" d="M60 726 C93.3 677 137.7 677 171 726 C208.8 689 259.2 689 297 726 C338.4 668 393.6 668 435 726"/>
+<path class="d bg m" pathLength="1" style="animation-delay:0.72s" d="M1470 726 C1513.5 695 1571.5 695 1615 726 C1654.0 680 1706.0 680 1745 726 C1780.1 686 1826.9 686 1862 726"/>
+<path class="d bg m" pathLength="1" style="animation-delay:0.84s" d="M380 726 Q381.5 654 395 606 M395 606 Q424.2 588.6 443.7 621.5 M395 606 Q412.3 561.7 423.9 606 M395 606 Q392.4 553.3 390.6 601.1 M395 606 Q373.6 567.1 359.4 609.1 M395 606 Q364.9 596.8 344.8 626.3"/>
+<path class="d bg p" pathLength="1" style="animation-delay:0.96s" d="M0 726 H480 M1440 726 H1920"/>
+</g>
 <g transform="translate(480 150) scale(1.6)">
 <path class="d p" pathLength="1" style="animation-delay:0.00s" d="M0 360 H600"/>
 <path class="d m" pathLength="1" style="animation-delay:0.22s" d="M20 360 L60 305 L100 360"/>

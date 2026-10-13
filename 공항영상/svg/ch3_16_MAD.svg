@@ -1,8 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
 <title>MAD MADRID BARAJAS</title>
-<defs><filter id="glow" filterUnits="userSpaceOnUse" x="0" y="0" width="1920" height="1080"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><style>.m{stroke:#b78bff}.p{stroke:#ffd166}.d{fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;opacity:0;animation:draw 1.4s cubic-bezier(.12,.7,.3,1) both}@keyframes draw{0%{stroke-dashoffset:1;opacity:0}1%{opacity:1}100%{stroke-dashoffset:0;opacity:1}}.all{animation:out .8s linear 6.2s both}@keyframes out{from{opacity:1}to{opacity:0}}.t{fill:none;stroke-width:1.6;text-anchor:middle;opacity:0;animation:fade .7s ease-out both}@keyframes fade{from{opacity:0}to{opacity:1}}</style></defs>
+<defs><filter id="glow" filterUnits="userSpaceOnUse" x="0" y="0" width="1920" height="1080"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><style>.m{stroke:#b78bff}.p{stroke:#ffd166}.d{fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;opacity:0;animation:draw 1.4s cubic-bezier(.12,.7,.3,1) both}@keyframes draw{0%{stroke-dashoffset:1;opacity:0}1%{opacity:1}100%{stroke-dashoffset:0;opacity:1}}.bg{stroke-width:2}.all{animation:out .8s linear 6.2s both}@keyframes out{from{opacity:1}to{opacity:0}}.t{fill:none;stroke-width:1.6;text-anchor:middle;opacity:0;animation:fade .7s ease-out both}@keyframes fade{from{opacity:0}to{opacity:1}}</style></defs>
 <rect width="1920" height="1080" fill="#05060d"/>
 <g filter="url(#glow)" class="all">
+<g opacity=".4" style="--w:2">
+<path class="d bg p" pathLength="1" style="animation-delay:0.00s" d="M1640 270 a60 60 0 1 0 120 0 a60 60 0 1 0 -120 0"/>
+<path class="d bg p" pathLength="1" style="animation-delay:0.12s" d="M130 240 a22 22 0 0 1 44 0 a30 30 0 0 1 60 0 a22 22 0 0 1 44 0"/>
+<path class="d bg m" pathLength="1" style="animation-delay:0.24s" d="M60 726 Q105.5 726 151 699 Q191 659 231 659 Q263 659 295 698 Q338 677 381 677 Q415.5 677 450 726"/>
+<path class="d bg m" pathLength="1" style="animation-delay:0.36s" d="M1470 726 Q1504.5 726 1539 685 Q1573.5 661 1608 661 Q1648 661 1688 691 Q1735.5 666 1783 666 Q1821.5 666 1860 726"/>
+<path class="d bg p" pathLength="1" style="animation-delay:0.48s" d="M0 726 H480 M1440 726 H1920"/>
+</g>
 <g transform="translate(480 150) scale(1.6)">
 <path class="d p" pathLength="1" style="animation-delay:0.00s" d="M0 360 H600"/>
 <path class="d m" pathLength="1" style="animation-delay:0.22s" d="M20 205 L34 220 L48 228.4 L62 226.5 L76 215.1 L90 199.3 L104 185.9 L118 181 L132 186.7 L146 200.4 L160 216.2 L174 227 L188 228.2 L202 219.1 L216 203.8 L230 189.1 L244 181.3 L258 184 L272 195.9 L286 211.9 L300 224.8 L314 228.9 L328 222.6 L342 208.5 L356 192.8 L370 182.6 L384 182.2 L398 191.8 L412 207.3 L426 221.8 L440 228.8 L454 225.4 L468 213 L482 197 L496 184.6 L510 181.2 L524 188.2 L538 202.7 L552 218.2 L566 227.8 L580 227.4"/>

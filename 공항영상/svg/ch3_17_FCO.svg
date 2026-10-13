@@ -1,8 +1,18 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
 <title>FCO ROME FIUMICINO</title>
-<defs><filter id="glow" filterUnits="userSpaceOnUse" x="0" y="0" width="1920" height="1080"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><style>.m{stroke:#b78bff}.p{stroke:#ffd166}.d{fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;opacity:0;animation:draw 1.4s cubic-bezier(.12,.7,.3,1) both}@keyframes draw{0%{stroke-dashoffset:1;opacity:0}1%{opacity:1}100%{stroke-dashoffset:0;opacity:1}}.all{animation:out .8s linear 6.2s both}@keyframes out{from{opacity:1}to{opacity:0}}.t{fill:none;stroke-width:1.6;text-anchor:middle;opacity:0;animation:fade .7s ease-out both}@keyframes fade{from{opacity:0}to{opacity:1}}</style></defs>
+<defs><filter id="glow" filterUnits="userSpaceOnUse" x="0" y="0" width="1920" height="1080"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><style>.m{stroke:#b78bff}.p{stroke:#ffd166}.d{fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;opacity:0;animation:draw 1.4s cubic-bezier(.12,.7,.3,1) both}@keyframes draw{0%{stroke-dashoffset:1;opacity:0}1%{opacity:1}100%{stroke-dashoffset:0;opacity:1}}.bg{stroke-width:2}.all{animation:out .8s linear 6.2s both}@keyframes out{from{opacity:1}to{opacity:0}}.t{fill:none;stroke-width:1.6;text-anchor:middle;opacity:0;animation:fade .7s ease-out both}@keyframes fade{from{opacity:0}to{opacity:1}}</style></defs>
 <rect width="1920" height="1080" fill="#05060d"/>
 <g filter="url(#glow)" class="all">
+<g opacity=".4" style="--w:2">
+<path class="d bg p" pathLength="1" style="animation-delay:0.00s" d="M128 257 H140 M134 251 V263"/>
+<path class="d bg p" pathLength="1" style="animation-delay:0.12s" d="M203 179 H215 M209 173 V185"/>
+<path class="d bg p" pathLength="1" style="animation-delay:0.24s" d="M394 267 H406 M400 261 V273"/>
+<path class="d bg m" pathLength="1" style="animation-delay:0.36s" d="M170 726 V621.0 M95.0 621.0 Q170 546.0 245.0 621.0 Q170 643.5 95.0 621.0"/>
+<path class="d bg m" pathLength="1" style="animation-delay:0.48s" d="M330 726 V649.0 M275.0 649.0 Q330 594.0 385.0 649.0 Q330 665.5 275.0 649.0"/>
+<path class="d bg m" pathLength="1" style="animation-delay:0.60s" d="M1580 726 V684.0 A70 70 0 0 1 1720 684.0 V726 M1650 614.0 V593.0"/>
+<path class="d bg m" pathLength="1" style="animation-delay:0.72s" d="M1790 726 V635.0 M1725.0 635.0 Q1790 570.0 1855.0 635.0 Q1790 654.5 1725.0 635.0"/>
+<path class="d bg p" pathLength="1" style="animation-delay:0.84s" d="M0 726 H480 M1440 726 H1920"/>
+</g>
 <g transform="translate(480 150) scale(1.6)">
 <path class="d p" pathLength="1" style="animation-delay:0.00s" d="M0 360 H600"/>
 <path class="d m" pathLength="1" style="animation-delay:0.22s" d="M80 360 V150 H370 L395 185 L430 175 L470 222 H520 V360"/>
