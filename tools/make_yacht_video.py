@@ -58,9 +58,10 @@ sh('ffmpeg', '-v', 'error', '-y', '-f', 'concat', '-safe', '0', '-i', lst, '-c',
 pts = [legs[i][0] + legs[i][1] * 0.5 for i, _, _ in CUTS]
 FADE = 0.35
 inputs, filt, labels = [], [], []
+n_in = [0]          # number of input FILES so far (inputs also holds -ss/-t flags)
 t0 = 0.0
 def seg(a, b, fin, fout):
-    k = len(inputs)
+    k = n_in[0]; n_in[0] += 1
     inputs.extend(['-ss', f'{a:.3f}', '-t', f'{b - a:.3f}', '-i', mapmp4])
     f = f'[{k}:v]setpts=PTS-STARTPTS'
     if fin: f += f',fade=t=in:st=0:d={FADE}'
@@ -68,7 +69,7 @@ def seg(a, b, fin, fout):
     filt.append(f + f'[v{k}]'); labels.append(f'[v{k}]')
 for n, ((_, name, sec), cp) in enumerate(zip(CUTS, pts)):
     seg(t0, cp, n > 0, True)
-    k = len(inputs)
+    k = n_in[0]; n_in[0] += 1
     inputs.extend(['-i', os.path.join(WORK, f'cut_{name}.mp4')])
     filt.append(f'[{k}:v]setpts=PTS-STARTPTS,fade=t=in:st=0:d={FADE},fade=t=out:st={sec - FADE:.3f}:d={FADE}[v{k}]'); labels.append(f'[v{k}]')
     t0 = cp
