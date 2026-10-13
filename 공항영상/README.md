@@ -7,11 +7,11 @@
 | 구간 | 내용 | 길이 |
 |---|---|---|
 | 타이틀 | 로고·제목 | 8초 |
-| 챕터1 아시아 | F01 이륙 → ICN PKX HKG BKK KIX SIN HND → F02 이륙 | 63초 |
+| 챕터1 아시아 | F01 이륙 → ICN HND KIX PKX HKG BKK SIN → F02 이륙 | 63초 |
 | 챕터2 중동·아프리카 | F03 착륙 → DXB DOH IST CAI CPT → F04 이륙 | 49초 |
 | 챕터3 유럽 | F05 착륙 → LHR CDG AMS MAD FCO ZRH → F06 이륙 | 56초 |
-| 챕터4 북미 | F07 착륙 → JFK LAX SFO DEN YVR MIA → F08 이륙 | 56초 |
-| 챕터5 남미·오세아니아 | F09 착륙 → GIG SCL EZE SYD AKL HNL → F10 착륙(엔딩) | 56초 |
+| 챕터4 북미 | F07 착륙 → JFK DEN YVR SFO LAX MIA → F08 이륙 | 56초 |
+| 챕터5 남미·오세아니아 | F09 착륙 → GIG EZE SCL SYD AKL HNL → F10 착륙(엔딩) | 56초 |
 | 크레딧 | 영문 크레딧 (Suno 상업 라이선스 표기 포함) | 12초 |
 
 챕터 색(메인 / 포인트): 1 `#35f3ff`/`#ff4fd8` · 2 `#ffb03a`/`#ff5a8a` · 3 `#b78bff`/`#ffd166` · 4 `#39ff9c`/`#4d7cff` · 5 `#ff4fd8`/`#ffe14d`
@@ -19,7 +19,7 @@
 ## 폴더
 
 - `svg/` — 원본 SVG 42개. 공항 `ch{챕터}_{번호}_{코드}.svg`, 이착륙 `flight_{번호}_{takeoff|landing}.svg`, `title.svg`, `credits.svg`
-- `clips/` — SVG를 7초(타이틀 8초, 크레딧 12초) mp4로 렌더한 클립. 파일 앞 번호가 재생 순서
+- `clips/` — SVG를 7초(타이틀 8초, 크레딧 12초) mp4로 렌더한 클립. 파일명은 SVG와 같고, 재생 순서는 `tools/gen_airports.py`의 `ROUTE`
 - `정지시트/` — 검수용 정지 프레임 시트. `airports_A~F.jpg`는 PDF의 배치 A~F(5개씩), `flights_multiexposure.jpg`는 이착륙 10개를 여러 시점 겹쳐 비행기·장식이 겹치지 않는지 본 것
 
 ## 공항별 배경

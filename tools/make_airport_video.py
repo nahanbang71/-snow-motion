@@ -17,7 +17,7 @@ jobs = [(i, svg, sec) for i, (svg, sec) in enumerate(seq)]
 
 
 def clip_name(i, svg):
-    return os.path.join(CLIPS, f'{i:02d}_{svg[:-4]}.mp4')
+    return os.path.join(CLIPS, f'{svg[:-4]}.mp4')   # named by svg, so the play order can change without re-rendering
 
 
 def run(j):

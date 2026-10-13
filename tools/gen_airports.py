@@ -306,17 +306,27 @@ def write(name, s):
         fh.write(s)
 
 
+ROUTE = {   # play order inside each chapter = flight-map order (west round the world, back to Seoul)
+    1: ['ICN', 'HND', 'KIX', 'PKX', 'HKG', 'BKK', 'SIN'],
+    2: ['DXB', 'DOH', 'IST', 'CAI', 'CPT'],
+    3: ['LHR', 'CDG', 'AMS', 'MAD', 'FCO', 'ZRH'],
+    4: ['JFK', 'DEN', 'YVR', 'SFO', 'LAX', 'MIA'],
+    5: ['GIG', 'EZE', 'SCL', 'SYD', 'AKL', 'HNL'],
+}
+
+
 def order():
     """final play order: list of (svg filename, seconds)"""
+    files = {}
+    for n, a in enumerate(A, 1):
+        files[a['code']] = f'ch{a["ch"]}_{n:02d}_{a["code"]}.svg'
     seq = [('title.svg', 8)]
-    n = 0
     chap_flights = {1: (1, 2), 2: (3, 4), 3: (5, 6), 4: (7, 8), 5: (9, 10)}
     for ch in range(1, 6):
         a, b = chap_flights[ch]
         seq.append((f'flight_{a:02d}_{FLIGHTS[a][0]}.svg', 7))
-        for ap in [x for x in A if x['ch'] == ch]:
-            n += 1
-            seq.append((f'ch{ch}_{n:02d}_{ap["code"]}.svg', 7))
+        for code in ROUTE[ch]:
+            seq.append((files[code], 7))
         seq.append((f'flight_{b:02d}_{FLIGHTS[b][0]}.svg', 7))
     seq.append(('credits.svg', 12))
     return seq
