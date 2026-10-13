@@ -145,5 +145,6 @@ def build():
 '''
 
 
-open(os.path.join(OUT, 'balloon_designs.svg'), 'w', encoding='utf-8').write(build())
-print('ok')
+if __name__ == '__main__':
+    open(os.path.join(OUT, 'balloon_designs.svg'), 'w', encoding='utf-8').write(build())
+    print('ok')
