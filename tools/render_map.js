@@ -13,7 +13,7 @@ const FPS = 30;
   const page = await browser.newPage({ viewport: { width: 1920, height: 1080 } });
   page.on('pageerror', e => console.log('ERR', e.message));
   await page.goto('file://' + path.resolve(__dirname, '..', '세계지도비행', 'map.html'));
-  const dur = await page.evaluate(([a, b]) => setup(+a, +b), [from, to]);
+  const dur = await page.evaluate(([a, b]) => setup(+a, +b, { total: (+a === 0 && +b === 30) ? 300 : 0 }), [from, to]);
   console.log('duration', dur.toFixed(2));
   if (mode === 'info') { await browser.close(); return; }
   if (mode === 'still') {

@@ -58,21 +58,26 @@ function sparkles(t, cx, cy, sc) {
 let R = [], TL = [], DUR = 0;
 
 function setup(from, to, o) {
-  o = Object.assign({ dwell: 2.2, lastDwell: 3.5 }, o || {});
+  o = Object.assign({ dwell: 4, lastDwell: 5, total: 0 }, o || {});
   R = STOPS.slice(from, to + 1).map(s => Object.assign({}, s));
   for (let i = 1; i < R.length; i++) {        // unwrap longitudes so the route keeps going the short way round
     while (R[i].lon - R[i - 1].lon > 180) R[i].lon -= 360;
     while (R[i - 1].lon - R[i].lon > 180) R[i].lon += 360;
   }
+  const legs = [];
+  for (let i = 0; i < R.length - 1; i++) {
+    const A = R[i], B = R[i + 1], dist = Math.hypot(B.lon - A.lon, B.lat - A.lat);
+    legs.push({ dist, w: cl(1.8 + dist / 45, 2.0, 6.0) });
+  }
+  const dwells = R.map((_, i) => i === R.length - 1 ? o.lastDwell : o.dwell);
+  const fixed = dwells.reduce((a, b) => a + b, 0), wsum = legs.reduce((a, l) => a + l.w, 0);
+  const k = o.total > 0 ? (o.total - fixed) / wsum : 1;   // stretch flights so the whole thing lasts exactly `total` s
   TL = []; let t = 0;
   for (let i = 0; i < R.length; i++) {
-    const a = t, last = i === R.length - 1;
-    const dw = last ? o.lastDwell : o.dwell; t += dw;
-    const e = { i, ta: a, td: t };
-    if (!last) {
-      const A = R[i], B = R[i + 1], dist = Math.hypot(B.lon - A.lon, B.lat - A.lat);
-      e.dist = dist; e.f = cl(1.8 + dist / 45, 2.0, 6.0); e.pts = arc(A, B);
-      e.span = cl(dist * 1.6 + 20, SPAN_STOP, 230); t += e.f;
+    const e = { i, ta: t, td: t + dwells[i] }; t += dwells[i];
+    if (i < R.length - 1) {
+      e.dist = legs[i].dist; e.f = legs[i].w * k; e.pts = arc(R[i], R[i + 1]);
+      e.span = cl(e.dist * 1.6 + 20, SPAN_STOP, 230); t += e.f;
     }
     TL.push(e);
   }
