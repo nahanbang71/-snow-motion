@@ -6,7 +6,7 @@
 <svg id="map" width="1920" height="1080" viewBox="0 0 1920 1080">
   <defs><path id="land" d=""/></defs>
   <g id="grat" stroke="#1b2347" stroke-width="1" fill="none"></g>
-  <g stroke="#4a66b0" stroke-width="1.3" fill="none">
+  <g id="lines" stroke="#4a66b0" stroke-width="1.3" fill="none">
     <use href="#land" x="-360"/><use href="#land"/><use href="#land" x="360"/>
   </g>
 </svg>
@@ -29,6 +29,32 @@ document.getElementById('land').setAttribute('d', LAND);
 })();
 
 const sm = u => u * u * (3 - 2 * u), cl = (v, a, b) => Math.min(b, Math.max(a, v)), lerp = (a, b, u) => a + (b - a) * u;
+
+// ---- gentle sparkle: background stars (screen space), shimmering borders, glints on land (map space)
+function rng(a) { return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+const STARS = [], GLINTS = [];
+(function () {
+  const r = rng(7);
+  for (let i = 0; i < 110; i++) STARS.push({ x: r() * 1920, y: r() * 1080, rad: 0.8 + r() * 1.2, f: 0.08 + r() * 0.2, ph: r(), a: 0.18 + r() * 0.3 });
+  const nums = LAND.match(/-?\d+(?:\.\d+)?/g).map(Number), n = nums.length / 2;
+  for (let i = 0; i < 260; i++) { const k = Math.floor(r() * n); GLINTS.push({ lon: nums[2 * k], lat: -nums[2 * k + 1], f: 0.1 + r() * 0.22, ph: r(), sz: 4 + r() * 5 }); }
+})();
+function sparkles(t, cx, cy, sc) {
+  let s = '';
+  for (const q of STARS) {
+    const a = q.a * (0.55 + 0.45 * Math.sin(2 * Math.PI * (q.f * t + q.ph)));
+    s += `<circle cx="${q.x.toFixed(0)}" cy="${q.y.toFixed(0)}" r="${q.rad.toFixed(1)}" fill="#a9bdff" opacity="${a.toFixed(2)}"/>`;
+  }
+  for (const g of GLINTS) {
+    const w = Math.sin(2 * Math.PI * (g.f * t + g.ph)), a = Math.pow(Math.max(0, w), 8);
+    if (a < 0.03) continue;
+    const lon = g.lon + 360 * Math.round((cx - g.lon) / 360), x = (lon - cx) * sc + 960, y = (cy - g.lat) * sc + 540;
+    if (x < -20 || x > 1940 || y < -20 || y > 1100) continue;
+    const z = g.sz * (0.6 + 0.4 * a);
+    s += `<path d="M${(x - z).toFixed(1)} ${y.toFixed(1)}H${(x + z).toFixed(1)}M${x.toFixed(1)} ${(y - z).toFixed(1)}V${(y + z).toFixed(1)}" stroke="#d6ecff" stroke-width="1.6" stroke-linecap="round" opacity="${(0.85 * a).toFixed(2)}"/>`;
+  }
+  return s;
+}
 let R = [], TL = [], DUR = 0;
 
 function setup(from, to, o) {
@@ -85,7 +111,8 @@ function frame(t) {
   document.getElementById('map').setAttribute('viewBox', `${cx - span / 2} ${-cy - vh / 2} ${span} ${vh}`);
   const sc = 1920 / span, P = (lo, la) => [(lo - cx) * sc + 960, (cy - la) * sc + 540];
   const [main, acc] = COL[R[chI].ch];
-  let s = '';
+  document.getElementById('lines').setAttribute('stroke-opacity', (0.86 + 0.14 * Math.sin(t * 1.1)).toFixed(3));
+  let s = sparkles(t, cx, cy, sc);
   const poly = (pts, col, w, op) => `<polyline fill="none" stroke="${col}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round" opacity="${op}" points="${pts.map(p => P(p[0], p[1]).map(v => v.toFixed(1)).join(',')).join(' ')}"/>`;
   for (let j = 0; j < k; j++) s += poly(TL[j].pts, COL[R[j + 1].ch][0], 3, 0.55);
   if (flying) s += poly(e.pts.slice(0, Math.max(2, Math.round(ue * 120) + 1)).concat([pos]), main, 4.5, 1);
