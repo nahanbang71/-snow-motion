@@ -25,6 +25,7 @@ async function seek(page, t) {
   if (mode === 'still') {
     for (const t of arg.split(',').map(Number)) {
       await seek(page, t);
+      await page.evaluate(() => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))));   // let the glow filter repaint before a single still
       await page.screenshot({ path: arg.includes(',') ? out.replace('.png', `_${t}.png`) : out });
     }
   } else {

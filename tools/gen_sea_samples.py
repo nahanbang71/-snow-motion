@@ -7,14 +7,40 @@ OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '세계지�
 FONT = "font-family=\"'Helvetica Neue', Arial, sans-serif\""
 WAVE = ' '.join(f't60 0' for _ in range(24))
 SEA = ''.join(f'<path d="M{300 + i * 60} {640 + i * 50} q30 -14 60 0 {WAVE}"/>' for i in range(3))
-STARS = ''.join(f'<circle class="star" cx="{x}" cy="{y}" r="{r}" style="animation-delay:{d}s"/>' for x, y, r, d in
-                [(420, 250, 2, .3), (1500, 200, 1.6, 1.2), (760, 150, 1.4, 2.1), (1260, 300, 2, .8), (1640, 420, 1.5, 1.7), (260, 430, 1.5, 2.6)])
+import random
+
+
+def starfield(seed=5):
+    """~90 slowly breathing stars, a few bright ones with a cross glint, and one rare shooting star"""
+    r = random.Random(seed)
+    pts = []
+    while len(pts) < 90:
+        x, y = r.randint(20, 1900), r.randint(40, 600)
+        if all(math.hypot(x - a, y - b) > 38 for a, b in pts):
+            pts.append((x, y))
+    out = ''
+    for i, (x, y) in enumerate(pts):
+        rad = r.choice((1.0, 1.2, 1.5, 1.8, 2.2))
+        out += (f'<circle class="star" cx="{x}" cy="{y}" r="{rad}" '
+                f'style="animation-duration:{r.uniform(3, 7):.1f}s;animation-delay:-{r.uniform(0, 6):.1f}s"/>')
+        if i % 15 == 0:
+            out += (f'<path class="glint" d="M{x - 9} {y}H{x + 9}M{x} {y - 9}V{y + 9}" '
+                    f'style="animation-duration:{r.uniform(5, 8):.1f}s;animation-delay:-{r.uniform(0, 5):.1f}s"/>')
+    out += '<path class="shoot" d="M1180 120 l-90 -38" style="animation-delay:6s"/>'
+    return out
+
+
+STARS = starfield()
 
 BASE_CSS = ('.d{fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;opacity:0;animation:draw 1.2s cubic-bezier(.12,.7,.3,1) both}'
             '@keyframes draw{0%{stroke-dashoffset:1;opacity:0}1%{opacity:1}100%{stroke-dashoffset:0;opacity:1}}'
             '.sea{opacity:.7;animation:fade 1.5s ease-out both}@keyframes fade{from{opacity:0}to{opacity:1}}'
-            '.t{fill:none;stroke:#ff4fd8;stroke-width:1.6;text-anchor:middle;opacity:0;animation:fade .9s ease-out 2.4s both}'
-            '.star{fill:#a9bdff;animation:tw 5s ease-in-out infinite alternate}@keyframes tw{from{opacity:.15}to{opacity:.55}}')
+            '.t{fill:none;stroke:#ff4fd8;stroke-width:1.6;text-anchor:middle;opacity:0;animation:fade .9s ease-out 2.4s both}')
+STAR_CSS = ('.star{fill:#b9c9ff;opacity:.2;animation:tw 5s ease-in-out infinite alternate}@keyframes tw{from{opacity:.12}to{opacity:.8}}'
+            '.glint{fill:none;stroke:#dfe8ff;stroke-width:1.4;stroke-linecap:round;opacity:0;animation:gl 6s ease-in-out infinite}@keyframes gl{0%,70%,100%{opacity:0}85%{opacity:.75}}'
+            '.shoot{fill:none;stroke:#eaf0ff;stroke-width:2.4;stroke-linecap:round;opacity:0;animation:shoot 9s linear infinite}'
+            '@keyframes shoot{0%{opacity:0;transform:translate(0,0)}3%{opacity:.9}14%{opacity:0;transform:translate(320px,135px)}100%{opacity:0}}')
+BASE_CSS += STAR_CSS
 
 
 def page(title, css, body, label, clip=True):
