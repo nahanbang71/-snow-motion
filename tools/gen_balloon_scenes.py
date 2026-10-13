@@ -159,7 +159,7 @@ def main():
         allsc.setdefault(sid, (name, sub, el, sc, seed, None, 14.0))
     me = mideast_scenes(13.6)
     for sid in want or list(allsc) + list(me):
-        if sid in me and sid not in ('cappadocia', 'giza'):
+        if sid in me:
             name, sub, el, sc, seed, bals, dur = me[sid]
             folder = os.path.join(OUT, 'mideast')
             os.makedirs(folder, exist_ok=True)
