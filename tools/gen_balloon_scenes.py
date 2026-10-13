@@ -57,7 +57,7 @@ def balloon(design, main, alt, delay0):
     return g + f'<path class="flame" d="{flame}" style="animation-delay:{delay0 + 1.5:.2f}s,{delay0 + 2.5:.2f}s"/>'
 
 
-def scene(sid, name, sub, elev, scale, ridge_seed, bals=None, dur=14.0):
+def scene(sid, name, sub, elev, scale, ridge_seed, bals=None, dur=14.0, compass=False):
     rnd = random.Random(ridge_seed)
     stars = ''.join(f'<circle class="star" cx="{rnd.randint(20, 1900)}" cy="{rnd.randint(20, 560)}" r="{rnd.choice((1, 1.2, 1.6, 2))}" '
                     f'style="animation-duration:{rnd.uniform(3, 7):.1f}s;animation-delay:-{rnd.uniform(0, 6):.1f}s"/>' for _ in range(90))
@@ -78,6 +78,11 @@ def scene(sid, name, sub, elev, scale, ridge_seed, bals=None, dur=14.0):
         dx = (-1) ** i * (60 + 14 * i)
         bl += (f'<g transform="translate({cx} {cy}) scale({sc})" opacity="{0.55 + 0.45 * min(1, sc):.2f}"><g class="dr" style="--dx:{dx}px;animation-delay:{.2 + i * .15:.2f}s">'
                f'<g class="bob" style="animation-delay:-{i * .9:.1f}s;animation-duration:{3.4 + i * .4:.1f}s">{balloon(des, main, alt, 1.0 + i * .35)}</g></g></g>')
+    comp = ''
+    if compass:                      # small compass, needle follows the balloons' eastward drift
+        comp = ('<g transform="translate(1800 960)" opacity=".9"><circle class="cpc" r="46"/><path class="cpc" d="M0 -46 V-36 M0 46 V36 M-46 0 H-36 M46 0 H36"/>'
+                '<g class="needle"><path class="nd" d="M0 -40 L7 0 L-7 0 Z"/><path class="nt" d="M0 40 L7 0 L-7 0 Z"/></g><circle class="cpc" r="4"/>'
+                '<text class="cl" y="-58" text-anchor="middle">N</text></g>')
     return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
 <title>{name}</title>
 <defs>
@@ -94,6 +99,11 @@ def scene(sid, name, sub, elev, scale, ridge_seed, bals=None, dur=14.0):
 .bob{{animation:bob 4s ease-in-out infinite alternate}}@keyframes bob{{from{{transform:translateY(-12px) rotate(-1.4deg)}}to{{transform:translateY(12px) rotate(1.4deg)}}}}
 .t{{fill:none;text-anchor:middle;opacity:0;animation:fi .9s ease-out both}}
 .star{{fill:#b9c9ff;opacity:.2;animation:tws 5s ease-in-out infinite alternate}}@keyframes tws{{from{{opacity:.1}}to{{opacity:.7}}}}
+.cpc{{fill:none;stroke:#8fb0ff;stroke-width:2;opacity:0;animation:fi 1s ease-out 1.5s both}}
+.nd{{fill:none;stroke:{GOLD};stroke-width:2.6;stroke-linejoin:round;opacity:0;animation:fi 1s ease-out 1.5s both}}
+.nt{{fill:none;stroke:{ACC};stroke-width:2.6;stroke-linejoin:round;opacity:0;animation:fi 1s ease-out 1.5s both}}
+.cl{{fill:#8fb0ff;font-size:20px;opacity:0;animation:fi 1s ease-out 1.5s both;font-family:Arial,sans-serif}}
+.needle{{transform:rotate(78deg);animation:ndl {dur}s ease-in-out both}}@keyframes ndl{{0%{{transform:rotate(78deg)}}35%{{transform:rotate(104deg)}}70%{{transform:rotate(70deg)}}100%{{transform:rotate(96deg)}}}}
 .all{{animation:out .9s linear {dur - 0.9:.1f}s both}}@keyframes out{{from{{opacity:1}}to{{opacity:0}}}}
 </style>
 </defs>
@@ -102,7 +112,7 @@ def scene(sid, name, sub, elev, scale, ridge_seed, bals=None, dur=14.0):
 <g>{stars}</g>
 {ridges}
 <g transform="translate(960 930) scale({scale})">{ev}</g>
-{bl}
+{bl}{comp}
 <text class="t" stroke="{GOLD}" stroke-width="1.8" x="960" y="1010" font-size="62" letter-spacing="14" {FONT} style="animation-delay:3.2s">{name}</text>
 <text class="t" stroke="{ACC}" stroke-width="1.4" x="960" y="1056" font-size="24" letter-spacing="10" {FONT} style="animation-delay:3.6s">{sub}</text>
 </g>
@@ -126,6 +136,20 @@ def europe_scenes(dur):
         base[2] = (520 + (seed % 2) * 880, 300, .85)            # keep the big centre balloon off the monument's top
         bals = [(max(70, min(1850, x + r.randint(-70, 70))), y + r.randint(-40, 50), z * r.uniform(.85, 1.15), (i + seed) % 7) for i, (x, y, z) in enumerate(base)]
         out[s['id']] = (s['name'], s['country'], (lambda b=s['build']: b()[1]), sc, seed, bals, dur)
+    return out
+
+
+def korea_scenes(dur):
+    import korea_sites as KS
+    out = {}
+    for sid, m in KS.KR.items():
+        sc = min(1150 / m['w'], 560 / m['h'])
+        seed = sum(map(ord, sid))
+        r = random.Random(seed)
+        base = list(BASE_BALS)
+        base[2] = (520 + (seed % 2) * 880, 300, .85)
+        bals = [(max(70, min(1850, x + r.randint(-70, 70))), y + r.randint(-40, 50), z * r.uniform(.85, 1.15), (i + seed) % 7) for i, (x, y, z) in enumerate(base)]
+        out[sid] = (m['name'], m['country'], m['el'], sc, seed, bals, dur)
     return out
 
 
@@ -157,6 +181,15 @@ def main():
     allsc = dict(europe_scenes(13.6))
     for sid, (name, sub, el, sc, seed) in SCENES.items():
         allsc.setdefault(sid, (name, sub, el, sc, seed, None, 14.0))
+    kr = korea_scenes(13.6)
+    for sid in [w for w in want if w in kr]:
+        name, sub, el, sc, seed, bals, dur = kr[sid]
+        os.makedirs(os.path.join(OUT, 'korea'), exist_ok=True)
+        open(os.path.join(OUT, 'korea', f'{sid}.svg'), 'w', encoding='utf-8').write(scene(sid, name, sub, el(), sc, seed, bals, dur, compass=True))
+        print('wrote', sid)
+    want = [w for w in want if w not in kr]
+    if sys.argv[1:] and not want:
+        return
     me = mideast_scenes(13.6)
     for sid in want or list(allsc) + list(me):
         if sid in me:
