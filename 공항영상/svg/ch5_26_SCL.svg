@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+<title>SCL SANTIAGO</title>
+<defs><filter id="glow" filterUnits="userSpaceOnUse" x="0" y="0" width="1920" height="1080"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><style>.m{stroke:#ff4fd8}.p{stroke:#ffe14d}.d{fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;opacity:0;animation:draw 1.4s cubic-bezier(.12,.7,.3,1) both}@keyframes draw{0%{stroke-dashoffset:1;opacity:0}1%{opacity:1}100%{stroke-dashoffset:0;opacity:1}}.all{animation:out .8s linear 6.2s both}@keyframes out{from{opacity:1}to{opacity:0}}.t{fill:none;stroke-width:1.6;text-anchor:middle;opacity:0;animation:fade .7s ease-out both}@keyframes fade{from{opacity:0}to{opacity:1}}</style></defs>
+<rect width="1920" height="1080" fill="#05060d"/>
+<g filter="url(#glow)" class="all">
+<g transform="translate(480 150) scale(1.6)">
+<path class="d p" pathLength="1" style="animation-delay:0.00s" d="M0 360 H600"/>
+<path class="d m" pathLength="1" style="animation-delay:0.22s" d="M0 280 L60 232 L110 255 L190 160 L260 230 L330 190 L420 270 L500 205 L600 260"/>
+<path class="d m" pathLength="1" style="animation-delay:0.44s" d="M0 340 L90 292 L160 322 L250 265 L340 330 L430 292 L520 335 L600 302"/>
+<path class="d m" pathLength="1" style="animation-delay:0.66s" d="M165 190 L175 202 L186 189 L198 203 L209 191 L220 190"/>
+<path class="d m" pathLength="1" style="animation-delay:0.88s" d="M469 230 L481 242 L492 228 L504 243 L517 229 L530 242 L545 230"/>
+<path class="d m" pathLength="1" style="animation-delay:1.10s" d="M0 360 L50 320"/>
+<path class="d p" pathLength="1" style="animation-delay:1.32s" d="M0 -40 C4 -40 5 -30 5 -20 L40 8 V16 L5 6 L5 26 L16 34 V39 L0 35 L-16 39 V34 L-5 26 L-5 6 L-40 16 V8 L-5 -20 C-5 -30 -4 -40 0 -40 Z" transform="translate(110 90) rotate(-30) scale(0.9)"/>
+</g>
+<text class="t p" x="960" y="800" font-size="30" letter-spacing="14" font-family="'Helvetica Neue', Arial, sans-serif" style="animation-delay:2.6s">SANTIAGO</text>
+<text class="t m" x="960" y="900" font-size="64" letter-spacing="14" font-family="'Helvetica Neue', Arial, sans-serif" style="animation-delay:3s">SCL</text>
+</g>
+</svg>

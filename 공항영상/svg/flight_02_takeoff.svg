@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+<title>F02 takeoff</title>
+<defs><filter id="glow" filterUnits="userSpaceOnUse" x="0" y="0" width="1920" height="1080"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><mask id="mk1" maskUnits="userSpaceOnUse" x="-300" y="0" width="2800" height="1080"><path class="d" pathLength="1" style="animation-delay:0.20s;stroke:#fff;stroke-width:40" d="M0 848 H1920"/></mask><mask id="mk2" maskUnits="userSpaceOnUse" x="-300" y="0" width="2800" height="1080"><path class="d" pathLength="1" style="animation-delay:0.40s;stroke:#fff;stroke-width:40" d="M0 888 H1920"/></mask><mask id="mk3" maskUnits="userSpaceOnUse" x="-300" y="0" width="2800" height="1080"><path class="d" pathLength="1" style="animation-delay:1.40s;stroke:#fff;stroke-width:40" d="M340 781 L1150 781 C1500 781 1600 650 2250 260"/></mask><style>.m{stroke:#35f3ff}.p{stroke:#ff4fd8}.d{fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;opacity:0;animation:draw 1.4s cubic-bezier(.12,.7,.3,1) both}@keyframes draw{0%{stroke-dashoffset:1;opacity:0}1%{opacity:1}100%{stroke-dashoffset:0;opacity:1}}.all{animation:out .8s linear 6.2s both}@keyframes out{from{opacity:1}to{opacity:0}}.t{fill:none;stroke-width:1.6;text-anchor:middle;opacity:0;animation:fade .7s ease-out 2.4s both}@keyframes fade{from{opacity:0}to{opacity:1}}.fi{fill:none;stroke-width:7;stroke-linecap:round;opacity:0;animation:fade .3s ease-out both}</style></defs>
+<rect width="1920" height="1080" fill="#05060d"/>
+<g filter="url(#glow)" class="all">
+<path class="d p" pathLength="1" style="animation-delay:0.00s" d="M0 830 H1920"/>
+<path class="m" fill="none" stroke-linecap="round" mask="url(#mk1)" stroke-width="7" stroke-dasharray="0.1 42" d="M0 848 H1920"/>
+<path class="p" fill="none" stroke-linecap="round" mask="url(#mk2)" stroke-width="3" stroke-dasharray="46 34" d="M0 888 H1920"/>
+<path class="d m" pathLength="1" style="animation-delay:0.60s" d="M130 830 V560 M150 830 V560"/>
+<path class="d m" pathLength="1" style="animation-delay:0.80s" d="M104 560 H176 L164 512 H116 Z"/>
+<path class="d m" pathLength="1" style="animation-delay:1.00s" d="M110 536 H170"/>
+<path class="d m" pathLength="1" style="animation-delay:1.20s" d="M140 512 V450"/>
+<path class="p" fill="none" stroke-linecap="round" mask="url(#mk3)" stroke-width="2" stroke-dasharray="3 16" d="M340 781 L1150 781 C1500 781 1600 650 2250 260"/>
+<path class="d p" pathLength="1" stroke-width="2.6" style="animation-delay:1.60s" d="M510 700 A130 130 0 0 1 770 700"/>
+<path class="d p" pathLength="1" stroke-width="2.6" style="animation-delay:1.80s" d="M545 700 A95 95 0 0 1 735 700"/>
+<path class="d p" pathLength="1" stroke-width="2.6" style="animation-delay:2.00s" d="M580 700 A60 60 0 0 1 700 700"/>
+<path class="d p" pathLength="1" stroke-width="2.6" style="animation-delay:2.20s" d="M490 700 H790"/>
+<path class="d p" pathLength="1" stroke-width="2.6" style="animation-delay:2.40s" d="M210 520 a26 26 0 0 1 52 0 a34 34 0 0 1 68 0 a26 26 0 0 1 52 0 a20 20 0 0 1 40 0"/>
+<path class="d p" pathLength="1" stroke-width="2.6" style="animation-delay:2.60s" d="M930 450 a22 22 0 0 1 44 0 a30 30 0 0 1 60 0 a38 38 0 0 1 76 0 a24 24 0 0 1 48 0"/>
+<g opacity="0"><set attributeName="opacity" to="1" begin="0.8s" fill="freeze"/><animateMotion dur="5.2s" begin="0.8s" fill="freeze" calcMode="spline" keyPoints="0;1" keyTimes="0;1" keySplines="0.55 0 0.85 0.55" path="M340 781 L1150 781 C1500 781 1600 650 2250 260"/><g><animateTransform attributeName="transform" type="rotate" values="0;0;-15;-15" keyTimes="0;0.5;0.66;1" dur="5.2s" begin="0.8s" fill="freeze"/><g transform="scale(1.3)" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M100 2 C94 -9 72 -15 48 -15 H-62 L-90 -52 H-104 L-98 -6 L-102 6 H48 C74 6 94 6 100 2 Z" stroke="#35f3ff"/><path d="M20 4 L-34 30 H-48 L-14 4" stroke="#35f3ff"/><path d="M-2 22 H22 Q30 27 22 32 H-2 Q-8 27 -2 22 Z" stroke="#35f3ff"/><path d="M-82 -2 L-110 10 H-118 L-100 -2" stroke="#35f3ff"/><path d="M62 -12 L80 -5 H60 Z" stroke="#35f3ff"/><g stroke="#ff4fd8"><animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.72;0.8;1" dur="5.2s" begin="0.8s" fill="freeze"/><path d="M30 6 V26 M-30 6 V26 M72 6 V27 M24 32 a6 6 0 1 0 12 0 a6 6 0 1 0 -12 0 M-36 32 a6 6 0 1 0 12 0 a6 6 0 1 0 -12 0 M67 32 a5 5 0 1 0 10 0 a5 5 0 1 0 -10 0"/></g></g></g></g>
+<text class="t m" x="960" y="120" font-size="64" letter-spacing="10" font-family="'Helvetica Neue', Arial, sans-serif">TAKEOFF</text>
+<text class="t p" x="960" y="990" font-size="26" letter-spacing="8" font-family="'Helvetica Neue', Arial, sans-serif">ASIA</text>
+</g>
+</svg>

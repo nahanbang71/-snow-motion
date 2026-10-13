@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+<title>YVR VANCOUVER</title>
+<defs><filter id="glow" filterUnits="userSpaceOnUse" x="0" y="0" width="1920" height="1080"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><style>.m{stroke:#39ff9c}.p{stroke:#4d7cff}.d{fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;opacity:0;animation:draw 1.4s cubic-bezier(.12,.7,.3,1) both}@keyframes draw{0%{stroke-dashoffset:1;opacity:0}1%{opacity:1}100%{stroke-dashoffset:0;opacity:1}}.all{animation:out .8s linear 6.2s both}@keyframes out{from{opacity:1}to{opacity:0}}.t{fill:none;stroke-width:1.6;text-anchor:middle;opacity:0;animation:fade .7s ease-out both}@keyframes fade{from{opacity:0}to{opacity:1}}</style></defs>
+<rect width="1920" height="1080" fill="#05060d"/>
+<g filter="url(#glow)" class="all">
+<g transform="translate(480 150) scale(1.6)">
+<path class="d p" pathLength="1" style="animation-delay:0.00s" d="M0 360 H600"/>
+<path class="d m" pathLength="1" style="animation-delay:0.22s" d="M215 360 V150 H285 V360"/>
+<path class="d m" pathLength="1" style="animation-delay:0.44s" d="M215 150 L250 118 L285 150"/>
+<path class="d m" pathLength="1" style="animation-delay:0.66s" d="M215 215 H285 M215 285 H285"/>
+<path class="d m" pathLength="1" style="animation-delay:0.88s" d="M229 182 a6 6 0 1 0 12 0 a6 6 0 1 0 -12 0 M259 182 a6 6 0 1 0 12 0 a6 6 0 1 0 -12 0 M229 248 a6 6 0 1 0 12 0 a6 6 0 1 0 -12 0 M259 248 a6 6 0 1 0 12 0 a6 6 0 1 0 -12 0 M229 320 a6 6 0 1 0 12 0 a6 6 0 1 0 -12 0 M259 320 a6 6 0 1 0 12 0 a6 6 0 1 0 -12 0"/>
+<path class="d m" pathLength="1" style="animation-delay:1.10s" d="M250 188 V204 M236 196 H264 M250 254 V272 M236 340 H264 M244 300 L256 300"/>
+<path class="d m" pathLength="1" style="animation-delay:1.32s" d="M310 360 L400 222 L450 275 L500 202 L590 360"/>
+<path class="d m" pathLength="1" style="animation-delay:1.54s" d="M20 360 L90 262 L150 335"/>
+<path class="d p" pathLength="1" style="animation-delay:1.76s" d="M0 -40 C4 -40 5 -30 5 -20 L40 8 V16 L5 6 L5 26 L16 34 V39 L0 35 L-16 39 V34 L-5 26 L-5 6 L-40 16 V8 L-5 -20 C-5 -30 -4 -40 0 -40 Z" transform="translate(500 100) rotate(25) scale(0.9)"/>
+</g>
+<text class="t p" x="960" y="800" font-size="30" letter-spacing="14" font-family="'Helvetica Neue', Arial, sans-serif" style="animation-delay:2.6s">VANCOUVER</text>
+<text class="t m" x="960" y="900" font-size="64" letter-spacing="14" font-family="'Helvetica Neue', Arial, sans-serif" style="animation-delay:3s">YVR</text>
+</g>
+</svg>

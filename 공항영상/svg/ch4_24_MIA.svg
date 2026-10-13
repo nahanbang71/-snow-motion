@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+<title>MIA MIAMI</title>
+<defs><filter id="glow" filterUnits="userSpaceOnUse" x="0" y="0" width="1920" height="1080"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><style>.m{stroke:#39ff9c}.p{stroke:#4d7cff}.d{fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;opacity:0;animation:draw 1.4s cubic-bezier(.12,.7,.3,1) both}@keyframes draw{0%{stroke-dashoffset:1;opacity:0}1%{opacity:1}100%{stroke-dashoffset:0;opacity:1}}.all{animation:out .8s linear 6.2s both}@keyframes out{from{opacity:1}to{opacity:0}}.t{fill:none;stroke-width:1.6;text-anchor:middle;opacity:0;animation:fade .7s ease-out both}@keyframes fade{from{opacity:0}to{opacity:1}}</style></defs>
+<rect width="1920" height="1080" fill="#05060d"/>
+<g filter="url(#glow)" class="all">
+<g transform="translate(480 150) scale(1.6)">
+<path class="d p" pathLength="1" style="animation-delay:0.00s" d="M0 360 H600"/>
+<path class="d m" pathLength="1" style="animation-delay:0.22s" d="M210 322 A90 90 0 0 1 390 322"/>
+<path class="d m" pathLength="1" style="animation-delay:0.44s" d="M150 322 L156 325.4 L162 327 L168 325.9 L174 322.6 L180 319.1 L186 317.1 L192 317.8 L198 320.8 L204 324.4 L210 326.8 L216 326.5 L222 323.8 L228 320.2 L234 317.5 L240 317.2 L246 319.6 L252 323.2 L258 326.2 L264 326.9 L270 324.9 L276 321.4 L282 318.1 L288 317 L294 318.6 L300 322 L306 325.4 L312 327 L318 325.9 L324 322.6 L330 319.1 L336 317.1 L342 317.8 L348 320.8 L354 324.4 L360 326.8 L366 326.5 L372 323.8 L378 320.2 L384 317.5 L390 317.2 L396 319.6 L402 323.2 L408 326.2 L414 326.9 L420 324.9 L426 321.4 L432 318.1 L438 317 L444 318.6 L450 322"/>
+<path class="d m" pathLength="1" style="animation-delay:0.66s" d="M70 360 Q72.5 246 95 170 M95 170 Q141.2 142.4 172.1 194.6 M95 170 Q122.5 99.9 140.8 170 M95 170 Q90.8 86.5 88 162.2 M95 170 Q61.1 108.4 38.6 174.9 M95 170 Q47.3 155.4 15.5 202.1"/>
+<path class="d m" pathLength="1" style="animation-delay:0.88s" d="M215 360 Q216.2 285 227 235 M227 235 Q257.4 216.8 277.7 251.2 M227 235 Q245.1 188.9 257.1 235 M227 235 Q224.3 180.1 222.4 229.9 M227 235 Q204.7 194.5 189.9 238.2 M227 235 Q195.6 225.4 174.7 256.1"/>
+<path class="d m" pathLength="1" style="animation-delay:1.10s" d="M540 360 Q538.5 261 525 195 M525 195 Q565.2 171 591.9 216.3 M525 195 Q548.8 134.1 564.7 195 M525 195 Q521.4 122.5 519 188.2 M525 195 Q495.6 141.5 476 199.2 M525 195 Q483.6 182.3 456 222.9"/>
+<path class="d p" pathLength="1" style="animation-delay:1.32s" d="M0 -40 C4 -40 5 -30 5 -20 L40 8 V16 L5 6 L5 26 L16 34 V39 L0 35 L-16 39 V34 L-5 26 L-5 6 L-40 16 V8 L-5 -20 C-5 -30 -4 -40 0 -40 Z" transform="translate(320 70) rotate(90) scale(0.9)"/>
+</g>
+<text class="t p" x="960" y="800" font-size="30" letter-spacing="14" font-family="'Helvetica Neue', Arial, sans-serif" style="animation-delay:2.6s">MIAMI</text>
+<text class="t m" x="960" y="900" font-size="64" letter-spacing="14" font-family="'Helvetica Neue', Arial, sans-serif" style="animation-delay:3s">MIA</text>
+</g>
+</svg>

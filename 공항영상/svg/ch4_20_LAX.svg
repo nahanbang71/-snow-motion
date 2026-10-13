@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+<title>LAX LOS ANGELES</title>
+<defs><filter id="glow" filterUnits="userSpaceOnUse" x="0" y="0" width="1920" height="1080"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><style>.m{stroke:#39ff9c}.p{stroke:#4d7cff}.d{fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;opacity:0;animation:draw 1.4s cubic-bezier(.12,.7,.3,1) both}@keyframes draw{0%{stroke-dashoffset:1;opacity:0}1%{opacity:1}100%{stroke-dashoffset:0;opacity:1}}.all{animation:out .8s linear 6.2s both}@keyframes out{from{opacity:1}to{opacity:0}}.t{fill:none;stroke-width:1.6;text-anchor:middle;opacity:0;animation:fade .7s ease-out both}@keyframes fade{from{opacity:0}to{opacity:1}}</style></defs>
+<rect width="1920" height="1080" fill="#05060d"/>
+<g filter="url(#glow)" class="all">
+<g transform="translate(480 150) scale(1.6)">
+<path class="d p" pathLength="1" style="animation-delay:0.00s" d="M0 360 H600"/>
+<path class="d m" pathLength="1" style="animation-delay:0.22s" d="M180 360 C190 285 280 238 350 215"/>
+<path class="d m" pathLength="1" style="animation-delay:0.44s" d="M420 360 C410 285 320 238 250 215"/>
+<path class="d m" pathLength="1" style="animation-delay:0.66s" d="M250 360 C255 300 300 258 330 237"/>
+<path class="d m" pathLength="1" style="animation-delay:0.88s" d="M350 360 C345 300 300 258 270 237"/>
+<path class="d m" pathLength="1" style="animation-delay:1.10s" d="M208 205 a92 15 0 1 0 184 0 a92 15 0 1 0 -184 0"/>
+<path class="d m" pathLength="1" style="animation-delay:1.32s" d="M252 195 Q300 160 348 195"/>
+<path class="d p" pathLength="1" style="animation-delay:1.54s" d="M0 -40 C4 -40 5 -30 5 -20 L40 8 V16 L5 6 L5 26 L16 34 V39 L0 35 L-16 39 V34 L-5 26 L-5 6 L-40 16 V8 L-5 -20 C-5 -30 -4 -40 0 -40 Z" transform="translate(110 100) rotate(-30) scale(0.9)"/>
+</g>
+<text class="t p" x="960" y="800" font-size="30" letter-spacing="14" font-family="'Helvetica Neue', Arial, sans-serif" style="animation-delay:2.6s">LOS ANGELES</text>
+<text class="t m" x="960" y="900" font-size="64" letter-spacing="14" font-family="'Helvetica Neue', Arial, sans-serif" style="animation-delay:3s">LAX</text>
+</g>
+</svg>

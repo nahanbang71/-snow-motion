@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+<title>PKX BEIJING DAXING</title>
+<defs><filter id="glow" filterUnits="userSpaceOnUse" x="0" y="0" width="1920" height="1080"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><style>.m{stroke:#35f3ff}.p{stroke:#ff4fd8}.d{fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;opacity:0;animation:draw 1.4s cubic-bezier(.12,.7,.3,1) both}@keyframes draw{0%{stroke-dashoffset:1;opacity:0}1%{opacity:1}100%{stroke-dashoffset:0;opacity:1}}.all{animation:out .8s linear 6.2s both}@keyframes out{from{opacity:1}to{opacity:0}}.t{fill:none;stroke-width:1.6;text-anchor:middle;opacity:0;animation:fade .7s ease-out both}@keyframes fade{from{opacity:0}to{opacity:1}}</style></defs>
+<rect width="1920" height="1080" fill="#05060d"/>
+<g filter="url(#glow)" class="all">
+<g transform="translate(480 150) scale(1.6)">
+<path class="d p" pathLength="1" style="animation-delay:0.00s" d="M0 360 H600"/>
+<path class="d m" pathLength="1" style="animation-delay:0.22s" d="M300 147 Q316.7 110.4 377.5 70.8 Q373.6 143.2 350.2 176 Q390.3 172.1 455 205 Q390.3 237.9 350.2 234 Q373.6 266.8 377.5 339.2 Q316.7 299.6 300 263 Q283.3 299.6 222.5 339.2 Q226.4 266.8 249.8 234 Q209.7 237.9 145 205 Q209.7 172.1 249.8 176 Q226.4 143.2 222.5 70.8 Q283.3 110.4 300 147 Z"/>
+<path class="d m" pathLength="1" style="animation-delay:0.44s" d="M264 205 a36 36 0 1 0 72 0 a36 36 0 1 0 -72 0"/>
+<path class="d m" pathLength="1" style="animation-delay:0.66s" d="M283 205 a17 17 0 1 0 34 0 a17 17 0 1 0 -34 0"/>
+<path class="d m" pathLength="1" style="animation-delay:0.88s" d="M334.6 185 L402.2 146 M334.6 225 L402.2 264 M300 245 L300 323 M265.4 225 L197.8 264 M265.4 185 L197.8 146 M300 165 L300 87"/>
+<path class="d p" pathLength="1" style="animation-delay:1.10s" d="M0 -40 C4 -40 5 -30 5 -20 L40 8 V16 L5 6 L5 26 L16 34 V39 L0 35 L-16 39 V34 L-5 26 L-5 6 L-40 16 V8 L-5 -20 C-5 -30 -4 -40 0 -40 Z" transform="translate(90 90) rotate(-40) scale(0.9)"/>
+</g>
+<text class="t p" x="960" y="800" font-size="30" letter-spacing="14" font-family="'Helvetica Neue', Arial, sans-serif" style="animation-delay:2.6s">BEIJING DAXING</text>
+<text class="t m" x="960" y="900" font-size="64" letter-spacing="14" font-family="'Helvetica Neue', Arial, sans-serif" style="animation-delay:3s">PKX</text>
+</g>
+</svg>

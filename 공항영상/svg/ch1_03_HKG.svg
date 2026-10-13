@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+<title>HKG HONG KONG INTERNATIONAL</title>
+<defs><filter id="glow" filterUnits="userSpaceOnUse" x="0" y="0" width="1920" height="1080"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><style>.m{stroke:#35f3ff}.p{stroke:#ff4fd8}.d{fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;opacity:0;animation:draw 1.4s cubic-bezier(.12,.7,.3,1) both}@keyframes draw{0%{stroke-dashoffset:1;opacity:0}1%{opacity:1}100%{stroke-dashoffset:0;opacity:1}}.all{animation:out .8s linear 6.2s both}@keyframes out{from{opacity:1}to{opacity:0}}.t{fill:none;stroke-width:1.6;text-anchor:middle;opacity:0;animation:fade .7s ease-out both}@keyframes fade{from{opacity:0}to{opacity:1}}</style></defs>
+<rect width="1920" height="1080" fill="#05060d"/>
+<g filter="url(#glow)" class="all">
+<g transform="translate(480 150) scale(1.6)">
+<path class="d p" pathLength="1" style="animation-delay:0.00s" d="M0 360 H600"/>
+<path class="d m" pathLength="1" style="animation-delay:0.22s" d="M60 340 C200 285 400 285 540 340"/>
+<path class="d m" pathLength="1" style="animation-delay:0.44s" d="M95 352 C210 305 390 305 505 352"/>
+<path class="d m" pathLength="1" style="animation-delay:0.66s" d="M60 340 V360 M540 340 V360"/>
+<path class="d m" pathLength="1" style="animation-delay:0.88s" d="M0 215 L70 185 L140 205 L220 165 L300 200 L380 175 L450 205 L520 185 L600 210"/>
+<path class="d m" pathLength="1" style="animation-delay:1.10s" d="M0 245 L80 220 L160 240 L240 205 L320 235 L400 215 L480 240 L560 222 L600 235"/>
+<path class="d m" pathLength="1" style="animation-delay:1.32s" d="M0 272 L90 253 L180 268 L270 245 L350 265 L440 250 L520 266 L600 256"/>
+<path class="d p" pathLength="1" style="animation-delay:1.54s" d="M0 -40 C4 -40 5 -30 5 -20 L40 8 V16 L5 6 L5 26 L16 34 V39 L0 35 L-16 39 V34 L-5 26 L-5 6 L-40 16 V8 L-5 -20 C-5 -30 -4 -40 0 -40 Z" transform="translate(500 100) rotate(25) scale(0.9)"/>
+</g>
+<text class="t p" x="960" y="800" font-size="30" letter-spacing="14" font-family="'Helvetica Neue', Arial, sans-serif" style="animation-delay:2.6s">HONG KONG INTERNATIONAL</text>
+<text class="t m" x="960" y="900" font-size="64" letter-spacing="14" font-family="'Helvetica Neue', Arial, sans-serif" style="animation-delay:3s">HKG</text>
+</g>
+</svg>

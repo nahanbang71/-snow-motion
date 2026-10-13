@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+<title>MAD MADRID BARAJAS</title>
+<defs><filter id="glow" filterUnits="userSpaceOnUse" x="0" y="0" width="1920" height="1080"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><style>.m{stroke:#b78bff}.p{stroke:#ffd166}.d{fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;opacity:0;animation:draw 1.4s cubic-bezier(.12,.7,.3,1) both}@keyframes draw{0%{stroke-dashoffset:1;opacity:0}1%{opacity:1}100%{stroke-dashoffset:0;opacity:1}}.all{animation:out .8s linear 6.2s both}@keyframes out{from{opacity:1}to{opacity:0}}.t{fill:none;stroke-width:1.6;text-anchor:middle;opacity:0;animation:fade .7s ease-out both}@keyframes fade{from{opacity:0}to{opacity:1}}</style></defs>
+<rect width="1920" height="1080" fill="#05060d"/>
+<g filter="url(#glow)" class="all">
+<g transform="translate(480 150) scale(1.6)">
+<path class="d p" pathLength="1" style="animation-delay:0.00s" d="M0 360 H600"/>
+<path class="d m" pathLength="1" style="animation-delay:0.22s" d="M20 205 L34 220 L48 228.4 L62 226.5 L76 215.1 L90 199.3 L104 185.9 L118 181 L132 186.7 L146 200.4 L160 216.2 L174 227 L188 228.2 L202 219.1 L216 203.8 L230 189.1 L244 181.3 L258 184 L272 195.9 L286 211.9 L300 224.8 L314 228.9 L328 222.6 L342 208.5 L356 192.8 L370 182.6 L384 182.2 L398 191.8 L412 207.3 L426 221.8 L440 228.8 L454 225.4 L468 213 L482 197 L496 184.6 L510 181.2 L524 188.2 L538 202.7 L552 218.2 L566 227.8 L580 227.4"/>
+<path class="d m" pathLength="1" style="animation-delay:0.44s" d="M20 229 L34 244 L48 252.4 L62 250.5 L76 239.1 L90 223.3 L104 209.9 L118 205 L132 210.7 L146 224.4 L160 240.2 L174 251 L188 252.2 L202 243.1 L216 227.8 L230 213.1 L244 205.3 L258 208 L272 219.9 L286 235.9 L300 248.8 L314 252.9 L328 246.6 L342 232.5 L356 216.8 L370 206.6 L384 206.2 L398 215.8 L412 231.3 L426 245.8 L440 252.8 L454 249.4 L468 237 L482 221 L496 208.6 L510 205.2 L524 212.2 L538 226.7 L552 242.2 L566 251.8 L580 251.4"/>
+<path class="d m" pathLength="1" style="animation-delay:0.66s" d="M100 213.1 V360"/>
+<path class="d m" pathLength="1" style="animation-delay:0.88s" d="M240 206.6 V360"/>
+<path class="d m" pathLength="1" style="animation-delay:1.10s" d="M380 205.2 V360"/>
+<path class="d m" pathLength="1" style="animation-delay:1.32s" d="M520 209.2 V360"/>
+<path class="d p" pathLength="1" style="animation-delay:1.54s" d="M0 -40 C4 -40 5 -30 5 -20 L40 8 V16 L5 6 L5 26 L16 34 V39 L0 35 L-16 39 V34 L-5 26 L-5 6 L-40 16 V8 L-5 -20 C-5 -30 -4 -40 0 -40 Z" transform="translate(110 90) rotate(-25) scale(0.9)"/>
+</g>
+<text class="t p" x="960" y="800" font-size="30" letter-spacing="14" font-family="'Helvetica Neue', Arial, sans-serif" style="animation-delay:2.6s">MADRID BARAJAS</text>
+<text class="t m" x="960" y="900" font-size="64" letter-spacing="14" font-family="'Helvetica Neue', Arial, sans-serif" style="animation-delay:3s">MAD</text>
+</g>
+</svg>

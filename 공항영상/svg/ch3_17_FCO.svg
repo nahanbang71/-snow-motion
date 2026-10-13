@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+<title>FCO ROME FIUMICINO</title>
+<defs><filter id="glow" filterUnits="userSpaceOnUse" x="0" y="0" width="1920" height="1080"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><style>.m{stroke:#b78bff}.p{stroke:#ffd166}.d{fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;opacity:0;animation:draw 1.4s cubic-bezier(.12,.7,.3,1) both}@keyframes draw{0%{stroke-dashoffset:1;opacity:0}1%{opacity:1}100%{stroke-dashoffset:0;opacity:1}}.all{animation:out .8s linear 6.2s both}@keyframes out{from{opacity:1}to{opacity:0}}.t{fill:none;stroke-width:1.6;text-anchor:middle;opacity:0;animation:fade .7s ease-out both}@keyframes fade{from{opacity:0}to{opacity:1}}</style></defs>
+<rect width="1920" height="1080" fill="#05060d"/>
+<g filter="url(#glow)" class="all">
+<g transform="translate(480 150) scale(1.6)">
+<path class="d p" pathLength="1" style="animation-delay:0.00s" d="M0 360 H600"/>
+<path class="d m" pathLength="1" style="animation-delay:0.22s" d="M80 360 V150 H370 L395 185 L430 175 L470 222 H520 V360"/>
+<path class="d m" pathLength="1" style="animation-delay:0.44s" d="M80 290 H520"/>
+<path class="d m" pathLength="1" style="animation-delay:0.66s" d="M80 220 H470"/>
+<path class="d m" pathLength="1" style="animation-delay:0.88s" d="M98 358 V320 A18 18 0 0 1 134 320 V358 M170 358 V320 A18 18 0 0 1 206 320 V358 M242 358 V320 A18 18 0 0 1 278 320 V358 M314 358 V320 A18 18 0 0 1 350 320 V358 M386 358 V320 A18 18 0 0 1 422 320 V358 M458 358 V320 A18 18 0 0 1 494 320 V358"/>
+<path class="d m" pathLength="1" style="animation-delay:1.10s" d="M98 288 V250 A18 18 0 0 1 134 250 V288 M170 288 V250 A18 18 0 0 1 206 250 V288 M242 288 V250 A18 18 0 0 1 278 250 V288 M314 288 V250 A18 18 0 0 1 350 250 V288 M386 288 V250 A18 18 0 0 1 422 250 V288 M458 288 V250 A18 18 0 0 1 494 250 V288"/>
+<path class="d m" pathLength="1" style="animation-delay:1.32s" d="M98 218 V182 A18 18 0 0 1 134 182 V218 M170 218 V182 A18 18 0 0 1 206 182 V218 M242 218 V182 A18 18 0 0 1 278 182 V218 M314 218 V182 A18 18 0 0 1 350 182 V218"/>
+<path class="d p" pathLength="1" style="animation-delay:1.54s" d="M0 -40 C4 -40 5 -30 5 -20 L40 8 V16 L5 6 L5 26 L16 34 V39 L0 35 L-16 39 V34 L-5 26 L-5 6 L-40 16 V8 L-5 -20 C-5 -30 -4 -40 0 -40 Z" transform="translate(500 90) rotate(30) scale(0.9)"/>
+</g>
+<text class="t p" x="960" y="800" font-size="30" letter-spacing="14" font-family="'Helvetica Neue', Arial, sans-serif" style="animation-delay:2.6s">ROME FIUMICINO</text>
+<text class="t m" x="960" y="900" font-size="64" letter-spacing="14" font-family="'Helvetica Neue', Arial, sans-serif" style="animation-delay:3s">FCO</text>
+</g>
+</svg>
