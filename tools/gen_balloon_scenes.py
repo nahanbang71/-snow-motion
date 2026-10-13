@@ -129,6 +129,21 @@ def europe_scenes(dur):
     return out
 
 
+def mideast_scenes(dur):
+    """20 Mediterranean / Middle East landmarks"""
+    import mideast_sites as MS
+    out = {}
+    for sid, m in MS.ME.items():
+        sc = min(1150 / m['w'], 560 / m['h'])
+        seed = sum(map(ord, sid))
+        r = random.Random(seed)
+        base = list(BASE_BALS)
+        base[2] = (520 + (seed % 2) * 880, 300, .85)
+        bals = [(max(70, min(1850, x + r.randint(-70, 70))), y + r.randint(-40, 50), z * r.uniform(.85, 1.15), (i + seed) % 7) for i, (x, y, z) in enumerate(base)]
+        out[sid] = (m['name'], m['country'], m['el'], sc, seed, bals, dur)
+    return out
+
+
 SCENES = {
     'cappadocia': ('CAPPADOCIA', 'GOREME · TURKIYE', lambda: WS.cappadocia(), 1.5, 11),
     'giza': ('PYRAMIDS OF GIZA', 'EGYPT', lambda: WS.giza(), 1.15, 12),
@@ -142,7 +157,15 @@ def main():
     allsc = dict(europe_scenes(13.6))
     for sid, (name, sub, el, sc, seed) in SCENES.items():
         allsc.setdefault(sid, (name, sub, el, sc, seed, None, 14.0))
-    for sid in want or list(allsc):
+    me = mideast_scenes(13.6)
+    for sid in want or list(allsc) + list(me):
+        if sid in me and sid not in ('cappadocia', 'giza'):
+            name, sub, el, sc, seed, bals, dur = me[sid]
+            folder = os.path.join(OUT, 'mideast')
+            os.makedirs(folder, exist_ok=True)
+            open(os.path.join(folder, f'{sid}.svg'), 'w', encoding='utf-8').write(scene(sid, name, sub, el(), sc, seed, bals, dur))
+            print('wrote', sid)
+            continue
         name, sub, el, sc, seed, bals, dur = allsc[sid]
         folder = OUT if sid in SCENES and sid != 'rome' else os.path.join(OUT, 'europe')
         os.makedirs(folder, exist_ok=True)
