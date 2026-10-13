@@ -55,7 +55,7 @@ def credits_svg():
     cols = BD.CH
     lines = [('CREDITS', 90, 300, cols[0], 'none', 22, 0.2), ('EUROPE FROM ABOVE — LASER LINE ART', 40, 430, cols[4], 'none', 8, 1.0),
              ('ElevenSeoul', 56, 580, cols[1], 'none', 14, 2.2),
-             ('오대산', 44, 660, cols[3], 'none', 14, 3.4),
+             ('Daesan Oh', 44, 660, cols[3], 'none', 14, 3.4),
              ('Thank you for floating with us', 36, 780, cols[2], 'none', 6, 5.0)]
     t = ''
     for txt, size, y, c, fill, ls, d in lines:
