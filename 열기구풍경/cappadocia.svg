@@ -10,7 +10,7 @@
 .rg{fill:none;stroke-width:2;stroke-linejoin:round;opacity:0;animation:fi 1.4s ease-out both}
 .flame{fill:none;stroke:#ff9a3c;stroke-width:3;stroke-linejoin:round;opacity:0;transform-box:fill-box;transform-origin:50% 100%;animation:fi .8s ease-out both,flk 2.4s ease-in-out infinite alternate}
 @keyframes flk{from{transform:scale(1,1)}to{transform:scale(1.08,1.14)}}
-.dr{animation:dr 14s linear both}@keyframes dr{from{transform:translate(0,0)}to{transform:translate(var(--dx),-26px)}}
+.dr{animation:dr 14.0s linear both}@keyframes dr{from{transform:translate(0,0)}to{transform:translate(var(--dx),-26px)}}
 .bob{animation:bob 4s ease-in-out infinite alternate}@keyframes bob{from{transform:translateY(-12px) rotate(-1.4deg)}to{transform:translateY(12px) rotate(1.4deg)}}
 .t{fill:none;text-anchor:middle;opacity:0;animation:fi .9s ease-out both}
 .star{fill:#b9c9ff;opacity:.2;animation:tws 5s ease-in-out infinite alternate}@keyframes tws{from{opacity:.1}to{opacity:.7}}
