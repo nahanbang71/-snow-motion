@@ -1,0 +1,112 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>World flight map</title>
+<style>html,body{margin:0;background:#05060d;overflow:hidden}svg{position:absolute;left:0;top:0}
+#map path{fill:none;vector-effect:non-scaling-stroke}</style></head>
+<body>
+<svg id="map" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs><path id="land" d=""/></defs>
+  <g id="grat" stroke="#1b2347" stroke-width="1" fill="none"></g>
+  <g stroke="#4a66b0" stroke-width="1.3" fill="none">
+    <use href="#land" x="-360"/><use href="#land"/><use href="#land" x="360"/>
+  </g>
+</svg>
+<svg id="fx" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs><filter id="glow" filterUnits="userSpaceOnUse" x="0" y="0" width="1920" height="1080">
+    <feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+  <g id="o" filter="url(#glow)"></g>
+</svg>
+<script src="data.js"></script>
+<script>
+const COL = { 1: ['#35f3ff', '#ff4fd8'], 2: ['#ffb03a', '#ff5a8a'], 3: ['#b78bff', '#ffd166'], 4: ['#39ff9c', '#4d7cff'], 5: ['#ff4fd8', '#ffe14d'] };
+const PLANE = 'M0 -40 C4 -40 5 -30 5 -20 L40 8 V16 L5 6 L5 26 L16 34 V39 L0 35 L-16 39 V34 L-5 26 L-5 6 L-40 16 V8 L-5 -20 C-5 -30 -4 -40 0 -40 Z';
+const FONT = "font-family=\"'Helvetica Neue', Arial, sans-serif\"";
+const SPAN_STOP = 34;
+document.getElementById('land').setAttribute('d', LAND);
+(function () {   // graticule every 30 degrees (x=lon, y=-lat)
+  let d = ''; for (let x = -540; x <= 540; x += 30) d += `M${x} -90V90`; for (let y = -60; y <= 90; y += 30) d += `M-540 ${-y}H540`;
+  const p = document.createElementNS('http://www.w3.org/2000/svg', 'path'); p.setAttribute('d', d); p.setAttribute('style', 'vector-effect:non-scaling-stroke');
+  document.getElementById('grat').appendChild(p);
+})();
+
+const sm = u => u * u * (3 - 2 * u), cl = (v, a, b) => Math.min(b, Math.max(a, v)), lerp = (a, b, u) => a + (b - a) * u;
+let R = [], TL = [], DUR = 0;
+
+function setup(from, to, o) {
+  o = Object.assign({ dwell: 2.2, lastDwell: 3.5 }, o || {});
+  R = STOPS.slice(from, to + 1).map(s => Object.assign({}, s));
+  for (let i = 1; i < R.length; i++) {        // unwrap longitudes so the route keeps going the short way round
+    while (R[i].lon - R[i - 1].lon > 180) R[i].lon -= 360;
+    while (R[i - 1].lon - R[i].lon > 180) R[i].lon += 360;
+  }
+  TL = []; let t = 0;
+  for (let i = 0; i < R.length; i++) {
+    const a = t, last = i === R.length - 1;
+    const dw = last ? o.lastDwell : o.dwell; t += dw;
+    const e = { i, ta: a, td: t };
+    if (!last) {
+      const A = R[i], B = R[i + 1], dist = Math.hypot(B.lon - A.lon, B.lat - A.lat);
+      e.dist = dist; e.f = cl(1.8 + dist / 45, 2.0, 6.0); e.pts = arc(A, B);
+      e.span = cl(dist * 1.6 + 20, SPAN_STOP, 230); t += e.f;
+    }
+    TL.push(e);
+  }
+  DUR = t; return DUR;
+}
+
+function arc(A, B) {
+  const dx = B.lon - A.lon, dy = B.lat - A.lat, L = Math.hypot(dx, dy) || 1;
+  let px = -dy / L, py = dx / L; if (py < 0 || (py === 0 && px < 0)) { px = -px; py = -py; }
+  const pts = [];
+  for (let k = 0; k <= 120; k++) {
+    const s = k / 120, lift = L * 0.14 * Math.sin(Math.PI * s);
+    pts.push([A.lon + dx * s + px * lift, A.lat + dy * s + py * lift]);
+  }
+  return pts;
+}
+
+function frame(t) {
+  t = cl(t, 0, DUR - 1e-6);
+  let k = TL.findIndex(e => t < (e.f !== undefined ? e.td + e.f : e.td)); if (k < 0) k = TL.length - 1;
+  const e = TL[k], A = R[k];
+  const flying = e.f !== undefined && t >= e.td;
+  const u = flying ? cl((t - e.td) / e.f, 0, 1) : 0, ue = sm(u);
+  let cx = A.lon, cy = A.lat, span = SPAN_STOP, pos = [A.lon, A.lat], head = null, chI = k;
+  if (flying) {
+    const B = R[k + 1];
+    cx = lerp(A.lon, B.lon, ue); cy = lerp(A.lat, B.lat, ue);
+    span = lerp(SPAN_STOP, e.span, Math.pow(Math.sin(Math.PI * u), 0.8));
+    const idx = ue * 120, i0 = Math.min(119, Math.floor(idx)), f = idx - i0;
+    pos = [lerp(e.pts[i0][0], e.pts[i0 + 1][0], f), lerp(e.pts[i0][1], e.pts[i0 + 1][1], f)];
+    head = [e.pts[i0 + 1][0] - e.pts[i0][0], e.pts[i0 + 1][1] - e.pts[i0][1]]; chI = k + 1;
+  } else if (k > 0) { const P = TL[k - 1].pts; head = [P[120][0] - P[119][0], P[120][1] - P[119][1]]; }
+  if (!head) { const B = R[1] || A; head = [B.lon - A.lon, B.lat - A.lat]; }
+  // camera
+  const vh = span * 1080 / 1920;
+  document.getElementById('map').setAttribute('viewBox', `${cx - span / 2} ${-cy - vh / 2} ${span} ${vh}`);
+  const sc = 1920 / span, P = (lo, la) => [(lo - cx) * sc + 960, (cy - la) * sc + 540];
+  const [main, acc] = COL[R[chI].ch];
+  let s = '';
+  const poly = (pts, col, w, op) => `<polyline fill="none" stroke="${col}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round" opacity="${op}" points="${pts.map(p => P(p[0], p[1]).map(v => v.toFixed(1)).join(',')).join(' ')}"/>`;
+  for (let j = 0; j < k; j++) s += poly(TL[j].pts, COL[R[j + 1].ch][0], 3, 0.55);
+  if (flying) s += poly(e.pts.slice(0, Math.max(2, Math.round(ue * 120) + 1)).concat([pos]), main, 4.5, 1);
+  // pins
+  R.forEach((r, j) => {
+    const [x, y] = P(r.lon, r.lat), reached = j < k || (j === k && !flying) || (j === k + 1 && flying && u > .98);
+    s += reached ? `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="7" fill="none" stroke="${COL[r.ch][1]}" stroke-width="3"/>`
+      : `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="4" fill="none" stroke="${COL[r.ch][0]}" stroke-width="2" opacity=".4"/>`;
+  });
+  // arrival ring + label
+  if (!flying) {
+    const [x, y] = P(A.lon, A.lat), age = t - e.ta, a = cl(age / .45, 0, 1) * cl((e.td - t) / .35, 0, 1);
+    if (k > 0 || true) s += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${(10 + 60 * cl(age / 1.0, 0, 1)).toFixed(1)}" fill="none" stroke="${acc}" stroke-width="2.5" opacity="${(0.9 * (1 - cl(age / 1.0, 0, 1))).toFixed(2)}"/>`;
+    s += `<text x="${x.toFixed(1)}" y="${(y + 130).toFixed(1)}" text-anchor="middle" fill="none" stroke="${main}" stroke-width="1.8" font-size="64" letter-spacing="14" ${FONT} opacity="${a.toFixed(2)}">${A.city}</text>`;
+    s += `<text x="${x.toFixed(1)}" y="${(y + 178).toFixed(1)}" text-anchor="middle" fill="none" stroke="${acc}" stroke-width="1.4" font-size="26" letter-spacing="10" ${FONT} opacity="${a.toFixed(2)}">${A.country}</text>`;
+  }
+  // plane
+  const [qx, qy] = P(pos[0], pos[1]), hs = P(pos[0] + head[0], pos[1] + head[1]);
+  const ang = Math.atan2(hs[0] - qx, -(hs[1] - qy)) * 180 / Math.PI;
+  s += `<g transform="translate(${qx.toFixed(1)} ${qy.toFixed(1)}) rotate(${ang.toFixed(1)}) scale(1.1)"><path d="${PLANE}" fill="#05060d" stroke="${acc}" stroke-width="3" stroke-linejoin="round"/></g>`;
+  document.getElementById('o').innerHTML = s;
+}
+window.setup = setup; window.frame = frame; window.getDur = () => DUR;
+</script></body></html>
