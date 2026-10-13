@@ -1,0 +1,175 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Round-the-world yacht voyage</title>
+<style>html,body{margin:0;background:#05060d;overflow:hidden}svg{position:absolute;left:0;top:0}
+#map path{fill:none;vector-effect:non-scaling-stroke}</style></head>
+<body>
+<svg id="map" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs><path id="land" d=""/></defs>
+  <g id="grat" stroke="#161d3a" stroke-width="1" fill="none"></g>
+  <g id="lines" stroke="#5a78c8" stroke-width="1.3" fill="none"><use href="#land" x="-360"/><use href="#land"/><use href="#land" x="360"/></g>
+</svg>
+<svg id="fx" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs><filter id="glow" filterUnits="userSpaceOnUse" x="0" y="0" width="1920" height="1080">
+    <feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+  <g id="o" filter="url(#glow)"></g>
+</svg>
+<script src="data.js"></script>
+<script src="yacht_data.js"></script>
+<script>
+const COL = { 1: ['#35f3ff', '#ff4fd8'], 2: ['#ffb03a', '#ff5a8a'], 3: ['#b78bff', '#ffd166'], 4: ['#39ff9c', '#4d7cff'], 5: ['#ff4fd8', '#ffe14d'] };
+const GOLD = '#ffd166', SEA = '#4a66b0', FONT = "font-family=\"'Helvetica Neue', Arial, sans-serif\"";
+const SPAN_PORT = 30;
+const OCEANS = [['PACIFIC OCEAN', -150, 8], ['PACIFIC OCEAN', 170, 15], ['ATLANTIC OCEAN', -38, 20], ['SOUTH ATLANTIC', -15, -22], ['INDIAN OCEAN', 78, -18],
+  ['MEDITERRANEAN SEA', 17, 34.5], ['SOUTH CHINA SEA', 113.5, 13], ['ARABIAN SEA', 64, 14], ['CARIBBEAN SEA', -75, 15.5], ['TASMAN SEA', 160, -38],
+  ['RED SEA', 38.6, 20.5], ['BAY OF BENGAL', 88, 14], ['GULF OF MEXICO', -90, 25]];
+document.getElementById('land').setAttribute('d', LAND);
+(function () { let d = ''; for (let x = -540; x <= 540; x += 30) d += `M${x} -90V90`; for (let y = -60; y <= 90; y += 30) d += `M-540 ${-y}H540`;
+  const p = document.createElementNS('http://www.w3.org/2000/svg', 'path'); p.setAttribute('d', d); p.setAttribute('style', 'vector-effect:non-scaling-stroke'); document.getElementById('grat').appendChild(p); })();
+
+const sm = u => u * u * (3 - 2 * u), cl = (v, a, b) => Math.min(b, Math.max(a, v)), lerp = (a, b, u) => a + (b - a) * u;
+function rng(a) { return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+const STARS = [], GLINTS = [];
+(function () { const r = rng(7);
+  for (let i = 0; i < 110; i++) STARS.push({ x: r() * 1920, y: r() * 1080, rad: 0.8 + r() * 1.2, f: 0.08 + r() * 0.2, ph: r(), a: 0.18 + r() * 0.3 });
+  const nums = LAND.match(/-?\d+(?:\.\d+)?/g).map(Number), n = nums.length / 2;
+  for (let i = 0; i < 200; i++) { const k = Math.floor(r() * n); GLINTS.push({ lon: nums[2 * k], lat: -nums[2 * k + 1], f: 0.1 + r() * 0.22, ph: r(), sz: 4 + r() * 5 }); } })();
+
+let P = [], LG = [], TL = [], DUR = 0, EV = [];
+
+function setup(total, o) {
+  o = Object.assign({ dwell: 4, lastDwell: 5 }, o || {});
+  // chain the legs so longitudes keep running west without jumps
+  LG = []; let prevEnd = null;
+  LEGS.forEach(l => {
+    let pts = l.map(p => p.slice());
+    if (prevEnd) { const sh = Math.round((prevEnd[0] - pts[0][0]) / 360) * 360; pts.forEach(p => p[0] += sh); }
+    const cum = [0]; for (let i = 1; i < pts.length; i++) cum.push(cum[i - 1] + Math.hypot((pts[i][0] - pts[i - 1][0]) * Math.cos(pts[i][1] * Math.PI / 180), pts[i][1] - pts[i - 1][1]));
+    LG.push({ pts, cum, L: cum[cum.length - 1] }); prevEnd = pts[pts.length - 1];
+  });
+  P = PORTS.map((p, i) => Object.assign({}, p, { lon: i < LG.length ? LG[i].pts[0][0] : LG[LG.length - 1].pts.slice(-1)[0][0], lat: i < LG.length ? LG[i].pts[0][1] : LG[LG.length - 1].pts.slice(-1)[0][1], ch: 1 + Math.min(4, Math.floor(i * 5 / PORTS.length)) }));
+  const dw = P.map((_, i) => i === P.length - 1 ? o.lastDwell : o.dwell);
+  const w = LG.map(l => Math.pow(l.L, 0.7) + 2.5), fixed = dw.reduce((a, b) => a + b, 0), k = (total - fixed) / w.reduce((a, b) => a + b, 0);
+  TL = []; let t = 0;
+  for (let i = 0; i < P.length; i++) {
+    const e = { i, ta: t, td: t + dw[i] }; t += dw[i];
+    if (i < LG.length) { e.f = w[i] * k; e.span = cl(LG[i].L * 0.9 + 25, 40, 190); t += e.f; }
+    TL.push(e);
+  }
+  DUR = t;
+  // wildlife schedule: open-ocean legs get a dolphin jump and a whale spout; every port gets gulls
+  EV = [];
+  LG.forEach((l, i) => { if (l.L > 28) { EV.push({ kind: 'dolphin', leg: i, u: 0.3 }); EV.push({ kind: 'whale', leg: i, u: 0.68 }); } else if (l.L > 16) EV.push({ kind: 'dolphin', leg: i, u: 0.5 }); });
+  return DUR;
+}
+
+function legPos(l, s) {
+  s = cl(s, 0, l.L); let lo = 0, hi = l.cum.length - 1;
+  while (hi - lo > 1) { const m = (lo + hi) >> 1; if (l.cum[m] <= s) lo = m; else hi = m; }
+  const f = (s - l.cum[lo]) / ((l.cum[hi] - l.cum[lo]) || 1);
+  return [lerp(l.pts[lo][0], l.pts[hi][0], f), lerp(l.pts[lo][1], l.pts[hi][1], f)];
+}
+
+const DOLPHIN = 'M-62 6 C-46 -14 -10 -26 26 -20 C44 -17 54 -10 66 -8 L76 -4 L66 1 C54 5 44 7 30 11 C0 21 -30 19 -62 6 Z M-8 -23 Q-2 -42 16 -40 Q9 -32 11 -21 M-62 6 Q-76 -2 -86 -16 M-62 6 Q-76 14 -86 28 M22 9 Q12 26 -2 28';
+const YACHT_HULL = 'M-42 0 H42 L30 15 H-30 Z', YACHT_SAILS = 'M0 0 V-64 M3 -62 L34 -6 H3 Z M-3 -54 L-32 -6 H-3 Z', YACHT_FLAG = 'M0 -64 L12 -69 L0 -74';
+
+function frame(t) {
+  t = cl(t, 0, DUR - 1e-6);
+  let k = TL.findIndex(e => t < (e.f !== undefined ? e.td + e.f : e.td)); if (k < 0) k = TL.length - 1;
+  const e = TL[k], flying = e.f !== undefined && t >= e.td;
+  const u = flying ? cl((t - e.td) / e.f, 0, 1) : 0, ue = sm(u);
+  let pos, head, cx, cy, span = SPAN_PORT, chI = k;
+  if (flying) {
+    const l = LG[k]; pos = legPos(l, ue * l.L); const a = legPos(l, Math.max(0, ue * l.L - 0.4)), b = legPos(l, Math.min(l.L, ue * l.L + 0.4));
+    head = [b[0] - a[0], b[1] - a[1]]; cx = pos[0]; cy = pos[1]; span = lerp(SPAN_PORT, e.span, Math.pow(Math.sin(Math.PI * u), 0.8)); chI = k + 1;
+  } else {
+    pos = [P[k].lon, P[k].lat]; cx = pos[0]; cy = pos[1];
+    if (k > 0) { const l = LG[k - 1], a = legPos(l, l.L - 0.4); head = [pos[0] - a[0], pos[1] - a[1]]; } else head = [-1, 0];
+  }
+  const vh = span * 1080 / 1920, sc = 1920 / span;
+  document.getElementById('map').setAttribute('viewBox', `${cx - span / 2} ${-cy - vh / 2} ${span} ${vh}`);
+  document.getElementById('lines').setAttribute('stroke-opacity', (0.78 + 0.14 * Math.sin(t * 1.1)).toFixed(3));
+  const X = (lo, la) => [(lo - cx) * sc + 960, (cy - la) * sc + 540];
+  const wrapX = lo => lo + 360 * Math.round((cx - lo) / 360);
+  const [main, acc] = COL[P[chI].ch];
+  let s = '';
+  // starlight (screen space)
+  for (const q of STARS) s += `<circle cx="${q.x.toFixed(0)}" cy="${q.y.toFixed(0)}" r="${q.rad.toFixed(1)}" fill="#a9bdff" opacity="${(q.a * (0.55 + 0.45 * Math.sin(2 * Math.PI * (q.f * t + q.ph)))).toFixed(2)}"/>`;
+  // sea sparkles: little wave marks that breathe slowly, plus glints on land
+  const R = (WAVES.length);
+  for (let i = 0; i < R; i++) {
+    const w = WAVES[i], x = (wrapX(w[0]) - cx) * sc + 960, y = (cy - w[1]) * sc + 540;
+    if (x < -20 || x > 1940 || y < -20 || y > 1100) continue;
+    const a = 0.28 + 0.5 * (0.5 + 0.5 * Math.sin(2 * Math.PI * (0.07 + (i % 7) * 0.02) * t + i));
+    s += `<path d="M${(x - 8).toFixed(0)} ${y.toFixed(0)}q4 -5 8 0t8 0" fill="none" stroke="${SEA}" stroke-width="1.6" stroke-linecap="round" opacity="${a.toFixed(2)}"/>`;
+  }
+  for (const g of GLINTS) {
+    const a = Math.pow(Math.max(0, Math.sin(2 * Math.PI * (g.f * t + g.ph))), 8); if (a < 0.03) continue;
+    const x = (wrapX(g.lon) - cx) * sc + 960, y = (cy - g.lat) * sc + 540; if (x < -20 || x > 1940 || y < -20 || y > 1100) continue;
+    const z = g.sz * (0.6 + 0.4 * a);
+    s += `<path d="M${(x - z).toFixed(1)} ${y.toFixed(1)}H${(x + z).toFixed(1)}M${x.toFixed(1)} ${(y - z).toFixed(1)}V${(y + z).toFixed(1)}" stroke="#d6ecff" stroke-width="1.6" stroke-linecap="round" opacity="${(0.8 * a).toFixed(2)}"/>`;
+  }
+  // ocean names, faded by distance from the camera
+  for (const [name, lo, la] of OCEANS) {
+    const x = (wrapX(lo) - cx) * sc + 960, y = (cy - la) * sc + 540, d = Math.hypot(x - 960, y - 540);
+    const a = 0.5 * cl(1 - d / 1200, 0, 1) * cl(1.4 - span / 150, 0, 1);
+    if (a > 0.02) s += `<text x="${x.toFixed(0)}" y="${y.toFixed(0)}" text-anchor="middle" fill="none" stroke="#6f8fdc" stroke-width="1.8" font-size="${cl(sc * 3.2, 42, 96).toFixed(0)}" letter-spacing="18" ${FONT} opacity="${a.toFixed(2)}">${name}</text>`;
+  }
+  // wake: past legs faint, current leg bright and rippling
+  const wavy = (pts, amp, ph) => {
+    const q = pts.map(p => X(p[0], p[1])); let d = '';
+    for (let i = 0; i < q.length; i++) {
+      const a = q[Math.max(0, i - 1)], b = q[Math.min(q.length - 1, i + 1)]; let nx = -(b[1] - a[1]), ny = b[0] - a[0]; const m = Math.hypot(nx, ny) || 1; nx /= m; ny /= m;
+      const o2 = amp * Math.sin(i * 0.9 - ph); d += `${i ? 'L' : 'M'}${(q[i][0] + nx * o2).toFixed(1)} ${(q[i][1] + ny * o2).toFixed(1)}`;
+    } return d;
+  };
+  for (let j = 0; j < Math.min(k, LG.length); j++) s += `<path d="${wavy(LG[j].pts, 0, 0)}" fill="none" stroke="${COL[P[j + 1].ch][0]}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" opacity=".5"/>`;
+  if (flying) {
+    const l = LG[k], n = l.pts.findIndex((_, i) => l.cum[i] > ue * l.L), cut = l.pts.slice(0, n < 0 ? l.pts.length : n); cut.push(pos);
+    s += `<path d="${wavy(cut, 3.2, t * 5)}" fill="none" stroke="${main}" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>`;
+  }
+  // ports
+  P.forEach((r, j) => {
+    const [x, y] = X(wrapX(r.lon), r.lat), reached = j < k || (j === k && !flying);
+    s += reached ? `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="7" fill="none" stroke="${COL[r.ch][1]}" stroke-width="3"/>` : `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="4" fill="none" stroke="${COL[r.ch][0]}" stroke-width="2" opacity=".4"/>`;
+  });
+  // arrival ring, label, gulls
+  if (!flying) {
+    const [x, y] = X(pos[0], pos[1]), age = t - e.ta, a = cl(age / .45, 0, 1) * cl((e.td - t) / .35, 0, 1);
+    s += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${(10 + 60 * cl(age, 0, 1)).toFixed(1)}" fill="none" stroke="${acc}" stroke-width="2.5" opacity="${(0.9 * (1 - cl(age, 0, 1))).toFixed(2)}"/>`;
+    s += `<text x="${x.toFixed(1)}" y="${(y + 130).toFixed(1)}" text-anchor="middle" fill="none" stroke="${main}" stroke-width="1.8" font-size="64" letter-spacing="14" ${FONT} opacity="${a.toFixed(2)}">${P[k].city}</text>`;
+    s += `<text x="${x.toFixed(1)}" y="${(y + 178).toFixed(1)}" text-anchor="middle" fill="none" stroke="${acc}" stroke-width="1.4" font-size="26" letter-spacing="10" ${FONT} opacity="${a.toFixed(2)}">${P[k].country}</text>`;
+  }
+  const gullT = flying ? (u < 0.12 ? t - e.td + 1.0 : (u > 0.88 ? -1 : -1)) : t - e.ta;   // gulls at arrival and just after departure
+  if (gullT >= 0 && gullT < 4.2) {
+    const [x, y] = X(pos[0], pos[1]);
+    [[0, 0, 1], [-70, 34, .75], [-140, -18, .6]].forEach(([dx, dy, z], gi) => {
+      const gx = x - 320 + (gullT / 4.2) * 900 + dx, gy = y - 210 + dy + 14 * Math.sin(gullT * 1.6 + gi), f = Math.sin(gullT * 7 + gi * 1.7), S = 38 * z;
+      const up = -0.55 + 0.6 * f;
+      s += `<path d="M${(gx - S).toFixed(1)} ${(gy + S * (0.2 + 0.3 * f)).toFixed(1)}Q${(gx - S * .5).toFixed(1)} ${(gy + S * up).toFixed(1)} ${gx.toFixed(1)} ${gy.toFixed(1)}Q${(gx + S * .5).toFixed(1)} ${(gy + S * up).toFixed(1)} ${(gx + S).toFixed(1)} ${(gy + S * (0.2 + 0.3 * f)).toFixed(1)}" fill="none" stroke="#eaf6ff" stroke-width="2.6" stroke-linecap="round" opacity="${(0.85 * cl(gullT, 0, .5) * cl((4.2 - gullT) / .6, 0, 1)).toFixed(2)}"/>`;
+    });
+  }
+  // dolphins / whales: anchored in map space beside the track
+  for (const ev of EV) {
+    const l = LG[ev.leg], t0 = TL[ev.leg].td + TL[ev.leg].f * ev.u, dur = ev.kind === 'dolphin' ? 1.9 : 3.2, age = t - t0;
+    if (age < 0 || age > dur) continue;
+    const a = legPos(l, l.L * sm(ev.u)), b = legPos(l, Math.min(l.L, l.L * sm(ev.u) + 0.6)), dx = b[0] - a[0], dy = b[1] - a[1], m = Math.hypot(dx, dy) || 1;
+    const [ax, ay] = X(a[0] + (-dy / m) * 2.6 * Math.sign(ev.leg % 2 - .5), a[1] + (dx / m) * 2.6 * Math.sign(ev.leg % 2 - .5));
+    if (ev.kind === 'dolphin') {
+      const v = cl(age / dur, 0, 1) * 2 - 1, X0 = v * 70, Y0 = 26 - 70 * (1 - v * v), ang = Math.atan2(70 * 2 * v / 70, 1) * 180 / Math.PI;
+      const vis = Math.abs(v) < 0.99;
+      if (vis) s += `<g transform="translate(${(ax + X0).toFixed(1)} ${(ay + Y0).toFixed(1)}) rotate(${ang.toFixed(1)}) scale(.55)"><path d="${DOLPHIN}" fill="#05060d" stroke="#7ff0e0" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" opacity="${cl(1 - Math.abs(v) * 0 , 0, 1)}"/></g>`;
+      [-.8, .8].forEach(vv => { const near = Math.abs(v - vv) < .4; if (near) s += `<ellipse cx="${(ax + vv * 70).toFixed(1)}" cy="${(ay + 28).toFixed(1)}" rx="${(10 + 24 * (1 - Math.abs(v - vv) / .4)).toFixed(1)}" ry="${(3 + 6 * (1 - Math.abs(v - vv) / .4)).toFixed(1)}" fill="none" stroke="#7ff0e0" stroke-width="2" opacity="${(0.7 * Math.abs(v - vv) / .4).toFixed(2)}"/>`; });
+    } else {
+      const ph = age / dur, rise = sm(cl(ph / .25, 0, 1)) * (1 - sm(cl((ph - .7) / .3, 0, 1))), jet = cl((ph - .2) / .3, 0, 1), fade = 1 - cl((ph - .65) / .3, 0, 1);
+      s += `<path d="M${(ax - 46).toFixed(1)} ${(ay + 30 - 0).toFixed(1)}C${(ax - 40).toFixed(1)} ${(ay + 30 - 20 * rise).toFixed(1)} ${(ax - 10).toFixed(1)} ${(ay + 30 - 30 * rise).toFixed(1)} ${(ax + 6).toFixed(1)} ${(ay + 30 - 26 * rise).toFixed(1)}C${(ax + 24).toFixed(1)} ${(ay + 30 - 22 * rise).toFixed(1)} ${(ax + 40).toFixed(1)} ${(ay + 30 - 10 * rise).toFixed(1)} ${(ax + 50).toFixed(1)} ${(ay + 30).toFixed(1)}" fill="none" stroke="#6fa8ff" stroke-width="3" stroke-linecap="round" opacity="${(rise > 0.02 ? 1 : 0)}"/>`;
+      if (jet > 0) s += `<path d="M${(ax - 10).toFixed(1)} ${(ay + 4).toFixed(1)}C${(ax - 12).toFixed(1)} ${(ay - 20 * jet).toFixed(1)} ${(ax - 22).toFixed(1)} ${(ay - 36 * jet).toFixed(1)} ${(ax - 32).toFixed(1)} ${(ay - 44 * jet).toFixed(1)}M${(ax - 10).toFixed(1)} ${(ay + 4).toFixed(1)}C${(ax - 6).toFixed(1)} ${(ay - 20 * jet).toFixed(1)} ${(ax + 4).toFixed(1)} ${(ay - 36 * jet).toFixed(1)} ${(ax + 14).toFixed(1)} ${(ay - 44 * jet).toFixed(1)}" fill="none" stroke="#cfe3ff" stroke-width="2.6" stroke-linecap="round" opacity="${fade.toFixed(2)}"/>`;
+    }
+  }
+  // the yacht: upright, bobbing, flag streaming away from its heading
+  const [qx, qy] = X(pos[0], pos[1]), flip = (head[0] < 0 ? -1 : 1), bob = Math.sin(t * 2.2) * 3, tilt = Math.sin(t * 1.7) * 2.4;
+  s += `<g transform="translate(${qx.toFixed(1)} ${(qy + bob).toFixed(1)}) rotate(${tilt.toFixed(1)}) scale(${(0.95 * flip).toFixed(2)} 0.95) translate(0 -2)" fill="#05060d" stroke-linecap="round" stroke-linejoin="round">`
+    + `<path d="${YACHT_HULL}" stroke="${GOLD}" stroke-width="3.2"/><path d="${YACHT_SAILS}" stroke="${GOLD}" stroke-width="3.2"/><path d="${YACHT_FLAG}" fill="none" stroke="#ff4fd8" stroke-width="3.2"/></g>`;
+  document.getElementById('o').innerHTML = s;
+}
+window.setup = setup; window.frame = frame; window.getDur = () => DUR;
+</script></body></html>
