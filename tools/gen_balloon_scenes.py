@@ -57,7 +57,7 @@ def balloon(design, main, alt, delay0):
     return g + f'<path class="flame" d="{flame}" style="animation-delay:{delay0 + 1.5:.2f}s,{delay0 + 2.5:.2f}s"/>'
 
 
-def scene(sid, name, sub, elev, scale, ridge_seed, bals=None):
+def scene(sid, name, sub, elev, scale, ridge_seed, bals=None, dur=14.0):
     rnd = random.Random(ridge_seed)
     stars = ''.join(f'<circle class="star" cx="{rnd.randint(20, 1900)}" cy="{rnd.randint(20, 560)}" r="{rnd.choice((1, 1.2, 1.6, 2))}" '
                     f'style="animation-duration:{rnd.uniform(3, 7):.1f}s;animation-delay:-{rnd.uniform(0, 6):.1f}s"/>' for _ in range(90))
@@ -90,11 +90,11 @@ def scene(sid, name, sub, elev, scale, ridge_seed, bals=None):
 .rg{{fill:none;stroke-width:2;stroke-linejoin:round;opacity:0;animation:fi 1.4s ease-out both}}
 .flame{{fill:none;stroke:#ff9a3c;stroke-width:3;stroke-linejoin:round;opacity:0;transform-box:fill-box;transform-origin:50% 100%;animation:fi .8s ease-out both,flk 2.4s ease-in-out infinite alternate}}
 @keyframes flk{{from{{transform:scale(1,1)}}to{{transform:scale(1.08,1.14)}}}}
-.dr{{animation:dr 14s linear both}}@keyframes dr{{from{{transform:translate(0,0)}}to{{transform:translate(var(--dx),-26px)}}}}
+.dr{{animation:dr {dur}s linear both}}@keyframes dr{{from{{transform:translate(0,0)}}to{{transform:translate(var(--dx),-26px)}}}}
 .bob{{animation:bob 4s ease-in-out infinite alternate}}@keyframes bob{{from{{transform:translateY(-12px) rotate(-1.4deg)}}to{{transform:translateY(12px) rotate(1.4deg)}}}}
 .t{{fill:none;text-anchor:middle;opacity:0;animation:fi .9s ease-out both}}
 .star{{fill:#b9c9ff;opacity:.2;animation:tws 5s ease-in-out infinite alternate}}@keyframes tws{{from{{opacity:.1}}to{{opacity:.7}}}}
-.all{{animation:out .9s linear 13.1s both}}@keyframes out{{from{{opacity:1}}to{{opacity:0}}}}
+.all{{animation:out .9s linear {dur - 0.9:.1f}s both}}@keyframes out{{from{{opacity:1}}to{{opacity:0}}}}
 </style>
 </defs>
 <rect width="1920" height="1080" fill="#05060d"/>
@@ -110,6 +110,25 @@ def scene(sid, name, sub, elev, scale, ridge_seed, bals=None):
 '''
 
 
+BASE_BALS = [(300, 250, .52), (640, 150, .38), (920, 300, .85), (1250, 190, .5), (1560, 330, 1.0), (1790, 160, .36), (1080, 120, .3)]
+
+
+def europe_scenes(dur):
+    """all 20 European landmarks in the balloons-over-landscape layout"""
+    import gen_europe_overview as GO
+    out = {}
+    for s in ES.SITES:
+        w, h = GO.CITIES[s['id']][3], GO.CITIES[s['id']][4]
+        sc = min(1150 / w, 560 / h)
+        seed = sum(map(ord, s['id']))
+        r = random.Random(seed)
+        base = [(x, y, z) for (x, y, z) in BASE_BALS]
+        base[2] = (520 + (seed % 2) * 880, 300, .85)            # keep the big centre balloon off the monument's top
+        bals = [(max(70, min(1850, x + r.randint(-70, 70))), y + r.randint(-40, 50), z * r.uniform(.85, 1.15), (i + seed) % 7) for i, (x, y, z) in enumerate(base)]
+        out[s['id']] = (s['name'], s['country'], (lambda b=s['build']: b()[1]), sc, seed, bals, dur)
+    return out
+
+
 SCENES = {
     'cappadocia': ('CAPPADOCIA', 'GOREME · TURKIYE', lambda: WS.cappadocia(), 1.5, 11),
     'giza': ('PYRAMIDS OF GIZA', 'EGYPT', lambda: WS.giza(), 1.15, 12),
@@ -119,10 +138,15 @@ SCENES = {
 
 def main():
     os.makedirs(OUT, exist_ok=True)
-    want = sys.argv[1:] or list(SCENES)
-    for sid in want:
-        name, sub, el, sc, seed = SCENES[sid]
-        open(os.path.join(OUT, f'{sid}.svg'), 'w', encoding='utf-8').write(scene(sid, name, sub, el(), sc, seed))
+    want = sys.argv[1:]
+    allsc = dict(europe_scenes(13.6))
+    for sid, (name, sub, el, sc, seed) in SCENES.items():
+        allsc.setdefault(sid, (name, sub, el, sc, seed, None, 14.0))
+    for sid in want or list(allsc):
+        name, sub, el, sc, seed, bals, dur = allsc[sid]
+        folder = OUT if sid in SCENES and sid != 'rome' else os.path.join(OUT, 'europe')
+        os.makedirs(folder, exist_ok=True)
+        open(os.path.join(folder, f'{sid}.svg'), 'w', encoding='utf-8').write(scene(sid, name, sub, el(), sc, seed, bals, dur))
         print('wrote', sid)
 
 
