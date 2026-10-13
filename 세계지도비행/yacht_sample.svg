@@ -5,12 +5,12 @@
 <style>
 .d{fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;opacity:0;animation:draw 1.4s cubic-bezier(.12,.7,.3,1) both}
 @keyframes draw{0%{stroke-dashoffset:1;opacity:0}1%{opacity:1}100%{stroke-dashoffset:0;opacity:1}}
-.m{stroke:#35f3ff}.p{stroke:#ff4fd8}
+.m{stroke:#ffd166}.p{stroke:#ff4fd8}
 .drift{animation:drift 8s linear both}
 @keyframes drift{from{transform:translate(-170px,0)}to{transform:translate(170px,0)}}
 .bob{animation:bob 3.2s ease-in-out infinite alternate}
 @keyframes bob{from{transform:translateY(-4px) rotate(-2.2deg)}to{transform:translateY(4px) rotate(2.2deg)}}
-.sea{opacity:.28;animation:fade 1.5s ease-out both}
+.sea{opacity:.7;animation:fade 1.5s ease-out both}
 .wake{fill:none;stroke-width:1.6;stroke-linecap:round;opacity:0;animation:wake 3s ease-out 1.6s infinite}
 @keyframes wake{0%{opacity:0;transform:translateX(0)}20%{opacity:.7}100%{opacity:0;transform:translateX(-34px)}}
 .t{fill:none;stroke-width:1.6;text-anchor:middle;opacity:0;animation:fade .9s ease-out 2.4s both}
@@ -22,7 +22,7 @@
 <rect width="1920" height="1080" fill="#05060d"/>
 <g filter="url(#glow)">
   <!-- faint sea -->
-  <g class="sea" fill="none" stroke="#35f3ff" stroke-width="2" stroke-linecap="round">
+  <g class="sea" fill="none" stroke="#4a66b0" stroke-width="2" stroke-linecap="round">
     <path d="M300 640 q30 -14 60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0"/>
     <path d="M360 690 q30 -14 60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0"/>
     <path d="M420 740 q30 -14 60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0"/>
