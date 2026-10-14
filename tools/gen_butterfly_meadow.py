@@ -298,5 +298,6 @@ svg = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{
 </g>
 </svg>
 '''
-open(OUT, 'w', encoding='utf-8').write(svg)
-print('wrote', os.path.normpath(OUT), len(svg) // 1024, 'KB')
+if __name__ == '__main__':
+    open(OUT, 'w', encoding='utf-8').write(svg)
+    print('wrote', os.path.normpath(OUT), len(svg) // 1024, 'KB')
