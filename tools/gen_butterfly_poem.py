@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 """'A single butterfly' - a quiet, emotional 96 s laser-line film (loops).
-   0-16   dawn      the sun rises slowly, one flower opens
+   0-16   dawn      the light slowly comes up, one flower opens
   16-32   meeting   a lonely butterfly wanders in, hesitates, lands; ripples spread from the flower
   32-48   rest      it rests (slow wing beats), the meadow starts to bloom outward from the flower
   48-60   dance     the others are drawn in; butterflies circle the flower, leaving light-dust trails
   60-78   golden    the sky warms; two butterflies draw a heart in the air, the rest settle on flowers
-  78-96   goodbye   they fly into the sun and scatter into light, flowers close, one butterfly stays
+  78-96   goodbye   they fly up into the sky and scatter into light, flowers close, one butterfly stays
 usage: python3 tools/gen_butterfly_poem.py [seed] [--slow=1.0] [--laser]   -> flowers/butterfly_poem.svg
+--sun: draw the sun (off by default)
 --text: add Korean subtitles (for the rendered video; needs a Hangul-capable system font)
 --out=PATH: write somewhere else
 --laser: lines and points only on pure black (no glow, gradients, sun halo, pollen motes, tinted sky) -> butterfly_poem_laser.svg
@@ -24,6 +25,7 @@ K = next((float(a.split('=')[1]) for a in sys.argv if a.startswith('--slow=')), 
 CYC = T * K
 LASER = '--laser' in sys.argv
 TEXT = '--text' in sys.argv
+SUN = '--sun' in sys.argv      # off by default: the dark sky reads better without it
 SEED = int(sys.argv[1]) if len(sys.argv) > 1 and sys.argv[1].isdigit() else 5
 OUT = next((a.split('=', 1)[1] for a in sys.argv if a.startswith('--out=')), None) or os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'flowers', 'butterfly_poem_laser.svg' if LASER else 'butterfly_poem.svg')
 R = random.Random(SEED)
@@ -139,9 +141,10 @@ sun_kf = kfs([(0, 'transform:translateY(130px);opacity:0;color:#ffd7a0'), (2, 't
               (T, 'transform:translateY(130px);opacity:0;color:#ffd7a0')])
 rays = ''.join(f'M{sunx+58*math.cos(a):.1f} {suny+58*math.sin(a):.1f} L{sunx+86*math.cos(a):.1f} {suny+86*math.sin(a):.1f} '
                for a in [k * math.pi / 8 for k in range(16)])
-layers.append(f'<g class="k" style="opacity:0;animation-name:{sun_kf}"><g class="spin" style="transform-origin:{sunx}px {suny}px">'
-              f'<path class="sunr" d="{rays}"/></g><path class="sunr" d="{m.circ(sunx, suny, 40)}"/>'
-              f'<path class="sunr soft" d="{m.circ(sunx, suny, 50)}"/>{"" if LASER else f'<circle cx="{sunx}" cy="{suny}" r="200" fill="url(#sunglow)" style="stroke:none"/>'}</g>')
+if SUN:
+    layers.append(f'<g class="k" style="opacity:0;animation-name:{sun_kf}"><g class="spin" style="transform-origin:{sunx}px {suny}px">'
+        f'<path class="sunr" d="{rays}"/></g><path class="sunr" d="{m.circ(sunx, suny, 40)}"/>'
+        f'<path class="sunr soft" d="{m.circ(sunx, suny, 50)}"/>{"" if LASER else f'<circle cx="{sunx}" cy="{suny}" r="200" fill="url(#sunglow)" style="stroke:none"/>'}</g>')
 
 for i, (cxx, cyy, s) in enumerate([(150, 70, 1.0), (790, 105, .8)]):
     dur = (110 + i * 20) * K
@@ -229,17 +232,18 @@ for i, (px, ptop) in enumerate([perch_pts[0], perch_pts[1], perch_pts[3]]):
     layers.append(flyer(f'M{px:.0f} {cy+15*sc:.0f} C{px+30:.0f} {cy-140:.0f} {px+60:.0f} {cy-230:.0f} {px+110:.0f} {cy-300:.0f}', sc, [LILAC, ROSE, GOLD][i],
                         84.5 + i * 1.2, 8, beat=.9, ease='cubic-bezier(.6,0,.8,.6)', fade=1.2))
 
+TX, TY = (sunx, 272) if SUN else (690, 215)
 # 78-96 goodbye: the heart pair flies into the sun, shrinks, and scatters as light
 for ph, pal in ((14 / 16, GOLD), (22 / 16 % 1, ROSE)):
     x0, y0 = heart(ph * 2 * math.pi)
-    layers.append(flyer(f'M{x0:.0f} {y0:.0f} C{x0+160:.0f} {y0-90:.0f} 560 200 {sunx} 272', .55, pal, 78, 12, beat=.8,
+    layers.append(flyer(f'M{x0:.0f} {y0:.0f} C{x0+160:.0f} {y0-90:.0f} 560 200 {TX} {TY}', .55, pal, 78, 12, beat=.8,
                         ease='cubic-bezier(.4,0,.6,1)', shrink=True, fade=.8))
 for k in range(18):
     ang = k * 2 * math.pi / 18 + R.uniform(-.1, .1)
     r = R.uniform(70, 150)
     nm = kfs([(0, 'transform:translate(0px,0px);opacity:0'), (90, 'transform:translate(0px,0px);opacity:0'), (90.6, 'transform:translate(0px,0px);opacity:1'),
               (95, f'transform:translate({r*math.cos(ang):.0f}px,{r*math.sin(ang)*.8-30:.0f}px);opacity:0')])
-    layers.append(f'<circle class="k spark" style="opacity:0;animation-name:{nm}" cx="{sunx}" cy="274" r="{R.choice([1.6, 2.2, 2.8])}"/>')
+    layers.append(f'<circle class="k spark" style="opacity:0;animation-name:{nm}" cx="{TX}" cy="{TY+2}" r="{R.choice([1.6, 2.2, 2.8])}"/>')
 # the first butterfly comes back and stays
 layers.append(f'<g class="k" style="opacity:0;animation-name:{kfs([(0, "opacity:0"), (84, "opacity:0"), (86, "opacity:1"), (92.5, "opacity:1"), (95.4, "opacity:0")])}"><g transform="translate({CX} {cy1:.0f}) scale({sc1})" style="{pv(GOLD)}"><g class="bobS"><g class="flapS">{WING}</g><g transform="scale(-1 1)"><g class="flapS">{WING}</g></g>{BODY}</g></g></g>')
 
