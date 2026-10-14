@@ -6,7 +6,8 @@
   48-60   dance     the others are drawn in; butterflies circle the flower, leaving light-dust trails
   60-78   golden    the sky warms; two butterflies draw a heart in the air, the rest settle on flowers
   78-96   goodbye   they fly into the sun and scatter into light, flowers close, one butterfly stays
-usage: python3 tools/gen_butterfly_poem.py [seed] [--slow=1.0]   -> flowers/butterfly_poem.svg
+usage: python3 tools/gen_butterfly_poem.py [seed] [--slow=1.0] [--laser]   -> flowers/butterfly_poem.svg
+--laser: lines and points only on pure black (no glow, gradients, sun halo, pollen motes, tinted sky) -> butterfly_poem_laser.svg
 """
 import math
 import os
@@ -19,8 +20,9 @@ import gen_butterfly_meadow as m  # noqa: E402
 W, H, T = m.W, m.H, 96.0
 K = next((float(a.split('=')[1]) for a in sys.argv if a.startswith('--slow=')), 1.0)
 CYC = T * K
+LASER = '--laser' in sys.argv
 SEED = int(sys.argv[1]) if len(sys.argv) > 1 and sys.argv[1].isdigit() else 5
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'flowers', 'butterfly_poem.svg')
+OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'flowers', 'butterfly_poem_laser.svg' if LASER else 'butterfly_poem.svg')
 R = random.Random(SEED)
 KFS = []
 
@@ -136,7 +138,7 @@ rays = ''.join(f'M{sunx+58*math.cos(a):.1f} {suny+58*math.sin(a):.1f} L{sunx+86*
                for a in [k * math.pi / 8 for k in range(16)])
 layers.append(f'<g class="k" style="opacity:0;animation-name:{sun_kf}"><g class="spin" style="transform-origin:{sunx}px {suny}px">'
               f'<path class="sunr" d="{rays}"/></g><path class="sunr" d="{m.circ(sunx, suny, 40)}"/>'
-              f'<path class="sunr soft" d="{m.circ(sunx, suny, 50)}"/><circle cx="{sunx}" cy="{suny}" r="150" fill="url(#sunglow)" style="stroke:none"/></g>')
+              f'<path class="sunr soft" d="{m.circ(sunx, suny, 50)}"/>{"" if LASER else f'<circle cx="{sunx}" cy="{suny}" r="150" fill="url(#sunglow)" style="stroke:none"/>'}</g>')
 
 for i, (cxx, cyy, s) in enumerate([(150, 70, 1.0), (790, 105, .8)]):
     dur = (110 + i * 20) * K
@@ -239,7 +241,7 @@ for k in range(18):
 layers.append(perched(CX, cy1, sc1, GOLD, 84, 94.5))
 
 # ---------- floating light motes (always, very gentle) ----------
-motes = ''.join(
+motes = '' if LASER else ''.join(
     f'<circle class="mote" cx="{R.uniform(20, 940):.0f}" cy="{R.uniform(200, 520):.0f}" r="{R.uniform(1, 2.4):.1f}" '
     f'style="--md:{R.uniform(11, 22)*K:.1f}s;--mdl:-{R.uniform(0, 20):.1f}s;--dx:{R.uniform(-40, 50):.0f}px;--dy:-{R.uniform(60, 150):.0f}px;'
     f'fill:{R.choice(["#ffe9b0", "#ffd1e0", "#ffe9b0"])}"/>' for _ in range(22))
@@ -247,6 +249,11 @@ motes = ''.join(
 cam = kfs([(0, 'transform:scale(1) translate(0px,0px)'), (48, 'transform:scale(1.045) translate(-6px,-4px)'), (T, 'transform:scale(1) translate(0px,0px)')])
 warm = kfs([(0, 'opacity:0'), (50, 'opacity:0'), (66, 'opacity:.6'), (84, 'opacity:.6'), (95, 'opacity:0')])
 dawn = kfs([(0, 'opacity:0'), (3, 'opacity:0'), (10, 'opacity:.45'), (20, 'opacity:0')])
+
+BGLAYERS = (f'<rect width="{W}" height="{H}" fill="#000"/>' if LASER else
+            f'<rect width="{W}" height="{H}" fill="url(#bg)"/>\n<rect class="k" width="{W}" height="{H}" fill="url(#dawn)" style="opacity:0;animation-name:{dawn}"/>\n'
+            f'<rect class="k" width="{W}" height="{H}" fill="url(#warm)" style="opacity:0;animation-name:{warm}"/>')
+GLOW = '' if LASER else ' filter="url(#glow)"'
 
 svg = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}">
 <title>A single butterfly - laser line art</title>
@@ -289,10 +296,8 @@ svg = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{
 {chr(10).join(KFS)}
 </style>
 </defs>
-<rect width="{W}" height="{H}" fill="url(#bg)"/>
-<rect class="k" width="{W}" height="{H}" fill="url(#dawn)" style="opacity:0;animation-name:{dawn}"/>
-<rect class="k" width="{W}" height="{H}" fill="url(#warm)" style="opacity:0;animation-name:{warm}"/>
-<g filter="url(#glow)"><g class="cam">
+{BGLAYERS}
+<g{GLOW}><g class="cam">
 {''.join(layers)}
 {motes}
 </g></g>
