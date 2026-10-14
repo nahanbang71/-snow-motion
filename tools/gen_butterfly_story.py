@@ -4,7 +4,8 @@
   Act 2 14-28 s   a new flock glides down and lands on the big cosmos (slow wing beats)
   Act 3 28-42 s   wind rises: streaks, flowers bend, petals blow right, butterflies lift off and leave
 usage: python3 tools/gen_butterfly_story.py [seed]           -> flowers/butterfly_story.svg   (42 s)
-       python3 tools/gen_butterfly_story.py [seed] --full    -> flowers/butterfly_full.svg    (56 s)
+       python3 tools/gen_butterfly_story.py [seed] --full    -> flowers/butterfly_full.svg    (70 s)
+--full also appends a close-up act (+14 s): big flowers filling the frame, a sun, butterflies circling.
 --full prepends an opening act (14 s): mountains / pine trees / lake behind the meadow, one butterfly
 rests on a cosmos, then lifts off and flies away into Act 1; the landscape fades out as Act 1 begins.
 """
@@ -20,7 +21,8 @@ W, H = m.W, m.H
 FULL = '--full' in sys.argv
 ARGS = [a for a in sys.argv[1:] if not a.startswith('--')]
 OFF = 14.0 if FULL else 0.0
-T = 42.0 + OFF
+CL = 14.0 if FULL else 0.0
+T = 42.0 + OFF + CL
 SEED = int(ARGS[0]) if ARGS else 11
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'flowers', 'butterfly_full.svg' if FULL else 'butterfly_story.svg')
 R = random.Random(SEED)
@@ -65,7 +67,8 @@ BIG = [(150, 1.0), (390, .85), (640, .95), (850, .8)]
 perch = []
 
 
-def sway_wrap(i0, x):
+def sway_wrap(i0, x, tgt=None):
+    S = tgt or globals()['S']
     amp = R.uniform(1.2, 3.6) * (-1 if R.random() < .5 else 1)
     dur = R.uniform(2.6, 5.4)
     S.els[i0:] = [f'<g class="sway" style="--sa:{amp:.2f}deg;--sd:{dur:.2f}s;--sl:-{R.uniform(0, dur):.2f}s;'
@@ -190,6 +193,63 @@ if FULL:
     out.append(flyer(f'M{px:.0f} {cy+10:.0f} C{px+70:.0f} {cy-140:.0f} {px+330:.0f} {cy-70:.0f} 1080 140', sc, pal, 11.4, 9.5, shift=False))
     bd_fade = kfs([(0, 'opacity:1'), (12.2, 'opacity:1'), (14.4, 'opacity:0'), (T, 'opacity:0')], False)
 
+# ---------- closing act (--full): close-up of big flowers, sun, circling butterflies ----------
+closeup = []
+close_win = ''
+if FULL:
+    A4 = 42.0 + OFF   # = 56
+
+    class Cyc(m.Scene):
+        def path(self, d, cls, s, t, col=None):
+            c = f';stroke:{col}' if col else ''
+            nm = kfs([(0, 'stroke-dashoffset:1'), (A4 + s, 'stroke-dashoffset:1'), (A4 + s + t, 'stroke-dashoffset:0'), (T, 'stroke-dashoffset:0')], False)
+            self.els.append(f'<path class="d0 k {cls}" pathLength="1" style="animation-name:{nm}{c}" d="{d}"/>')
+
+        def dot(self, x, y, r, cls, s, col=None):
+            c = f';fill:{col}' if col else ''
+            nm = kfs([(0, 'opacity:0'), (A4 + s, 'opacity:0'), (A4 + s + .5, 'opacity:1'), (T, 'opacity:1')], False)
+            self.els.append(f'<circle class="k {cls}" style="opacity:0;animation-name:{nm}{c}" cx="{x:.1f}" cy="{y:.1f}" r="{r}"/>')
+
+    C = Cyc(0)
+    for fn, args in [(m.lupine, (90, 340, 170, '#a78bff', 1.4)), (m.lupine, (900, 330, 190, '#8f9bff', 1.6)),
+                     (m.cosmos, (300, 300, 1.45, '#ff6fb5', .5)), (m.daisy, (690, 350, 1.8, '#ffffff', 1.0)),
+                     (m.cosmos, (520, 440, .75, '#ffb3da', 1.8)), (m.bud, (840, 450, 1.0, '#ff9fd0', 2.0)),
+                     (m.tiny, (440, 500, 1.4, '#ffe45a', 2.2)), (m.tiny, (610, 510, 1.3, '#7ad8ff', 2.3)),
+                     (m.tiny, (190, 480, 1.3, '#ffe45a', 2.4)), (m.daisy, (130, 470, .9, '#fff4a0', 2.0))]:
+        i0 = len(C.els)
+        fn(C, R, *args)
+        sway_wrap(i0, args[0], C)
+    # sun with slowly turning rays
+    sunx, suny = 800, 100
+    rays = ''.join(f'M{sunx+58*math.cos(a):.1f} {suny+58*math.sin(a):.1f} L{sunx+88*math.cos(a):.1f} {suny+88*math.sin(a):.1f} '
+                   for a in [k * math.pi / 6 for k in range(12)])
+    nm = kfs([(0, 'stroke-dashoffset:1'), (A4 + .6, 'stroke-dashoffset:1'), (A4 + 2.6, 'stroke-dashoffset:0'), (T, 'stroke-dashoffset:0')], False)
+    C.els.append(f'<g class="spin" style="transform-origin:{sunx}px {suny}px"><path class="d0 k sunr" pathLength="1" style="animation-name:{nm}" d="{rays}"/></g>')
+    nm = kfs([(0, 'stroke-dashoffset:1'), (A4 + .4, 'stroke-dashoffset:1'), (A4 + 1.8, 'stroke-dashoffset:0'), (T, 'stroke-dashoffset:0')], False)
+    C.els.append(f'<path class="d0 k sunr" pathLength="1" style="animation-name:{nm}" d="{m.circ(sunx, suny, 40)}"/>')
+    # butterflies circling the big flowers on closed lissajous loops
+    for i in range(3):
+        cx0, cy0 = 480 + R.uniform(-40, 40), 270 + R.uniform(-20, 20)
+        ax, ay = R.uniform(260, 340), R.uniform(90, 140)
+        ph = R.uniform(0, 6.28)
+        pts = [(cx0 + ax * math.cos(t + ph), cy0 + ay * math.sin(2 * t + ph * .5) * (.6 if i else 1) + 20 * math.sin(t)) for t in
+               [k * 2 * math.pi / 90 for k in range(91)]]
+        d = 'M' + ' L'.join(f'{x:.0f} {y:.0f}' for x, y in pts) + ' Z'
+        dur = R.uniform(10, 15)
+        sc = R.uniform(.5, .8)
+        pal = m.BFLY[i % 3]
+        C.els.append(f'<g class="orb" style="offset-path:path(\'{d}\');--od:{dur:.1f}s;--ol:-{R.uniform(0, dur):.1f}s">'
+                     f'<g transform="scale({sc:.2f})" style="--w:{pal[0]};--b:{pal[1]};--e:{pal[2]}">'
+                     f'{bf_body("beat", round(R.uniform(.45, .75), 2), R.uniform(0, .5))}</g></g>')
+    for j in range(7):
+        sx = R.uniform(60, 900)
+        d = f'M{sx:.0f} -20 C{sx+R.uniform(-120,120):.0f} 120 {sx+R.uniform(-120,120):.0f} 260 {sx+R.uniform(-60,60):.0f} 560'
+        dur = R.uniform(7, 11)
+        C.els.append(f'<path class="petal orb" style="opacity:1;offset-path:path(\'{d}\');--od:{dur:.1f}s;--ol:-{R.uniform(0, dur):.1f}s" '
+                     f'd="M0 0 C6 -7 15 -5 18 2 C13 9 4 9 0 0 Z"/>')
+    close_win = window(A4 + .3, T - 1.2, 1.0, False)
+    closeup = C.els
+
 # wind streaks (act 3) and petals
 streaks = []
 for j, (y, t0) in enumerate([(120, 28.6), (210, 30.6), (300, 32.4), (170, 34.2)]):
@@ -204,9 +264,15 @@ for j in range(16):
                f'd="M0 0 C6 -7 15 -5 18 2 C13 9 4 9 0 0 Z"/>')
 
 # wind bend for the whole meadow
-wind = kfs([(0, 'transform:skewX(0deg)'), (28, 'transform:skewX(0deg)'), (30, 'transform:skewX(-4deg)'), (32, 'transform:skewX(-1deg)'),
-            (34, 'transform:skewX(-5deg)'), (36.5, 'transform:skewX(-2deg)'), (39, 'transform:skewX(-4deg)'), (41.5, 'transform:skewX(0deg)'),
-            (T, 'transform:skewX(0deg)')])
+def sk(deg, op=1):
+    return f'transform:skewX({deg}deg);opacity:{op}'
+
+
+o = OFF
+wpts = [(0, sk(0)), (28 + o, sk(0)), (30 + o, sk(-4)), (32 + o, sk(-1)), (34 + o, sk(-5)), (36.5 + o, sk(-2)), (39 + o, sk(-4)),
+        (41.2 + o, sk(0))]
+wpts += [(42.8 + o, sk(0, 0)), (T - 2.2, sk(0, 0)), (T, sk(0, 1))] if FULL else [(41.5 + o, sk(0)), (T, sk(0))]
+wind = kfs(wpts, False)
 
 clouds = []
 for i in range(5):
@@ -234,6 +300,8 @@ svg = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{
 .wind{{fill:none;stroke:#bfe9ff;stroke-width:2;stroke-linecap:round;stroke-dasharray:.2 2;stroke-dashoffset:.2}}
 .d0{{fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1}}
 .mtn{{stroke:#7aa8ff;stroke-width:2.2}} .tree{{stroke:#3df2c0;stroke-width:1.8}} .lake{{stroke:#5ad7ff;stroke-width:1.6}}
+.sunr{{stroke:#ffd23f;stroke-width:2.4}} .spin{{animation:spin 40s linear infinite}}
+.orb{{offset-rotate:auto 90deg;animation:orbit var(--od) linear var(--ol) infinite}}
 .k,.mv,.meadow{{animation-duration:{T:.0f}s;animation-timing-function:linear;animation-iteration-count:infinite}}
 .mv{{opacity:0;offset-rotate:auto 90deg}}
 .meadow{{transform-origin:0 {H}px;animation-name:{wind}}}
@@ -242,6 +310,7 @@ svg = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{
 .bobS{{animation:bob 3.2s ease-in-out var(--bl) infinite}}
 .sway{{animation:sway var(--sd) ease-in-out var(--sl) infinite}}
 .drift{{animation:drift var(--dd) linear var(--dl) infinite}}
+@keyframes spin{{to{{transform:rotate(360deg)}}}} @keyframes orbit{{from{{offset-distance:0%}}to{{offset-distance:100%}}}}
 @keyframes draw{{to{{stroke-dashoffset:0}}}} @keyframes fade{{to{{opacity:1}}}}
 @keyframes flap{{0%,100%{{transform:scaleX(1)}}50%{{transform:scaleX(.2)}}}}
 @keyframes flapS{{0%,100%{{transform:scaleX(1)}}50%{{transform:scaleX(.5)}}}}
@@ -256,6 +325,7 @@ svg = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{
 {''.join(clouds)}
 <g class="k" style="animation-name:{bd_fade}">{''.join(backdrop)}</g>
 <g class="meadow">{''.join(S.els)}</g>
+<g class="k" style="opacity:0;animation-name:{close_win}">{''.join(closeup)}</g>
 {''.join(streaks)}
 {''.join(out)}
 </g>
