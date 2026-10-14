@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""3-minute (180 s) looping laser line-art film: butterflies, flowers, clouds. All times are seconds into the loop.
+"""Looping laser line-art film: butterflies, flowers, clouds. Scene times below are in "story seconds" (180 s);
+every motion is slowed by SLOW (default 1.25) so the real length is 180*SLOW = 225 s (3:45).
    0- 14  A  lake landscape (mountains / pines / river), butterfly rests on a cosmos, lifts off
   14- 28  B  five butterflies cross the sky, left -> right
   28- 42  C  four butterflies glide down and land on the cosmos
@@ -11,7 +12,7 @@
  130-150  I  whirlwind: petals spiral, butterflies rise in spirals
  150-165  J  six butterflies come back down to the meadow
  165-180  K  farewell: they rise to a small sun, shrinking away -> loops to A
-usage: python3 tools/gen_butterfly_film.py [seed]   -> flowers/butterfly_film.svg
+usage: python3 tools/gen_butterfly_film.py [seed] [--slow=1.25]   -> flowers/butterfly_film.svg
 """
 import math
 import os
@@ -22,6 +23,8 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import gen_butterfly_meadow as m  # noqa: E402
 
 W, H, T = m.W, m.H, 180.0
+K = next((float(a.split('=')[1]) for a in sys.argv if a.startswith('--slow=')), 1.25)
+CYC = T * K          # real length of one loop in seconds
 SEED = int(sys.argv[1]) if len(sys.argv) > 1 and sys.argv[1].isdigit() else 21
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'flowers', 'butterfly_film.svg')
 R = random.Random(SEED)
@@ -94,7 +97,7 @@ class Once(m.Scene):
 def sway_wrap(S, i0, x):
     amp = R.uniform(1.2, 3.6) * (-1 if R.random() < .5 else 1)
     dur = R.uniform(2.6, 5.4)
-    S.els[i0:] = [f'<g class="sway" style="--sa:{amp:.2f}deg;--sd:{dur:.2f}s;--sl:-{R.uniform(0, dur):.2f}s;'
+    S.els[i0:] = [f'<g class="sway" style="--sa:{amp:.2f}deg;--sd:{dur*K:.2f}s;--sl:-{R.uniform(0, dur):.2f}s;'
                   f'transform-origin:{x:.1f}px {H}px">' + ''.join(S.els[i0:]) + '</g>']
 
 
@@ -105,7 +108,7 @@ BODY = ('<path class="body" d="M0 -24 C-5 -20 -5 -10 0 -6 C5 -10 5 -20 0 -24 Z M
 
 
 def bf_body(cls, bd, bl):
-    return (f'<g class="{cls}" style="--bd:{bd}s;--bl:-{bl:.2f}s"><g class="flap">{WING}</g>'
+    return (f'<g class="{cls}" style="--bd:{bd*K:.2f}s;--bl:-{bl:.2f}s"><g class="flap">{WING}</g>'
             f'<g transform="scale(-1 1)"><g class="flap">{WING}</g></g>{BODY}</g>')
 
 
@@ -170,13 +173,13 @@ for k, (bx, sc) in enumerate(BIG):
     m.cosmos(MS, R, bx, 462, .8 * sc, R.choice(m.PINKS), .2 + k * .4)
     perch.append((bx, 462 - 100 * .8 * sc))
     sway_wrap(MS, i0, bx)
-n = 18
+n = 11
 for i in range(n):
     x = 15 + (W - 30) * (i + .5) / n + R.uniform(-15, 15)
     if any(abs(x - bx) < 75 for bx, _ in BIG):
         continue
     i0, d = len(MS.els), 1.0 + i * .12
-    kind = R.choice(['daisy', 'daisy', 'lupine', 'bud', 'tiny', 'tiny', 'cosmos'])
+    kind = R.choice(['daisy', 'daisy', 'lupine', 'bud', 'tiny', 'cosmos'])
     col = R.choice(R.choice([m.PINKS, m.WARM, m.COOL, m.WHITE]))
     if kind == 'cosmos':
         m.cosmos(MS, R, x, R.uniform(470, 500), R.uniform(.3, .45), col, d)
@@ -237,8 +240,8 @@ landscape(C1, [(228, 250, 720), (242, 290, 680), (256, 330, 640)])
 layers['A'] = (kfs([(0, 'opacity:1'), (12.2, 'opacity:1'), (14.4, 'opacity:0'), (T, 'opacity:0')]), C1.els)
 
 C2 = Cyc([(70, 88.5)])
-landscape(C2, [(236 + 22 * k, 0 + 6 * k, 960 - 6 * k) for k in range(10)])
-for j in range(7):          # reeds along the bottom corners
+landscape(C2, [(236 + 22 * k, 0 + 6 * k, 960 - 6 * k) for k in range(7)])
+for j in range(4):          # reeds along the bottom corners
     for side in (0, 1):
         rx = (28 + j * 24) if side == 0 else (W - 28 - j * 24)
         h = R.uniform(60, 130)
@@ -249,11 +252,9 @@ layers['F'] = (multi_window([(70, 88.5)], 1.0, 1.5), C2.els)
 
 # ---------- E/H: close-up flowers + sun ----------
 C3 = Cyc([(56, 70), (110, 130)])
-for fn, args in [(m.lupine, (90, 340, 170, '#a78bff', 1.4)), (m.lupine, (900, 330, 190, '#8f9bff', 1.6)),
+for fn, args in [(m.lupine, (900, 340, 170, '#8f9bff', 1.4)),
                  (m.cosmos, (300, 300, 1.45, '#ff6fb5', .5)), (m.daisy, (690, 350, 1.8, '#ffffff', 1.0)),
-                 (m.cosmos, (520, 440, .75, '#ffb3da', 1.8)), (m.bud, (840, 450, 1.0, '#ff9fd0', 2.0)),
-                 (m.tiny, (440, 500, 1.4, '#ffe45a', 2.2)), (m.tiny, (610, 510, 1.3, '#7ad8ff', 2.3)),
-                 (m.tiny, (190, 480, 1.3, '#ffe45a', 2.4)), (m.daisy, (130, 470, .9, '#fff4a0', 2.0))]:
+                 (m.cosmos, (520, 450, .7, '#ffb3da', 1.8)), (m.tiny, (150, 490, 1.4, '#ffe45a', 2.2)), (m.tiny, (800, 500, 1.3, '#7ad8ff', 2.3))]:
     i0 = len(C3.els)
     fn(C3, R, *args)
     sway_wrap(C3, i0, args[0])
@@ -287,84 +288,82 @@ cy = ptop - 48 * .72
 bfl.append(perched(px, cy, .72, pal_of(0), 3.5, 11.4, 0))
 bfl.append(flyer(f'M{px:.0f} {cy+10:.0f} C{px+70:.0f} {cy-140:.0f} {px+330:.0f} {cy-70:.0f} 1080 140', .72, pal_of(0), 11.4, 9.5))
 # B: crossing
-for i in range(5):
-    sc = R.uniform(.35, .8)
-    bfl.append(flyer(fmt(wpts(R.uniform(80, 300), R.uniform(80, 300), 50)), sc, pal_of(i), 14.3 + i * 1.3, R.uniform(9, 12.5) / (.6 + sc)))
+for i, yb in enumerate([100, 190, 280]):
+    sc = R.uniform(.45, .8)
+    bfl.append(flyer(fmt(wpts(yb, yb + R.uniform(-20, 20), 22)), sc, pal_of(i), 14.3 + i * 2.2, R.uniform(10, 13) / (.6 + sc)))
 # C/D: landing, rest, lift
-for i, (px, ptop) in enumerate(perch):
-    bfl += land_and_leave(px, ptop, R.uniform(.55, .75), pal_of(i + 1), 28.4 + i * 1.5, 43.6 + i * .8, i)
+for i, (px, ptop) in enumerate([perch[0], perch[2], perch[3]]):
+    bfl += land_and_leave(px, ptop, R.uniform(.55, .75), pal_of(i + 1), 28.4 + i * 1.8, 43.6 + i * .9, i)
 # D: wind streaks + petals
-for t0, y in [(42.6, 120), (44.6, 210), (46.4, 300), (48.2, 170)]:
+for t0, y in [(42.6, 130), (45.4, 250), (48.0, 180)]:
     p = fmt(wpts(y, y + R.uniform(-30, 30), 25, -50, 1010, 5))
     nm = kfs([(0, 'stroke-dashoffset:.2'), (t0, 'stroke-dashoffset:.2'), (t0 + 3.6, 'stroke-dashoffset:-1'), (T, 'stroke-dashoffset:-1')])
     bfl.append(f'<path class="wind k" pathLength="1" style="animation-name:{nm}" d="{p}"/>')
 PET = 'M0 0 C6 -7 15 -5 18 2 C13 9 4 9 0 0 Z'
-for j in range(16):
+for j in range(8):
     sx, sy = R.uniform(40, 800), R.uniform(380, 470)
     bfl.append(f'<path class="petal mv" style="offset-path:path(\'{fmt(wpts(sy, sy - R.uniform(80, 280), 60, sx, sx + R.uniform(300, 600), 3))}\');'
-               f'animation-name:{motion(42.8 + j * .75, R.uniform(5, 8), .6)}" d="{PET}"/>')
+               f'animation-name:{motion(43.2 + j * 1.3, R.uniform(5, 8), .6)}" d="{PET}"/>')
 # E: circling butterflies + falling petals (inside own window group)
 orb = []
-for i in range(3):
+for i in range(2):
     cx0, cy0 = 480 + R.uniform(-40, 40), 270 + R.uniform(-20, 20)
     ax, ay, ph = R.uniform(260, 340), R.uniform(90, 140), R.uniform(0, 6.28)
     pts = [(cx0 + ax * math.cos(t + ph), cy0 + ay * math.sin(2 * t + ph * .5) * (.6 if i else 1) + 20 * math.sin(t))
            for t in [k * 2 * math.pi / 90 for k in range(91)]]
     dur, sc, pal = R.uniform(10, 15), R.uniform(.5, .8), pal_of(i)
-    orb.append(f'<g class="orb" style="offset-path:path(\'{lpath(pts)} Z\');--od:{dur:.1f}s;--ol:-{R.uniform(0, dur):.1f}s">'
+    orb.append(f'<g class="orb" style="offset-path:path(\'{lpath(pts)} Z\');--od:{dur*K:.1f}s;--ol:-{R.uniform(0, dur):.1f}s">'
                f'<g transform="scale({sc:.2f})" style="--w:{pal[0]};--b:{pal[1]};--e:{pal[2]}">{bf_body("beat", round(R.uniform(.45, .75), 2), R.uniform(0, .5))}</g></g>')
-for j in range(7):
+for j in range(4):
     sx = R.uniform(60, 900)
     d = f'M{sx:.0f} -20 C{sx+R.uniform(-120,120):.0f} 120 {sx+R.uniform(-120,120):.0f} 260 {sx+R.uniform(-60,60):.0f} 560'
     dur = R.uniform(7, 11)
-    orb.append(f'<path class="petal orb" style="opacity:1;offset-path:path(\'{d}\');--od:{dur:.1f}s;--ol:-{R.uniform(0, dur):.1f}s" d="{PET}"/>')
+    orb.append(f'<path class="petal orb" style="opacity:1;offset-path:path(\'{d}\');--od:{dur*K:.1f}s;--ol:-{R.uniform(0, dur):.1f}s" d="{PET}"/>')
 bfl.append(f'<g class="k" style="opacity:0;animation-name:{window(56.4, 68.6, 1.0)}">{"".join(orb)}</g>')
 # F: right -> left over the river, with reflections (water line y=228 mirrored)
 YW = 228
-for i in range(5):
-    sc = R.uniform(.4, .75)
-    pts = wpts(R.uniform(120, 200), R.uniform(120, 200), 35, 1080, -120)
-    st, du = 71 + i * 1.7, R.uniform(10, 14) / (.6 + sc)
+for i, yb in enumerate([105, 165, 205]):
+    sc = R.uniform(.45, .7)
+    pts = wpts(yb, yb + R.uniform(-15, 15), 20, 1080, -120)
+    st, du = 71 + i * 2.6, R.uniform(10, 14) / (.6 + sc)
     bfl.append(flyer(fmt(pts), sc, pal_of(i + 2), st, du))
     bfl.append(flyer(fmt([(x, 2 * YW - y) for x, y in pts]), sc * .9, pal_of(i + 2), st, du, refl=True))
 # G: V formation + three small crossers
 lead = wpts(330, 300, 30, -120, 1080, 4)
-for k in range(7):
+for k in range(5):
     row, side = (k + 1) // 2, (-1 if k % 2 else 1)
     dx, dy = -75 * row, 48 * row * side if k else 0
     bfl.append(flyer(fmt([(x + dx, y + dy) for x, y in lead]), .6 if k else .72, pal_of(k), 92, 12.5))
-for i in range(3):
-    bfl.append(flyer(fmt(wpts(R.uniform(100, 170), R.uniform(100, 170), 30)), R.uniform(.35, .5), pal_of(i), 99 + i * 1.6, 9))
 # H: land on the close-up flowers
 for i, (px, ptop, sc) in enumerate([(300, 150, .95), (400, 225, .6), (690, 252, .75)]):
     bfl += land_and_leave(px, ptop, sc, pal_of(i), 111.5 + i * 1.7, 124.2 + i * .9, i, adur=4.6, xdur=6, y0=R.uniform(60, 120))
 # I: whirlwind
-for j in range(26):
+for j in range(12):
     th0 = R.uniform(0, 6.28)
     rr0, rr1 = R.uniform(20, 60), R.uniform(200, 330)
     pts = [(480 + (rr0 + (rr1 - rr0) * u) * math.cos(th0 + u * 7), 300 + (rr0 + (rr1 - rr0) * u) * .45 * math.sin(th0 + u * 7) - u * 60)
            for u in [k / 40 for k in range(41)]]
-    bfl.append(f'<path class="petal mv" style="offset-path:path(\'{lpath(pts)}\');animation-name:{motion(131 + j * .55, R.uniform(6, 9), .6)}" d="{PET}"/>')
-for i in range(4):
-    th0 = i * 1.57
+    bfl.append(f'<path class="petal mv" style="offset-path:path(\'{lpath(pts)}\');animation-name:{motion(131 + j * 1.2, R.uniform(6, 9), .6)}" d="{PET}"/>')
+for i in range(3):
+    th0 = i * 2.09
     pts = [(480 + (110 + 90 * u) * math.cos(th0 + u * 9.5), 430 - u * 380 + 40 * math.sin(th0 + u * 9.5)) for u in [k / 80 for k in range(81)]]
-    bfl.append(flyer(lpath(pts), R.uniform(.45, .65), pal_of(i), 132 + i * 1.3, 11, shrink=False))
-for j, (cx_, cy_, rx_, ry_) in enumerate([(480, 300, 300, 90), (480, 280, 230, 70), (480, 320, 360, 110)]):
+    bfl.append(flyer(lpath(pts), R.uniform(.45, .65), pal_of(i), 132 + i * 2.2, 11, shrink=False))
+for j, (cx_, cy_, rx_, ry_) in enumerate([(480, 300, 300, 90), (480, 320, 360, 110)]):
     nm = kfs([(0, 'stroke-dashoffset:.2'), (131 + j * 1.6, 'stroke-dashoffset:.2'), (131 + j * 1.6 + 6, 'stroke-dashoffset:-1'), (T, 'stroke-dashoffset:-1')])
     bfl.append(f'<path class="wind k" pathLength="1" style="animation-name:{nm}" d="M{cx_-rx_} {cy_} A{rx_} {ry_} 0 1 1 {cx_+rx_} {cy_} A{rx_} {ry_} 0 1 1 {cx_-rx_} {cy_}"/>')
 # J + K: come back, rest, then rise to the sun and shrink away
-spots = perch + R.sample(extra_perch, min(2, len(extra_perch)))
+spots = perch
 for i, (px, ptop) in enumerate(spots):
-    bfl += land_and_leave(px, ptop, R.uniform(.5, .7), pal_of(i + 2), 150.4 + i * 1.0, 165.4 + i * .65, i, dest=(480 + R.uniform(-30, 30), 175),
+    bfl += land_and_leave(px, ptop, R.uniform(.5, .7), pal_of(i + 2), 150.4 + i * 1.4, 165.4 + i * .9, i, dest=(480 + R.uniform(-30, 30), 175),
                           shrink=True, adur=4.5, xdur=9)
 
 clouds = []
-for i in range(5):
-    s = R.uniform(.8, 1.3)
-    y = 45 + i * 24 + R.uniform(-6, 6)
+for i in range(3):
+    s = R.uniform(.9, 1.3)
+    y = 45 + i * 40 + R.uniform(-6, 6)
     dur = R.uniform(55, 90)
-    clouds.append(f'<g transform="translate(0 {y:.0f})"><g class="drift" style="--dd:{dur:.0f}s;--dl:-{R.uniform(0, dur):.0f}s">'
-                  f'<path class="d1 cloud" pathLength="1" style="--s:{.3 + i*.3:.1f}s;--t:1.4s" d="{m.cloud_d(s)}"/></g></g>')
+    clouds.append(f'<g transform="translate(0 {y:.0f})"><g class="drift" style="--dd:{dur*K:.0f}s;--dl:-{R.uniform(0, dur):.0f}s">'
+                  f'<path class="d1 cloud" pathLength="1" style="--s:{.3 + i*.5:.1f}s;--t:1.4s" d="{m.cloud_d(s)}"/></g></g>')
 
 lay = ''.join(f'<g class="k" style="opacity:0;animation-name:{nm}">{"".join(els)}</g>' for nm, els in layers.values())
 svg = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}">
@@ -385,14 +384,14 @@ svg = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{
 .eye{{stroke:var(--e);stroke-width:2.6}} .body{{stroke:#ffffff;stroke-width:2.8}} .ant{{stroke:#ffffff;stroke-width:1.8}}
 .petal{{fill:none;stroke:#ff9fd0;stroke-width:1.8;stroke-linejoin:round;opacity:0}}
 .wind{{fill:none;stroke:#bfe9ff;stroke-width:2;stroke-linecap:round;stroke-dasharray:.2 2;stroke-dashoffset:.2}}
-.sunr{{stroke:#ffd23f;stroke-width:2.4;fill:none;stroke-linecap:round}} .spin{{animation:spin 40s linear infinite}}
+.sunr{{stroke:#ffd23f;stroke-width:2.4;fill:none;stroke-linecap:round}} .spin{{animation:spin {40*K:.0f}s linear infinite}}
 .orb{{offset-rotate:auto 90deg;animation:orbit var(--od) linear var(--ol) infinite}}
-.k,.mv,.meadow{{animation-duration:{T:.0f}s;animation-timing-function:linear;animation-iteration-count:infinite}}
+.k,.mv,.meadow{{animation-duration:{CYC:.0f}s;animation-timing-function:linear;animation-iteration-count:infinite}}
 .mv{{opacity:0;offset-rotate:auto 90deg}}
 .meadow{{transform-origin:0 {H}px;animation-name:{meadow_kf}}}
 .flap{{animation:flap var(--bd) ease-in-out var(--bl) infinite}}
-.flapS{{animation:flapS 2.4s ease-in-out var(--bl) infinite}}
-.bobS{{animation:bob 3.2s ease-in-out var(--bl) infinite}}
+.flapS{{animation:flapS {2.4*K:.2f}s ease-in-out var(--bl) infinite}}
+.bobS{{animation:bob {3.2*K:.2f}s ease-in-out var(--bl) infinite}}
 .sway{{animation:sway var(--sd) ease-in-out var(--sl) infinite}}
 .drift{{animation:drift var(--dd) linear var(--dl) infinite}}
 @keyframes spin{{to{{transform:rotate(360deg)}}}} @keyframes orbit{{from{{offset-distance:0%}}to{{offset-distance:100%}}}}
@@ -415,4 +414,4 @@ svg = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{
 </svg>
 '''
 open(OUT, 'w', encoding='utf-8').write(svg)
-print('wrote', os.path.normpath(OUT), len(svg) // 1024, 'KB', len(KFS), 'keyframes')
+print('wrote', os.path.normpath(OUT), len(svg) // 1024, 'KB', len(KFS), 'keyframes;', f'{CYC:.0f} s loop')
