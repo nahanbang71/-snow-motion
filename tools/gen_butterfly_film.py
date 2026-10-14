@@ -132,12 +132,13 @@ def lpath(pts):
     return 'M' + ' L'.join(f'{x:.0f} {y:.0f}' for x, y in pts)
 
 
-def flyer(path_d, sc, pal, start, dur, fade=.4, shrink=False, refl=False):
+def flyer(path_d, sc, pal, start, dur, fade=.4, shrink=False, refl=False, ease=None):
     inner = f'{bf_body("beat", round(R.uniform(.45, .75), 2), R.uniform(0, .5))}'
     if shrink:
         sk = kfs([(0, 'transform:scale(1)'), (start, 'transform:scale(1)'), (start + dur, 'transform:scale(.22)'), (T, 'transform:scale(.22)')])
         inner = f'<g class="k" style="animation-name:{sk}">{inner}</g>'
-    g = (f'<g class="mv" style="offset-path:path(\'{path_d}\');animation-name:{motion(start, dur, fade)}">'
+    e = f';animation-timing-function:{ease}' if ease else ''
+    g = (f'<g class="mv" style="offset-path:path(\'{path_d}\');animation-name:{motion(start, dur, fade)}{e}">'
          f'<g transform="scale({sc:.2f})" style="--w:{pal[0]};--b:{pal[1]};--e:{pal[2]}">{inner}</g></g>')
     return f'<g style="opacity:.3">{g}</g>' if refl else g
 
@@ -156,8 +157,8 @@ def land_and_leave(px, ptop, sc, pal, land0, lift, i, dest=None, shrink=False, a
         leave = f'M{px:.0f} {cy+15*sc:.0f} C{px:.0f} {cy-120:.0f} {dest[0]:.0f} {dest[1]+120:.0f} {dest[0]:.0f} {dest[1]:.0f}'
     else:
         leave = f'M{px:.0f} {cy+15*sc:.0f} C{px+60:.0f} {cy-120:.0f} {px+260:.0f} {cy-60:.0f} 1080 {R.uniform(60, 200):.0f}'
-    return [flyer(arrive, sc, pal, land0, adur), perched(px, cy, sc, pal, land0 + adur, lift, i),
-            flyer(leave, sc, pal, lift, xdur, shrink=shrink)]
+    return [flyer(arrive, sc, pal, land0, adur, ease='cubic-bezier(.2,.6,.3,1)'), perched(px, cy, sc, pal, land0 + adur, lift, i),
+            flyer(leave, sc, pal, lift, xdur, shrink=shrink, ease='cubic-bezier(.6,0,.8,.6)')]
 
 
 layers = {}   # name -> (opacity keyframes name, elements)
@@ -173,26 +174,22 @@ for k, (bx, sc) in enumerate(BIG):
     m.cosmos(MS, R, bx, 462, .8 * sc, R.choice(m.PINKS), .2 + k * .4)
     perch.append((bx, 462 - 100 * .8 * sc))
     sway_wrap(MS, i0, bx)
-n = 11
-for i in range(n):
-    x = 15 + (W - 30) * (i + .5) / n + R.uniform(-15, 15)
-    if any(abs(x - bx) < 75 for bx, _ in BIG):
-        continue
-    i0, d = len(MS.els), 1.0 + i * .12
-    kind = R.choice(['daisy', 'daisy', 'lupine', 'bud', 'tiny', 'cosmos'])
-    col = R.choice(R.choice([m.PINKS, m.WARM, m.COOL, m.WHITE]))
-    if kind == 'cosmos':
-        m.cosmos(MS, R, x, R.uniform(470, 500), R.uniform(.3, .45), col, d)
+CALM_YELLOW, CALM_LAV = ['#ffd23f', '#fff4a0'], ['#a78bff', '#c9a6ff']
+# small flowers fill the gaps between the big cosmos: tall / short alternate so the strip reads as one rhythm
+FILL = [(55, 'tiny'), (225, 'lupine'), (305, 'daisy'), (470, 'bud'), (555, 'daisy'), (730, 'lupine'), (790, 'tiny'), (920, 'daisy')]
+for i, (x, kind) in enumerate(FILL):
+    x += R.uniform(-8, 8)
+    i0, d = len(MS.els), 1.0 + i * .3
+    if kind == 'lupine':
+        m.lupine(MS, R, x, R.uniform(395, 420), R.uniform(95, 115), R.choice(CALM_LAV), d)
     elif kind == 'daisy':
-        y, sc = R.uniform(470, 500), R.uniform(.4, .6)
+        y, sc = R.uniform(470, 495), R.uniform(.45, .6)
         m.daisy(MS, R, x, y, sc, R.choice(m.WHITE), d)
         extra_perch.append((x, y - 54 * sc))
-    elif kind == 'lupine':
-        m.lupine(MS, R, x, R.uniform(400, 430), R.uniform(85, 110), R.choice(m.COOL), d)
     elif kind == 'bud':
-        m.bud(MS, R, x, R.uniform(470, 495), R.uniform(.5, .8), col, d)
+        m.bud(MS, R, x, R.uniform(470, 490), R.uniform(.6, .8), R.choice(m.PINKS), d)
     else:
-        m.tiny(MS, R, x, R.uniform(480, 515), R.uniform(.8, 1.2), R.choice(m.WARM + m.COOL + m.WHITE), d)
+        m.tiny(MS, R, x, R.uniform(485, 510), R.uniform(.9, 1.2), R.choice(CALM_YELLOW + CALM_LAV + m.WHITE), d)
     sway_wrap(MS, i0, x)
 
 
@@ -254,7 +251,7 @@ layers['F'] = (multi_window([(70, 88.5)], 1.0, 1.5), C2.els)
 C3 = Cyc([(56, 70), (110, 130)])
 for fn, args in [(m.lupine, (900, 340, 170, '#8f9bff', 1.4)),
                  (m.cosmos, (300, 300, 1.45, '#ff6fb5', .5)), (m.daisy, (690, 350, 1.8, '#ffffff', 1.0)),
-                 (m.cosmos, (520, 450, .7, '#ffb3da', 1.8)), (m.tiny, (150, 490, 1.4, '#ffe45a', 2.2)), (m.tiny, (800, 500, 1.3, '#7ad8ff', 2.3))]:
+                 (m.cosmos, (520, 450, .7, '#ffb3da', 1.8)), (m.tiny, (150, 490, 1.4, '#ffe45a', 2.2)), (m.tiny, (800, 500, 1.3, '#c9a6ff', 2.3))]:
     i0 = len(C3.els)
     fn(C3, R, *args)
     sway_wrap(C3, i0, args[0])
