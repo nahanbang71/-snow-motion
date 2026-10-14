@@ -11,8 +11,9 @@ OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'flowers', 
 els = []
 
 
-def path(d, cls, s, t, extra=''):
-    els.append(f'<path class="d {cls}" pathLength="1" style="--s:{s:.2f}s;--t:{t:.2f}s" d="{d}" {extra}/>')
+def path(d, cls, s, t, extra='', col=None):
+    c = f';stroke:{col}' if col else ''
+    els.append(f'<path class="d {cls}" pathLength="1" style="--s:{s:.2f}s;--t:{t:.2f}s{c}" d="{d}" {extra}/>')
 
 
 # ---------- backdrop: mountains, clouds, trees, lake ----------
@@ -90,6 +91,73 @@ for rr, n, c in [(13, 1, 'ctr'), (9, 10, 'ctr')]:
         for k in range(n):
             a = k * 2 * math.pi / n
             els.append(f'<circle class="fi ctrd" style="--s:{4.4+k*.04:.2f}s" cx="{CX+rr*1.9*math.cos(a):.1f}" cy="{CY+rr*1.9*math.sin(a):.1f}" r="2.2"/>')
+
+
+# ---------- meadow flowers: small & large, several kinds ----------
+daisy_petal = [('M', [0, -9]), ('C', [-10, -22, -10, -46, 0, -54]), ('C', [10, -46, 10, -22, 0, -9]), ('Z', [])]
+
+
+def circ(x, y, r):
+    return f'M{x-r:.1f} {y:.1f} a{r} {r} 0 1 0 {2*r} 0 a{r} {r} 0 1 0 {-2*r} 0'
+
+
+def stem(x, y, dx, d, w=2):
+    path(f'M{x} {y} C{x} {y+(H-y)*.4} {x+dx} {y+(H-y)*.7} {x+dx} {H+4}', 'stem', d, 1.0, col=None)
+
+
+def cosmos_f(x, y, sc, col, d, n=8):
+    stem(x, y + 90 * sc, -25 * sc, d)
+    for i in range(n):
+        a = i * 2 * math.pi / n + 0.3
+        path(poly(petal, a, x, y, sc), 'pet', d + .1 + i * .05, .7, col=col)
+    path(circ(x, y, 12 * sc), 'ctr', d + .6, .5)
+
+
+def daisy_f(x, y, sc, col, d, n=12):
+    stem(x, y + 55 * sc, 18 * sc, d)
+    for i in range(n):
+        path(poly(daisy_petal, i * 2 * math.pi / n, x, y, sc), 'pet2', d + .1 + i * .03, .5, col=col)
+    path(circ(x, y, 8 * sc), 'ctr', d + .5, .4)
+
+
+def lupine_f(x, y, h, col, d):
+    stem(x, y + h, 6, d)
+    rows = int(h / 16)
+    for k in range(rows):
+        yy = y + k * 16
+        wd = 4 + 9 * (1 - abs(k / rows - .35) * 1.2)
+        for sx in (-1, 1):
+            path(f'M{x} {yy} C{x+sx*wd} {yy-6} {x+sx*(wd+4)} {yy+8} {x+sx*2} {yy+14}', 'pet2', d + .1 + k * .06, .4, col=col)
+
+
+def bud_f(x, y, sc, col, d):
+    stem(x, y + 40 * sc, -10 * sc, d)
+    path(f'M{x} {y-30*sc} C{x-22*sc} {y-10*sc} {x-18*sc} {y+30*sc} {x} {y+38*sc} C{x+18*sc} {y+30*sc} {x+22*sc} {y-10*sc} {x} {y-30*sc}', 'pet', d + .1, .8, col=col)
+    path(f'M{x-14*sc} {y+22*sc} L{x} {y+4*sc} L{x+14*sc} {y+22*sc}', 'pet2', d + .5, .4, col=col)
+
+
+def tiny_f(x, y, sc, col, d):
+    stem(x, y + 14 * sc, 4, d)
+    for i in range(5):
+        a = i * 2 * math.pi / 5
+        path(circ(x + 9 * sc * math.cos(a), y + 9 * sc * math.sin(a), 5 * sc), 'pet2', d + .1 + i * .05, .3, col=col)
+    path(circ(x, y, 3 * sc), 'ctr', d + .4, .3)
+
+
+MEADOW = [
+    (lupine_f, (110, 330, 130, '#a78bff', 2.4)), (lupine_f, (300, 360, 110, '#8f9bff', 2.6)),
+    (lupine_f, (690, 350, 120, '#a78bff', 2.5)), (lupine_f, (880, 340, 140, '#8f9bff', 2.7)),
+    (cosmos_f, (205, 390, 0.62, '#ff9fd0', None, 2.8)), (cosmos_f, (40, 420, 0.5, '#ff6fb5', None, 3.0)),
+    (cosmos_f, (770, 400, 0.7, '#ff8ac4', None, 2.9)), (cosmos_f, (610, 460, 0.38, '#ffb3da', None, 3.1)),
+    (daisy_f, (350, 450, 0.7, '#ffffff', 3.0)), (daisy_f, (150, 470, 0.55, '#ffffff', 3.2)),
+    (daisy_f, (850, 450, 0.75, '#ffffff', 3.1)), (daisy_f, (690, 490, 0.45, '#fff4a0', 3.3)),
+    (bud_f, (560, 470, 0.7, '#ff6fb5', 3.4)), (bud_f, (920, 400, 0.6, '#ffb3da', 3.5)),
+    (tiny_f, (260, 500, 1.0, '#7ad8ff', 3.4)), (tiny_f, (90, 380, 0.9, '#ffe45a', 3.5)),
+    (tiny_f, (740, 480, 1.1, '#7ad8ff', 3.6)), (tiny_f, (420, 500, 0.8, '#ffe45a', 3.6)),
+    (tiny_f, (940, 480, 1.0, '#ffffff', 3.7)),
+]
+for fn, args in MEADOW:
+    fn(*[a for a in args if a is not None])
 
 # ---------- swallowtail (local coords, body axis x=0, wings flap by scaleX) ----------
 WING = [
