@@ -7,6 +7,8 @@
   60-78   golden    the sky warms; two butterflies draw a heart in the air, the rest settle on flowers
   78-96   goodbye   they fly into the sun and scatter into light, flowers close, one butterfly stays
 usage: python3 tools/gen_butterfly_poem.py [seed] [--slow=1.0] [--laser]   -> flowers/butterfly_poem.svg
+--text: add Korean subtitles (for the rendered video; needs a Hangul-capable system font)
+--out=PATH: write somewhere else
 --laser: lines and points only on pure black (no glow, gradients, sun halo, pollen motes, tinted sky) -> butterfly_poem_laser.svg
 """
 import math
@@ -21,8 +23,9 @@ W, H, T = m.W, m.H, 96.0
 K = next((float(a.split('=')[1]) for a in sys.argv if a.startswith('--slow=')), 1.0)
 CYC = T * K
 LASER = '--laser' in sys.argv
+TEXT = '--text' in sys.argv
 SEED = int(sys.argv[1]) if len(sys.argv) > 1 and sys.argv[1].isdigit() else 5
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'flowers', 'butterfly_poem_laser.svg' if LASER else 'butterfly_poem.svg')
+OUT = next((a.split('=', 1)[1] for a in sys.argv if a.startswith('--out=')), None) or os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'flowers', 'butterfly_poem_laser.svg' if LASER else 'butterfly_poem.svg')
 R = random.Random(SEED)
 KFS = []
 
@@ -138,7 +141,7 @@ rays = ''.join(f'M{sunx+58*math.cos(a):.1f} {suny+58*math.sin(a):.1f} L{sunx+86*
                for a in [k * math.pi / 8 for k in range(16)])
 layers.append(f'<g class="k" style="opacity:0;animation-name:{sun_kf}"><g class="spin" style="transform-origin:{sunx}px {suny}px">'
               f'<path class="sunr" d="{rays}"/></g><path class="sunr" d="{m.circ(sunx, suny, 40)}"/>'
-              f'<path class="sunr soft" d="{m.circ(sunx, suny, 50)}"/>{"" if LASER else f'<circle cx="{sunx}" cy="{suny}" r="150" fill="url(#sunglow)" style="stroke:none"/>'}</g>')
+              f'<path class="sunr soft" d="{m.circ(sunx, suny, 50)}"/>{"" if LASER else f'<circle cx="{sunx}" cy="{suny}" r="200" fill="url(#sunglow)" style="stroke:none"/>'}</g>')
 
 for i, (cxx, cyy, s) in enumerate([(150, 70, 1.0), (790, 105, .8)]):
     dur = (110 + i * 20) * K
@@ -146,21 +149,21 @@ for i, (cxx, cyy, s) in enumerate([(150, 70, 1.0), (790, 105, .8)]):
                   f'<path class="d1 cloud" pathLength="1" style="--s:{2+i}s;--t:2s" d="{m.cloud_d(s)}"/></g></g>')
 
 # ---------- hero flower: stem grows, petals open one by one, closes at the end ----------
-stem_kf = kfs([(0, 'stroke-dashoffset:1'), (2, 'stroke-dashoffset:1'), (7, 'stroke-dashoffset:0'), (90, 'stroke-dashoffset:0'), (94, 'stroke-dashoffset:1')])
+stem_kf = kfs([(0, 'stroke-dashoffset:1'), (2, 'stroke-dashoffset:1'), (7, 'stroke-dashoffset:0'), (92.5, 'stroke-dashoffset:0'), (95.6, 'stroke-dashoffset:1')])
 layers.append(f'<path class="d0 k stem" pathLength="1" style="animation-name:{stem_kf}" d="M{CX} 482 C{CX+4} 450 {CX-6} 420 {CX} {CY+10}"/>')
-leaf_kf = kfs([(0, 'stroke-dashoffset:1'), (5, 'stroke-dashoffset:1'), (9, 'stroke-dashoffset:0'), (90, 'stroke-dashoffset:0'), (93, 'stroke-dashoffset:1')])
+leaf_kf = kfs([(0, 'stroke-dashoffset:1'), (5, 'stroke-dashoffset:1'), (9, 'stroke-dashoffset:0'), (92.5, 'stroke-dashoffset:0'), (95.5, 'stroke-dashoffset:1')])
 layers.append(f'<path class="d0 k stem" pathLength="1" style="animation-name:{leaf_kf}" d="M{CX} 452 C{CX-40} 430 {CX-80} 440 {CX-96} 462 C{CX-60} 468 {CX-26} 462 {CX} 452"/>')
 for i in range(8):
     a = i * math.pi / 4 + .2
-    t0, tc = 7 + i * .5, 88 + i * .25
+    t0, tc = 7 + i * .5, 91 + i * .12
     nm = kfs([(0, 'transform:scale(.05) rotate(-40deg);opacity:0'), (t0, 'transform:scale(.05) rotate(-40deg);opacity:0'),
               (t0 + 4.5, 'transform:scale(1) rotate(0deg);opacity:1'), (tc, 'transform:scale(1) rotate(0deg);opacity:1'),
-              (tc + 5, 'transform:scale(.05) rotate(40deg);opacity:0')])
+              (tc + 4.2, 'transform:scale(.6) rotate(15deg);opacity:0')])
     layers.append(f'<g class="k" style="opacity:0;transform-origin:{CX}px {CY}px;animation-name:{nm}">'
                   f'<path class="sd pet" d="{m.poly(m.PETAL, a, CX, CY, 1.0)}"/><path class="sd pet2" d="{m.poly(m.VEIN, a, CX, CY, 1.0)}"/></g>')
 ctr = [f'<path class="sd ctr" d="{m.circ(CX, CY, 12)}"/>'] + [
     f'<circle class="ctrd" cx="{CX+23*math.cos(k*.628):.1f}" cy="{CY+23*math.sin(k*.628):.1f}" r="2"/>' for k in range(10)]
-layers.append(f'<g class="k" style="opacity:0;animation-name:{kfs([(0, "opacity:0"), (12, "opacity:0"), (15, "opacity:1"), (89, "opacity:1"), (93, "opacity:0")])}">{"".join(ctr)}</g>')
+layers.append(f'<g class="k" style="opacity:0;animation-name:{kfs([(0, "opacity:0"), (12, "opacity:0"), (15, "opacity:1"), (92, "opacity:1"), (95.3, "opacity:0")])}">{"".join(ctr)}</g>')
 
 # ripples from the flower when the butterfly lands
 for t0 in (32.0, 33.8, 35.6):
@@ -238,13 +241,21 @@ for k in range(18):
               (95, f'transform:translate({r*math.cos(ang):.0f}px,{r*math.sin(ang)*.8-30:.0f}px);opacity:0')])
     layers.append(f'<circle class="k spark" style="opacity:0;animation-name:{nm}" cx="{sunx}" cy="274" r="{R.choice([1.6, 2.2, 2.8])}"/>')
 # the first butterfly comes back and stays
-layers.append(perched(CX, cy1, sc1, GOLD, 84, 94.5))
+layers.append(f'<g class="k" style="opacity:0;animation-name:{kfs([(0, "opacity:0"), (84, "opacity:0"), (86, "opacity:1"), (92.5, "opacity:1"), (95.4, "opacity:0")])}"><g transform="translate({CX} {cy1:.0f}) scale({sc1})" style="{pv(GOLD)}"><g class="bobS"><g class="flapS">{WING}</g><g transform="scale(-1 1)"><g class="flapS">{WING}</g></g>{BODY}</g></g></g>')
 
 # ---------- floating light motes (always, very gentle) ----------
 motes = '' if LASER else ''.join(
     f'<circle class="mote" cx="{R.uniform(20, 940):.0f}" cy="{R.uniform(200, 520):.0f}" r="{R.uniform(1, 2.4):.1f}" '
-    f'style="--md:{R.uniform(11, 22)*K:.1f}s;--mdl:-{R.uniform(0, 20):.1f}s;--dx:{R.uniform(-40, 50):.0f}px;--dy:-{R.uniform(60, 150):.0f}px;'
-    f'fill:{R.choice(["#ffe9b0", "#ffd1e0", "#ffe9b0"])}"/>' for _ in range(22))
+    f'style="--md:{R.uniform(8, 15)*K:.1f}s;--mdl:-{R.uniform(0, 15):.1f}s;--dx:{R.uniform(-70, 90):.0f}px;--dy:-{R.uniform(110, 230):.0f}px;'
+    f'fill:{R.choice(["#ffe9b0", "#ffd1e0", "#ffe9b0"])}"/>' for _ in range(16))
+
+subs = ''
+if TEXT:
+    LINES = [(2.0, 13.0, '한 마리의 나비', 40, 195, 380), (18.0, 29.0, '처음엔, 혼자였어요', 24, 520, 480), (49.0, 58.5, '함께라서 따뜻했어요', 24, 520, 480),
+             (65.0, 76.0, '사랑이 피어나고', 24, 520, 480), (86.5, 95.0, '다시, 아침이 올 거예요', 24, 520, 480)]
+    for a, b, txt, fs, y, x in LINES:
+        nm = kfs([(0, 'opacity:0'), (a, 'opacity:0'), (a + 2.2, 'opacity:.9'), (b - 2.2, 'opacity:.9'), (b, 'opacity:0')])
+        subs += (f'<text class="k sub" x="{x}" y="{y}" text-anchor="middle" style="opacity:0;font-size:{fs}px;animation-name:{nm}">{txt}</text>')
 
 cam = kfs([(0, 'transform:scale(1) translate(0px,0px)'), (48, 'transform:scale(1.045) translate(-6px,-4px)'), (T, 'transform:scale(1) translate(0px,0px)')])
 warm = kfs([(0, 'opacity:0'), (50, 'opacity:0'), (66, 'opacity:.6'), (84, 'opacity:.6'), (95, 'opacity:0')])
@@ -259,7 +270,7 @@ svg = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{
 <title>A single butterfly - laser line art</title>
 <defs>
 <radialGradient id="bg" cx="50%" cy="40%" r="75%"><stop offset="0" stop-color="#171a40"/><stop offset="1" stop-color="#070914"/></radialGradient>
-<radialGradient id="sunglow"><stop offset="0" stop-color="#ffc98a" stop-opacity=".32"/><stop offset="1" stop-color="#ffc98a" stop-opacity="0"/></radialGradient>
+<radialGradient id="sunglow"><stop offset="0" stop-color="#ffc98a" stop-opacity=".26"/><stop offset=".25" stop-color="#ffc98a" stop-opacity=".17"/><stop offset=".5" stop-color="#ffb070" stop-opacity=".075"/><stop offset=".75" stop-color="#ff9a6a" stop-opacity=".02"/><stop offset="1" stop-color="#ff9a6a" stop-opacity="0"/></radialGradient>
 <radialGradient id="warm" cx="72%" cy="66%" r="85%"><stop offset="0" stop-color="#ff8a5a" stop-opacity=".75"/><stop offset=".45" stop-color="#b84a6a" stop-opacity=".35"/><stop offset="1" stop-color="#2a1030" stop-opacity="0"/></radialGradient>
 <radialGradient id="dawn" cx="72%" cy="68%" r="70%"><stop offset="0" stop-color="#ffc9a0" stop-opacity=".5"/><stop offset=".5" stop-color="#8f7bd9" stop-opacity=".25"/><stop offset="1" stop-color="#2a2a60" stop-opacity="0"/></radialGradient>
 <filter id="glow" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="2.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
@@ -275,6 +286,7 @@ svg = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{
 .wing,.stripe,.band,.eye,.body,.ant{{fill:none;stroke-linecap:round;stroke-linejoin:round}}
 .wing{{stroke:var(--w);stroke-width:3}} .stripe{{stroke:#fff6ea;stroke-width:2.2}} .band{{stroke:var(--b);stroke-width:3.2}}
 .eye{{stroke:var(--e);stroke-width:2.6}} .body{{stroke:#fff6ea;stroke-width:2.8}} .ant{{stroke:#fff6ea;stroke-width:1.8}}
+.sub{{font-family:'Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic','WenQuanYi Zen Hei',sans-serif;fill:#fff1e0;letter-spacing:.12em;stroke:#0a0c1e;stroke-width:4;stroke-linejoin:round;paint-order:stroke}}
 .spark{{fill:#ffe9b0}} .mote2{{}} .mote{{opacity:0;animation:mote var(--md) ease-in-out var(--mdl) infinite}}
 .k,.mv,.cam{{animation-duration:{CYC:.0f}s;animation-timing-function:linear;animation-iteration-count:infinite}}
 .cam{{transform-origin:480px 330px;animation-name:{cam};animation-timing-function:ease-in-out}}
@@ -301,6 +313,7 @@ svg = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{
 {''.join(layers)}
 {motes}
 </g></g>
+{subs}
 </svg>
 '''
 open(OUT, 'w', encoding='utf-8').write(svg)
