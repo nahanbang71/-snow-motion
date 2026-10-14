@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Laser-style sample: swallowtail on a cosmos, drifting petals, mountain/lake/cloud/tree backdrop.
+"""Laser-style sample: swallowtail on a cosmos, drifting petals, cloud backdrop.
 usage: python3 tools/gen_butterfly_meadow.py   -> flowers/butterfly_meadow.svg
 Single-stroke neon line art (no fills), same draw-on animation as gen_flowers.py.
 """
@@ -16,12 +16,7 @@ def path(d, cls, s, t, extra='', col=None):
     els.append(f'<path class="d {cls}" pathLength="1" style="--s:{s:.2f}s;--t:{t:.2f}s{c}" d="{d}" {extra}/>')
 
 
-# ---------- backdrop: mountains, clouds, trees, lake ----------
-path('M0 215 L90 150 L140 180 L230 100 L330 190 L400 150 L470 205 L560 130 L660 200 L740 160 L830 210 L960 150', 'mtn', 0, 2.4)
-path('M230 100 L255 130 L240 128 L228 142 L214 126 L205 130 Z', 'mtn', 1.6, 0.8)      # snow cap
-path('M560 130 L582 158 L570 156 L558 168 L546 154 L538 158 Z', 'mtn', 1.8, 0.8)
-
-
+# ---------- backdrop: clouds ----------
 def cloud(x, y, s, d):
     path(f'M{x} {y} a{18*s} {18*s} 0 0 1 {30*s} {-6*s} a{26*s} {26*s} 0 0 1 {50*s} {-12*s} '
          f'a{22*s} {22*s} 0 0 1 {44*s} {8*s} a{15*s} {15*s} 0 0 1 {8*s} {10*s} H{x}', 'cloud', d, 1.4)
@@ -31,28 +26,6 @@ cloud(60, 90, 1.0, 0.6)
 cloud(380, 60, 1.2, 0.9)
 cloud(700, 85, 0.9, 1.2)
 
-
-def tree(x, y, h, d):
-    w = 0.3 * h
-    pts = [(0, -h)]
-    for k in range(3):
-        top = -h + k * h * 0.28
-        pts += [(w * (0.45 + k * 0.2) * 0.55, top + h * 0.3), (w * (0.25 + k * 0.2) * 0.55, top + h * 0.3)]
-    pts += [(w, 0)]
-    left = [(-px, py) for px, py in reversed(pts[1:])]
-    seq = pts + left
-    dd = 'M' + ' L'.join(f'{x+px:.1f} {y+py:.1f}' for px, py in seq) + ' Z'
-    path(dd, 'tree', d, 1.0)
-
-
-for i, (tx, ty, th) in enumerate([(40, 262, 110), (95, 270, 85), (150, 258, 120), (205, 268, 70),
-                                  (770, 262, 75), (825, 258, 120), (885, 268, 90), (935, 260, 105)]):
-    tree(tx, ty, th, 1.0 + 0.12 * i)
-
-for k, (y, x0, x1) in enumerate([(228, 250, 720), (242, 290, 680), (256, 330, 640)]):
-    n = int((x1 - x0) / 40)
-    dd = f'M{x0} {y}' + ''.join(f' q10 -6 20 0 t20 0' for _ in range(n))
-    path(dd, 'lake', 2.0 + 0.2 * k, 1.4)
 
 # ---------- cosmos (centre 480,400) ----------
 CX, CY, R = 480, 400, 0.85
