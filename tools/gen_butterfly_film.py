@@ -12,7 +12,7 @@ every motion is slowed by SLOW (default 1.25) so the real length is 180*SLOW = 2
  130-150  I  whirlwind: petals spiral, butterflies rise in spirals
  150-165  J  six butterflies come back down to the meadow
  165-180  K  farewell: they rise to a small sun, shrinking away -> loops to A
-usage: python3 tools/gen_butterfly_film.py [seed] [--slow=1.25] [--sun] [--out=PATH]   -> flowers/butterfly_film.svg
+usage: python3 tools/gen_butterfly_film.py [seed] [--slow=1.25] [--sun] [--no-pollen] [--out=PATH]   -> flowers/butterfly_film.svg
 (no sun by default: the butterflies of the last act fly up and scatter into light instead)
 """
 import math
@@ -22,6 +22,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import gen_butterfly_meadow as m  # noqa: E402
+from pollen import Pollen  # noqa: E402
 
 W, H, T = m.W, m.H, 180.0
 K = next((float(a.split('=')[1]) for a in sys.argv if a.startswith('--slow=')), 1.25)
@@ -30,6 +31,8 @@ SEED = int(sys.argv[1]) if len(sys.argv) > 1 and sys.argv[1].isdigit() else 21
 SUN = '--sun' in sys.argv
 OUT = next((a.split('=', 1)[1] for a in sys.argv if a.startswith('--out=')), None) or os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'flowers', 'butterfly_film.svg')
 R = random.Random(SEED)
+POLLEN = '--no-pollen' not in sys.argv
+PO = Pollen(T, K, seed=SEED + 100)
 KFS = []
 
 
@@ -140,8 +143,12 @@ def flyer(path_d, sc, pal, start, dur, fade=.4, shrink=False, refl=False, ease=N
         sk = kfs([(0, 'transform:scale(1)'), (start, 'transform:scale(1)'), (start + dur, 'transform:scale(.22)'), (T, 'transform:scale(.22)')])
         inner = f'<g class="k" style="animation-name:{sk}">{inner}</g>'
     e = f';animation-timing-function:{ease}' if ease else ''
+    eid = '' if refl else PO.new_id()
+    if eid:
+        PO.add(eid, start + fade, start + dur - fade)
+    idattr = f' id="{eid}"' if eid else ''
     g = (f'<g class="mv" style="offset-path:path(\'{path_d}\');animation-name:{motion(start, dur, fade)}{e}">'
-         f'<g transform="scale({sc:.2f})" style="--w:{pal[0]};--b:{pal[1]};--e:{pal[2]}">{inner}</g></g>')
+         f'<g{idattr} transform="scale({sc:.2f})" style="--w:{pal[0]};--b:{pal[1]};--e:{pal[2]}">{inner}</g></g>')
     return f'<g style="opacity:.3">{g}</g>' if refl else g
 
 
@@ -319,9 +326,11 @@ for i in range(2):
     ax, ay, ph = R.uniform(260, 340), R.uniform(90, 140), R.uniform(0, 6.28)
     pts = [(cx0 + ax * math.cos(t + ph), cy0 + ay * math.sin(2 * t + ph * .5) * (.6 if i else 1) + 20 * math.sin(t))
            for t in [k * 2 * math.pi / 90 for k in range(91)]]
-    dur, sc, pal = R.uniform(10, 15), R.uniform(.5, .8), pal_of(i)
+    dur, sc, pal = R.choice([10, 12, 15]), R.uniform(.5, .8), pal_of(i)      # 180/dur is a whole number -> the orbit repeats exactly every loop
+    eid = PO.new_id()
+    PO.add(eid, 57.6, 68.4)
     orb.append(f'<g class="orb" style="offset-path:path(\'{lpath(pts)} Z\');--od:{dur*K:.1f}s;--ol:-{R.uniform(0, dur):.1f}s">'
-               f'<g transform="scale({sc:.2f})" style="--w:{pal[0]};--b:{pal[1]};--e:{pal[2]}">{bf_body("beat", round(R.uniform(.45, .75), 2), R.uniform(0, .5))}</g></g>')
+               f'<g id="{eid}" transform="scale({sc:.2f})" style="--w:{pal[0]};--b:{pal[1]};--e:{pal[2]}">{bf_body("beat", round(R.uniform(.45, .75), 2), R.uniform(0, .5))}</g></g>')
 for j in range(4):
     sx = R.uniform(60, 900)
     d = f'M{sx:.0f} -20 C{sx+R.uniform(-120,120):.0f} 120 {sx+R.uniform(-120,120):.0f} 260 {sx+R.uniform(-60,60):.0f} 560'
@@ -410,16 +419,24 @@ svg = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{
 @keyframes sway{{0%,100%{{transform:rotate(calc(var(--sa)*-1))}}50%{{transform:rotate(var(--sa))}}}}
 @keyframes drift{{from{{transform:translateX(-300px)}}to{{transform:translateX({W+60}px)}}}}
 {chr(10).join(KFS)}
+/*POLLEN_CSS*/
 </style>
 </defs>
 <rect width="{W}" height="{H}" fill="url(#bg)"/>
-<g filter="url(#glow)">
+<g filter="url(#glow)" id="world">
 {''.join(clouds)}
 {lay}
 <g class="meadow">{''.join(MS.els)}</g>
 {''.join(bfl)}
+<!--POLLEN-->
 </g>
 </svg>
 '''
+if POLLEN and PO.em:
+    base = svg.replace('<!--POLLEN-->', '').replace('/*POLLEN_CSS*/', '')
+    markup, css = PO.render(PO.probe(base))
+    svg = svg.replace('<!--POLLEN-->', markup).replace('/*POLLEN_CSS*/', css)
+else:
+    svg = svg.replace('<!--POLLEN-->', '').replace('/*POLLEN_CSS*/', '')
 open(OUT, 'w', encoding='utf-8').write(svg)
 print('wrote', os.path.normpath(OUT), len(svg) // 1024, 'KB', len(KFS), 'keyframes;', f'{CYC:.0f} s loop')

@@ -8,6 +8,7 @@
   78-96   goodbye   they fly up into the sky and scatter into light, flowers close, one butterfly stays
 usage: python3 tools/gen_butterfly_poem.py [seed] [--slow=1.0] [--laser]   -> flowers/butterfly_poem.svg
 --sun: draw the sun (off by default)
+--no-pollen: skip the pollen puffs shaken off flying butterflies (faster to generate)
 --text: add Korean subtitles (for the rendered video; needs a Hangul-capable system font)
 --out=PATH: write somewhere else
 --laser: lines and points only on pure black (no glow, gradients, sun halo, pollen motes, tinted sky) -> butterfly_poem_laser.svg
@@ -19,6 +20,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import gen_butterfly_meadow as m  # noqa: E402
+from pollen import Pollen  # noqa: E402
 
 W, H, T = m.W, m.H, 96.0
 K = next((float(a.split('=')[1]) for a in sys.argv if a.startswith('--slow=')), 1.0)
@@ -26,7 +28,9 @@ CYC = T * K
 LASER = '--laser' in sys.argv
 TEXT = '--text' in sys.argv
 SUN = '--sun' in sys.argv      # off by default: the dark sky reads better without it
+POLLEN = '--no-pollen' not in sys.argv
 SEED = int(sys.argv[1]) if len(sys.argv) > 1 and sys.argv[1].isdigit() else 5
+PO = Pollen(T, K, seed=SEED + 100)
 OUT = next((a.split('=', 1)[1] for a in sys.argv if a.startswith('--out=')), None) or os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'flowers', 'butterfly_poem_laser.svg' if LASER else 'butterfly_poem.svg')
 R = random.Random(SEED)
 KFS = []
@@ -99,8 +103,10 @@ def flyer(path_d, sc, pal, start, dur, beat=.7, ease=None, shrink=False, fade=.6
     if shrink:
         sk = kfs([(0, 'transform:scale(1)'), (start, 'transform:scale(1)'), (start + dur, 'transform:scale(.2)'), (T, 'transform:scale(.2)')])
         inner = f'<g class="k" style="animation-name:{sk}">{inner}</g>'
+    eid = PO.new_id()
+    PO.add(eid, start + fade, start + dur - fade)
     return (f'<g class="mv" style="offset-path:path(\'{path_d}\');animation-name:{motion(start, dur, fade)}{e}">'
-            f'<g transform="scale({sc:.2f})" style="{pv(pal)}">{inner}</g></g>')
+            f'<g id="{eid}" transform="scale({sc:.2f})" style="{pv(pal)}">{inner}</g></g>')
 
 
 def perched(px, cy, sc, pal, a, b, i=0):
@@ -109,10 +115,13 @@ def perched(px, cy, sc, pal, a, b, i=0):
             f'<g transform="scale(-1 1)"><g class="flapS" style="--bl:-{i*.6:.1f}s">{WING}</g></g>{BODY}</g></g></g>')
 
 
-def orbiter(path_d, sc, pal, od, ol, dots=6, lag=.33):
+def orbiter(path_d, sc, pal, od, ol, dots=6, lag=.33, win=None):
     """butterfly on a closed loop + a trail of fading light-dust behind it"""
+    eid = PO.new_id()
+    if win:
+        PO.add(eid, *win)
     out = (f'<g class="orb" style="offset-path:path(\'{path_d}\');--od:{od*K:.1f}s;--ol:{ol*K:.2f}s">'
-           f'<g transform="scale({sc:.2f})" style="{pv(pal)}">{body(R.uniform(.7, .95))}</g></g>')
+           f'<g id="{eid}" transform="scale({sc:.2f})" style="{pv(pal)}">{body(R.uniform(.7, .95))}</g></g>')
     for j in range(1, dots + 1):
         out += (f'<circle class="orb mote2" r="{max(.8, 3.0 - j*.4):.1f}" style="offset-path:path(\'{path_d}\');--od:{od*K:.1f}s;'
                 f'--ol:{(ol + lag*j)*K:.2f}s;fill:{pal[0]};opacity:{.8 - j*.11:.2f}"/>')
@@ -214,8 +223,9 @@ for j in range(1, 7):
 # 48-60 the dance: two loops (one each way), five butterflies, trails
 ellA = f'M{CX+190} 300 A190 75 0 1 1 {CX-190} 300 A190 75 0 1 1 {CX+190} 300'
 ellB = f'M{CX+150} 290 A150 105 0 1 0 {CX-150} 290 A150 105 0 1 0 {CX+150} 290'
-dance = ''.join([orbiter(ellA, .6, GOLD, 16, 0), orbiter(ellA, .5, ROSE, 16, 5.4), orbiter(ellA, .55, LILAC, 16, 10.6),
-                 orbiter(ellB, .5, LILAC, 16, 2.0), orbiter(ellB, .55, ROSE, 16, 9.0)])
+DW = (49.4, 59.4)
+dance = ''.join([orbiter(ellA, .6, GOLD, 16, 0, win=DW), orbiter(ellA, .5, ROSE, 16, 5.4, win=DW), orbiter(ellA, .55, LILAC, 16, 10.6, win=DW),
+                 orbiter(ellB, .5, LILAC, 16, 2.0, win=DW), orbiter(ellB, .55, ROSE, 16, 9.0, win=DW)])
 layers.append(f'<g class="k" style="opacity:0;animation-name:{window(48, 59.5)}">{dance}</g>')
 
 # 60-78 golden hour: a heart in the air, the others rest on flowers
@@ -224,7 +234,7 @@ hd = lpath(hp, True)
 heart_draw = kfs([(0, 'stroke-dashoffset:1;opacity:0'), (62, 'stroke-dashoffset:1;opacity:0'), (62.5, 'stroke-dashoffset:1;opacity:.55'),
                   (72, 'stroke-dashoffset:0;opacity:.55'), (78, 'stroke-dashoffset:0;opacity:.55'), (80, 'stroke-dashoffset:0;opacity:0')])
 layers.append(f'<path class="d0 k heartline" pathLength="1" style="animation-name:{heart_draw}" d="{hd}"/>')
-layers.append(f'<g class="k" style="opacity:0;animation-name:{window(62, 77.2)}">{orbiter(hd, .55, GOLD, 16, 0, 7, .3)}{orbiter(hd, .5, ROSE, 16, 8, 7, .3)}</g>')
+layers.append(f'<g class="k" style="opacity:0;animation-name:{window(62, 77.2)}">{orbiter(hd, .55, GOLD, 16, 0, 7, .3, win=(63.4, 77.0))}{orbiter(hd, .5, ROSE, 16, 8, 7, .3, win=(63.4, 77.0))}</g>')
 for i, (px, ptop) in enumerate([perch_pts[0], perch_pts[1], perch_pts[3]]):
     sc = .45
     cy = ptop - 48 * sc + 4
@@ -314,15 +324,23 @@ svg = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{
 @keyframes drift{{from{{transform:translateX(-300px)}}to{{transform:translateX({W+60}px)}}}}
 @keyframes mote{{0%{{opacity:0;transform:translate(0,0)}}25%{{opacity:.75}}75%{{opacity:.55}}100%{{opacity:0;transform:translate(var(--dx),var(--dy))}}}}
 {chr(10).join(KFS)}
+/*POLLEN_CSS*/
 </style>
 </defs>
 {BGLAYERS}
-<g{GLOW}><g class="cam">
+<g{GLOW}><g class="cam" id="world">
 {''.join(layers)}
 {motes}
+<!--POLLEN-->
 </g></g>
 {subs}
 </svg>
 '''
+if POLLEN and PO.em:
+    base = svg.replace('<!--POLLEN-->', '').replace('/*POLLEN_CSS*/', '')
+    markup, css = PO.render(PO.probe(base))
+    svg = svg.replace('<!--POLLEN-->', markup).replace('/*POLLEN_CSS*/', css)
+else:
+    svg = svg.replace('<!--POLLEN-->', '').replace('/*POLLEN_CSS*/', '')
 open(OUT, 'w', encoding='utf-8').write(svg)
 print('wrote', os.path.normpath(OUT), len(svg) // 1024, 'KB', len(KFS), 'keyframes;', f'{CYC:.0f} s loop')
