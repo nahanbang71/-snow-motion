@@ -297,6 +297,63 @@ for c_i, off in enumerate((-330, -170, 0, 170, 330)):
 for i in range(40):
     Dg.append(tw(R.choice(['#ffe08a', '#ffb35a', '#ff8fc4']), R.uniform(1, 2.4), DX + R.uniform(-60, 60), DY + R.uniform(-30, 40)))
 
+# --- stairway backdrop: a dim ceiling of hanging lanterns, glints, fairy lights, bokeh (own RNG, so other scenes stay unchanged) ---
+RD = random.Random(SEED + 500)
+bgD = []
+WARM_D = [('#ff9a3d', '#ffd45a'), ('#ffb43a', '#fff0a0'), ('#ff6a4a', '#ffd9a0'), ('#ff7fb0', '#ffe0ee'), ('#ffd45a', '#ff9a3d'), ('#9be05a', '#fff0a0')]
+for i in range(16):      # soft bokeh blobs far behind
+    bgD.append(f'<g class="pl" style="--pd:{RD.uniform(2.4, 5):.1f}s;--pl:-{RD.uniform(0, 5):.1f}s">'
+               f'{halo(RD.choice(["#ffb35a", "#ff8fc4", "#ffd27a", "#ff9a4a"]), RD.uniform(34, 80), RD.uniform(0, 960), RD.uniform(10, 380), .55)}</g>')
+for yy, sag in ((34, 64), (62, 80), (92, 56)):      # strings of fairy lights across the ceiling
+    bgD.append(f'<path class="cordD" style="opacity:.5" d="M-20 {yy} Q480 {yy + sag} 980 {yy}"/>')
+    for k in range(36):
+        t_ = k / 35
+        bx, by = -20 + 1000 * t_, (1 - t_) ** 2 * yy + 2 * t_ * (1 - t_) * (yy + sag) + t_ ** 2 * yy
+        col = RD.choice(['#ffe9a8', '#ff8fc4', '#ffb35a', '#9be05a', '#8fd8ff'])
+        bgD.append(f'<g class="pl" style="--pd:{RD.uniform(1.2, 2.6):.1f}s;--pl:-{RD.uniform(0, 3):.1f}s">{halo(col, 10, bx, by + 3, .8)}'
+                   f'<circle cx="{bx:.0f}" cy="{by + 3:.0f}" r="2.2" fill="{col}" style="stroke:none"/></g>')
+placedD, itemsD, tries = [], [], 0
+while len(itemsD) < 70 and tries < 5000:
+    tries += 1
+    kind = RD.choice(['hex', 'hex', 'round', 'round', 'star', 'drum', 'lotus', 'lotus', 'tag', 'tag'])
+    size = RD.uniform(.5, .98)
+    rr = {'hex': 34, 'round': 30, 'star': 32, 'drum': 30, 'lotus': 30, 'tag': 14}[kind] * size
+    x, drop = RD.uniform(0, 960), RD.uniform(16, 300)
+    cy = drop + rr * (1.1 if kind != 'tag' else 2.6)
+    if cy + rr > 300:       # stay above the stairs
+        continue
+    if 320 < x < 640 and cy + rr > 110 and cy - rr < 330:      # keep the glowing tunnel clear
+        continue
+    if any(math.hypot(x - px, cy - py) < (rr + pr) * .72 for px, py, pr in placedD):
+        continue
+    placedD.append((x, cy, rr))
+    itemsD.append((size, kind, x, drop, rr))
+for size, kind, x, drop, rr in sorted(itemsD, key=lambda a: a[0]):
+    c1, c2 = RD.choice(WARM_D)
+    if kind == 'hex':
+        g = LS.hex_lantern(46 * size, 50 * size, c1, c2)
+    elif kind == 'round':
+        g = LS.round_lantern(25 * size, c1, c2)
+    elif kind == 'star':
+        g = LS.star_lantern(27 * size, c1, c2)
+    elif kind == 'drum':
+        g = LS.drum_lantern(24 * size, 40 * size, c1, c2)
+    elif kind == 'lotus':
+        g = f'<g transform="scale({size:.2f})">{LS.lotus_hang(RD.choice(["#ff4f7a", "#ffc83a", "#ff8fc4"]))}</g>'
+    else:
+        g = LS.tag_strip(18 * size, 74 * size, c1)
+    dd = RD.uniform(3.4, 6)
+    inner = (f'<g class="pl" style="--pd:{RD.uniform(2.2, 4.6):.1f}s;--pl:-{RD.uniform(0, 5):.1f}s"><g transform="translate({x:.0f} {drop:.0f})">'
+             f'{halo(c1, rr * 1.9, 0, rr * 1.1, .6)}{g}</g></g>')
+    bgD.append(f'<g style="opacity:.62"><path class="cordD" style="opacity:.6" d="M{x:.0f} 0 L{x:.0f} {drop:.0f}"/>'
+               f'<g class="sw" style="--sa:{RD.uniform(1, 2.6):.1f}deg;--sd:{dd:.1f}s;--sl:-{RD.uniform(0, dd):.1f}s;transform-origin:{x:.0f}px 0px">{inner}</g></g>')
+for i in range(110):     # four-point glints
+    sx_, sy_, ss = RD.uniform(0, 960), RD.uniform(0, 420), RD.uniform(2.5, 7.5)
+    col = RD.choice(['#fff3c8', '#ffd27a', '#ffe9a8', '#ffc0dc'])
+    bgD.append(f'<g transform="translate({sx_:.0f} {sy_:.0f})"><path class="spk" style="fill:{col};--td:{RD.uniform(1.6, 4.2):.1f}s;--tl:-{RD.uniform(0, 4):.1f}s" '
+               f'd="M0 {-ss:.1f} Q0 0 {ss:.1f} 0 Q0 0 0 {ss:.1f} Q0 0 {-ss:.1f} 0 Q0 0 0 {-ss:.1f} Z"/></g>')
+Dg[0:0] = bgD
+
 # =============================================================================================
 # Scene E: the ceiling of hanging lanterns (126-158)
 # =============================================================================================
@@ -461,7 +518,8 @@ svg = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{
 .rip{{fill:none;stroke:#9cc8ff;stroke-width:1.3;opacity:0;transform-box:fill-box;transform-origin:center;animation:rip var(--rd) ease-out var(--rl) infinite}}
 .wob{{animation:wob 4.2s ease-in-out var(--wl) infinite}} .gl{{animation:gl 3.6s ease-in-out var(--gl,0s) infinite}}
 .stairS{{fill:none;stroke:#ffd9a0;stroke-width:1.6;opacity:.8}} .stairR{{fill:none;stroke:#b57a46;stroke-width:1.2;opacity:.7}} .rail2{{fill:none;stroke:#d8c8a8;stroke-width:1.5;opacity:.8}}
-.cordD{{fill:none;stroke:#d8c8a8;stroke-width:1.3;opacity:.8}} .beams{{fill:none;stroke:#ffb870;stroke-width:1;opacity:.25}}
+.cordD{{fill:none;stroke:#d8c8a8;stroke-width:1.3;opacity:.8}} .pl{{animation:pl var(--pd) ease-in-out var(--pl) infinite}}
+.spk{{stroke:none;transform-box:fill-box;transform-origin:center;animation:spk var(--td) ease-in-out var(--tl) infinite}} .beams{{fill:none;stroke:#ffb870;stroke-width:1;opacity:.25}}
 .tower{{stroke:#ffe9a0;stroke-width:2}}
 .beam{{stroke:#4aa8ff;opacity:.5;stroke-linecap:round;filter:url(#blur2);animation:beamfl var(--bd) ease-in-out var(--bl) infinite}}
 .sweep{{animation:sweep 16s ease-in-out infinite alternate}}
@@ -476,6 +534,8 @@ svg = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{
 @keyframes flow{{to{{stroke-dashoffset:-60}}}}
 @keyframes rip{{0%{{opacity:.7;transform:scale(.4)}}100%{{opacity:0;transform:scale(1.5)}}}}
 @keyframes wob{{0%,100%{{transform:skewX(-2.5deg)}}50%{{transform:skewX(2.5deg)}}}}
+@keyframes pl{{0%,100%{{opacity:.45}}50%{{opacity:1}}}}
+@keyframes spk{{0%,100%{{opacity:0;transform:scale(.2) rotate(0deg)}}50%{{opacity:1;transform:scale(1) rotate(45deg)}}}}
 @keyframes gl{{0%,100%{{opacity:.86}}50%{{opacity:1}}}}
 @keyframes sweep{{from{{transform:rotate(-7deg)}}to{{transform:rotate(9deg)}}}}
 @keyframes beamfl{{0%,100%{{opacity:.25}}50%{{opacity:.7}}}}
