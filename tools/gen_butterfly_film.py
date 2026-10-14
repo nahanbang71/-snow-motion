@@ -12,7 +12,8 @@ every motion is slowed by SLOW (default 1.25) so the real length is 180*SLOW = 2
  130-150  I  whirlwind: petals spiral, butterflies rise in spirals
  150-165  J  six butterflies come back down to the meadow
  165-180  K  farewell: they rise to a small sun, shrinking away -> loops to A
-usage: python3 tools/gen_butterfly_film.py [seed] [--slow=1.25]   -> flowers/butterfly_film.svg
+usage: python3 tools/gen_butterfly_film.py [seed] [--slow=1.25] [--sun] [--out=PATH]   -> flowers/butterfly_film.svg
+(no sun by default: the butterflies of the last act fly up and scatter into light instead)
 """
 import math
 import os
@@ -26,7 +27,8 @@ W, H, T = m.W, m.H, 180.0
 K = next((float(a.split('=')[1]) for a in sys.argv if a.startswith('--slow=')), 1.25)
 CYC = T * K          # real length of one loop in seconds
 SEED = int(sys.argv[1]) if len(sys.argv) > 1 and sys.argv[1].isdigit() else 21
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'flowers', 'butterfly_film.svg')
+SUN = '--sun' in sys.argv
+OUT = next((a.split('=', 1)[1] for a in sys.argv if a.startswith('--out=')), None) or os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'flowers', 'butterfly_film.svg')
 R = random.Random(SEED)
 KFS = []
 
@@ -255,12 +257,13 @@ for fn, args in [(m.lupine, (900, 340, 170, '#8f9bff', 1.4)),
     i0 = len(C3.els)
     fn(C3, R, *args)
     sway_wrap(C3, i0, args[0])
-sunx, suny = 800, 100
-rays = ''.join(f'M{sunx+58*math.cos(a):.1f} {suny+58*math.sin(a):.1f} L{sunx+88*math.cos(a):.1f} {suny+88*math.sin(a):.1f} '
-               for a in [k * math.pi / 6 for k in range(12)])
-C3.els.append(f'<g class="spin" style="transform-origin:{sunx}px {suny}px">'
-              f'<path class="d0 k sunr" pathLength="1" style="animation-name:{C3._pts("stroke-dashoffset", 1, 0, .6, 2.0)}" d="{rays}"/></g>')
-C3.path(m.circ(sunx, suny, 40), 'sunr', .4, 1.4)
+if SUN:
+    sunx, suny = 800, 100
+    rays = ''.join(f'M{sunx+58*math.cos(a):.1f} {suny+58*math.sin(a):.1f} L{sunx+88*math.cos(a):.1f} {suny+88*math.sin(a):.1f} '
+                   for a in [k * math.pi / 6 for k in range(12)])
+    C3.els.append(f'<g class="spin" style="transform-origin:{sunx}px {suny}px">'
+                  f'<path class="d0 k sunr" pathLength="1" style="animation-name:{C3._pts("stroke-dashoffset", 1, 0, .6, 2.0)}" d="{rays}"/></g>')
+    C3.path(m.circ(sunx, suny, 40), 'sunr', .4, 1.4)
 layers['E'] = (multi_window([(56, 70), (110, 130)], 1.0, 1.0), C3.els)
 
 # ---------- G: rainbow (90-110) ----------
@@ -270,12 +273,20 @@ for k, col in enumerate(['#ff5a5a', '#ffa14a', '#ffe45a', '#5aff9a', '#5ad7ff', 
     C4.path(f'M{480-r} 470 A{r} {r*.75:.0f} 0 0 1 {480+r} 470', 'rb', .3 + k * .45, 1.6, col)
 layers['G'] = (multi_window([(90, 110)], 1.0, 1.0), C4.els)
 
-# ---------- K: small sun (165-180) ----------
+# ---------- K: (optional) small sun (165-180) ----------
 C5 = Cyc([(165, T - 2)])
-C5.path(m.circ(480, 170, 34), 'sunr', .3, 1.4)
-C5.els.append('<path class="d0 k sunr" pathLength="1" style="animation-name:%s" d="%s"/>' % (
-    C5._pts("stroke-dashoffset", 1, 0, .8, 1.8),
-    ''.join(f'M{480+48*math.cos(a):.1f} {170+48*math.sin(a):.1f} L{480+70*math.cos(a):.1f} {170+70*math.sin(a):.1f} ' for a in [k * math.pi / 6 for k in range(12)])))
+if SUN:
+    C5.path(m.circ(480, 170, 34), 'sunr', .3, 1.4)
+    C5.els.append('<path class="d0 k sunr" pathLength="1" style="animation-name:%s" d="%s"/>' % (
+        C5._pts("stroke-dashoffset", 1, 0, .8, 1.8),
+        ''.join(f'M{480+48*math.cos(a):.1f} {170+48*math.sin(a):.1f} L{480+70*math.cos(a):.1f} {170+70*math.sin(a):.1f} ' for a in [k * math.pi / 6 for k in range(12)])))
+else:       # the butterflies dissolve into a burst of light where they meet in the sky
+    for k in range(16):
+        ang = k * 2 * math.pi / 16 + R.uniform(-.1, .1)
+        r = R.uniform(60, 130)
+        nm = kfs([(0, 'transform:translate(0px,0px);opacity:0'), (174.2, 'transform:translate(0px,0px);opacity:0'), (174.8, 'transform:translate(0px,0px);opacity:1'),
+                  (179, f'transform:translate({r*math.cos(ang):.0f}px,{r*math.sin(ang)*.8-25:.0f}px);opacity:0')])
+        C5.els.append(f'<circle class="k" style="opacity:0;fill:#ffe9b0;animation-name:{nm}" cx="480" cy="178" r="{R.choice([1.6, 2.2, 2.8])}"/>')
 layers['K'] = (kfs([(0, 'opacity:0'), (165, 'opacity:0'), (166, 'opacity:1'), (T - 1.5, 'opacity:1'), (T, 'opacity:0')]), C5.els)
 
 # ================= butterflies / petals =================
