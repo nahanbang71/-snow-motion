@@ -3,7 +3,10 @@
   Act 1  0-14 s   butterflies fly in from the left and cross the sky
   Act 2 14-28 s   a new flock glides down and lands on the big cosmos (slow wing beats)
   Act 3 28-42 s   wind rises: streaks, flowers bend, petals blow right, butterflies lift off and leave
-usage: python3 tools/gen_butterfly_story.py [seed]   -> flowers/butterfly_story.svg
+usage: python3 tools/gen_butterfly_story.py [seed]           -> flowers/butterfly_story.svg   (42 s)
+       python3 tools/gen_butterfly_story.py [seed] --full    -> flowers/butterfly_full.svg    (56 s)
+--full prepends an opening act (14 s): mountains / pine trees / lake behind the meadow, one butterfly
+rests on a cosmos, then lifts off and flies away into Act 1; the landscape fades out as Act 1 begins.
 """
 import math
 import os
@@ -14,30 +17,36 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import gen_butterfly_meadow as m  # noqa: E402
 
 W, H = m.W, m.H
-T = 42.0
-SEED = int(sys.argv[1]) if len(sys.argv) > 1 else 11
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'flowers', 'butterfly_story.svg')
+FULL = '--full' in sys.argv
+ARGS = [a for a in sys.argv[1:] if not a.startswith('--')]
+OFF = 14.0 if FULL else 0.0
+T = 42.0 + OFF
+SEED = int(ARGS[0]) if ARGS else 11
+OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'flowers', 'butterfly_full.svg' if FULL else 'butterfly_story.svg')
 R = random.Random(SEED)
 
 KFS = []
 
 
-def kfs(points):
-    """points: [(t_seconds, 'css props'), ...] ascending. returns animation-name (42 s cycle)."""
+def kfs(points, shift=True):
+    """points: [(t_seconds, 'css props'), ...] ascending. returns animation-name (cycle = T s).
+    shift=True: times are story times (moved after the opening act in --full mode)."""
+    if shift:
+        points = [(t if t in (0, T) else t + OFF, p) for t, p in points]
     body = ''.join(f'{t/T*100:.3f}%{{{p}}}' for t, p in points)
     KFS.append(f'@keyframes q{len(KFS)}{{{body}}}')
     return f'q{len(KFS)-1}'
 
 
-def motion(start, dur, fade=.4):
+def motion(start, dur, fade=.4, shift=True):
     f = fade / dur * 100
     return kfs([(0, 'offset-distance:0%;opacity:0'), (start, 'offset-distance:0%;opacity:0'),
                 (start + fade, f'offset-distance:{f:.2f}%;opacity:1'), (start + dur - fade, f'offset-distance:{100-f:.2f}%;opacity:1'),
-                (start + dur, 'offset-distance:100%;opacity:0'), (T, 'offset-distance:100%;opacity:0')])
+                (start + dur, 'offset-distance:100%;opacity:0'), (T, 'offset-distance:100%;opacity:0')], shift)
 
 
-def window(a, b, fade=.4):
-    return kfs([(0, 'opacity:0'), (a, 'opacity:0'), (a + fade, 'opacity:1'), (b, 'opacity:1'), (b + fade, 'opacity:0'), (T, 'opacity:0')])
+def window(a, b, fade=.4, shift=True):
+    return kfs([(0, 'opacity:0'), (a, 'opacity:0'), (a + fade, 'opacity:1'), (b, 'opacity:1'), (b + fade, 'opacity:0'), (T, 'opacity:0')], shift)
 
 
 class Once(m.Scene):
@@ -100,9 +109,9 @@ def bf_body(cls, bd, bl):
             f'<g transform="scale(-1 1)"><g class="flap">{WING}</g></g>{BODY}</g>')
 
 
-def flyer(path_d, sc, pal, start, dur):
+def flyer(path_d, sc, pal, start, dur, shift=True):
     """top view, head along the path"""
-    return (f'<g class="mv" style="offset-path:path(\'{path_d}\');animation-name:{motion(start, dur)}">'
+    return (f'<g class="mv" style="offset-path:path(\'{path_d}\');animation-name:{motion(start, dur, shift=shift)}">'
             f'<g transform="scale({sc:.2f})" style="--w:{pal[0]};--b:{pal[1]};--e:{pal[2]}">'
             f'{bf_body("beat", round(R.uniform(.45, .75), 2), R.uniform(0, .5))}</g></g>')
 
@@ -142,6 +151,45 @@ for i, (px, ptop) in enumerate(perch):
                f'<g class="flapS" style="--bl:-{i*.5:.1f}s">{WING}</g><g transform="scale(-1 1)"><g class="flapS" style="--bl:-{i*.5:.1f}s">{WING}</g></g>{BODY}</g></g></g>')
     out.append(flyer(leave, sc, pal, lift, xdur))
 
+# ---------- opening act (--full): landscape + one resting butterfly that flies off into Act 1 ----------
+backdrop = []
+bd_fade = ''
+if FULL:
+    def bpath(d, cls, a, t):
+        nm = kfs([(0, 'stroke-dashoffset:1'), (a, 'stroke-dashoffset:1'), (a + t, 'stroke-dashoffset:0'), (T, 'stroke-dashoffset:0')], False)
+        backdrop.append(f'<path class="d0 k {cls}" pathLength="1" style="animation-name:{nm}" d="{d}"/>')
+
+    bpath('M0 215 L90 150 L140 180 L230 100 L330 190 L400 150 L470 205 L560 130 L660 200 L740 160 L830 210 L960 150', 'mtn', .2, 2.6)
+    bpath('M230 100 L255 130 L240 128 L228 142 L214 126 L205 130 Z', 'mtn', 1.8, .8)
+    bpath('M560 130 L582 158 L570 156 L558 168 L546 154 L538 158 Z', 'mtn', 2.0, .8)
+
+    def tree(x, y, h, d):
+        w = .3 * h
+        pts = [(0, -h)]
+        for k in range(3):
+            top = -h + k * h * .28
+            pts += [(w * (.45 + k * .2) * .55, top + h * .3), (w * (.25 + k * .2) * .55, top + h * .3)]
+        pts += [(w, 0)]
+        seq = pts + [(-px, py) for px, py in reversed(pts[1:])]
+        bpath('M' + ' L'.join(f'{x+px:.1f} {y+py:.1f}' for px, py in seq) + ' Z', 'tree', d, 1.0)
+
+    for i, (tx, ty, th) in enumerate([(40, 262, 110), (95, 270, 85), (150, 258, 120), (205, 268, 70),
+                                      (770, 262, 75), (825, 258, 120), (885, 268, 90), (935, 260, 105)]):
+        tree(tx, ty, th, 1.2 + .15 * i)
+    for k, (y, x0, x1) in enumerate([(228, 250, 720), (242, 290, 680), (256, 330, 640)]):
+        nw = int((x1 - x0) / 40)
+        bpath(f'M{x0} {y}' + ' q10 -6 20 0 t20 0' * nw, 'lake', 2.6 + .25 * k, 1.5)
+
+    px, ptop = perch[1]
+    sc = .72
+    cy = ptop - 48 * sc
+    pal = m.BFLY[0]
+    out.append(f'<g class="k" style="animation-name:{window(3.5, 11.4, shift=False)}"><g transform="translate({px:.0f} {cy:.0f}) scale({sc})" '
+               f'style="--w:{pal[0]};--b:{pal[1]};--e:{pal[2]}"><g class="bobS" style="--bl:-.4s"><g class="flapS" style="--bl:-.2s">{WING}</g>'
+               f'<g transform="scale(-1 1)"><g class="flapS" style="--bl:-.2s">{WING}</g></g>{BODY}</g></g></g>')
+    out.append(flyer(f'M{px:.0f} {cy+10:.0f} C{px+70:.0f} {cy-140:.0f} {px+330:.0f} {cy-70:.0f} 1080 140', sc, pal, 11.4, 9.5, shift=False))
+    bd_fade = kfs([(0, 'opacity:1'), (12.2, 'opacity:1'), (14.4, 'opacity:0'), (T, 'opacity:0')], False)
+
 # wind streaks (act 3) and petals
 streaks = []
 for j, (y, t0) in enumerate([(120, 28.6), (210, 30.6), (300, 32.4), (170, 34.2)]):
@@ -169,7 +217,7 @@ for i in range(5):
                   f'<path class="d1 cloud" pathLength="1" style="--s:{.3 + i*.3:.1f}s;--t:1.4s" d="{m.cloud_d(s)}"/></g></g>')
 
 svg = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}">
-<title>Butterfly story - laser line art sample</title>
+<title>Butterfly {'full film' if FULL else 'story'} - laser line art sample</title>
 <defs>
 <radialGradient id="bg" cx="50%" cy="45%" r="70%"><stop offset="0" stop-color="#14183a"/><stop offset="1" stop-color="#080a1a"/></radialGradient>
 <filter id="glow" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="2.6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
@@ -184,6 +232,8 @@ svg = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{
 .eye{{stroke:var(--e);stroke-width:2.6}} .body{{stroke:#ffffff;stroke-width:2.8}} .ant{{stroke:#ffffff;stroke-width:1.8}}
 .petal{{fill:none;stroke:#ff9fd0;stroke-width:1.8;stroke-linejoin:round;opacity:0}}
 .wind{{fill:none;stroke:#bfe9ff;stroke-width:2;stroke-linecap:round;stroke-dasharray:.2 2;stroke-dashoffset:.2}}
+.d0{{fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1}}
+.mtn{{stroke:#7aa8ff;stroke-width:2.2}} .tree{{stroke:#3df2c0;stroke-width:1.8}} .lake{{stroke:#5ad7ff;stroke-width:1.6}}
 .k,.mv,.meadow{{animation-duration:{T:.0f}s;animation-timing-function:linear;animation-iteration-count:infinite}}
 .mv{{opacity:0;offset-rotate:auto 90deg}}
 .meadow{{transform-origin:0 {H}px;animation-name:{wind}}}
@@ -204,6 +254,7 @@ svg = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{
 <rect width="{W}" height="{H}" fill="url(#bg)"/>
 <g filter="url(#glow)">
 {''.join(clouds)}
+<g class="k" style="animation-name:{bd_fade}">{''.join(backdrop)}</g>
 <g class="meadow">{''.join(S.els)}</g>
 {''.join(streaks)}
 {''.join(out)}

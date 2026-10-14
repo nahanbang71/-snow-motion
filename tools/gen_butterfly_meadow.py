@@ -12,7 +12,7 @@ import sys
 
 W, H = 960, 540
 D = 14.0            # seconds per scene
-SEED = int(sys.argv[1]) if len(sys.argv) > 1 else 7
+SEED = int(sys.argv[1]) if __name__ == '__main__' and len(sys.argv) > 1 else 7
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'flowers', 'butterfly_meadow.svg')
 
 
