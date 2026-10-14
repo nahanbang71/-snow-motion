@@ -255,6 +255,9 @@ if TEXT:
              (65.0, 76.0, '사랑이 피어나고', 24, 520, 480), (86.5, 95.0, '다시, 아침이 올 거예요', 24, 520, 480)]
     for a, b, txt, fs, y, x in LINES:
         nm = kfs([(0, 'opacity:0'), (a, 'opacity:0'), (a + 2.2, 'opacity:.9'), (b - 2.2, 'opacity:.9'), (b, 'opacity:0')])
+        if y > 400:   # soft dark band under the bottom subtitles so they stay readable over the flowers
+            subs += (f'<rect class="k" x="0" y="{y-52}" width="{W}" height="{H-y+52}" fill="url(#subshade)" '
+                     f'style="opacity:0;animation-name:{nm}"/>')
         subs += (f'<text class="k sub" x="{x}" y="{y}" text-anchor="middle" style="opacity:0;font-size:{fs}px;animation-name:{nm}">{txt}</text>')
 
 cam = kfs([(0, 'transform:scale(1) translate(0px,0px)'), (48, 'transform:scale(1.045) translate(-6px,-4px)'), (T, 'transform:scale(1) translate(0px,0px)')])
@@ -270,6 +273,7 @@ svg = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{
 <title>A single butterfly - laser line art</title>
 <defs>
 <radialGradient id="bg" cx="50%" cy="40%" r="75%"><stop offset="0" stop-color="#171a40"/><stop offset="1" stop-color="#070914"/></radialGradient>
+<linearGradient id="subshade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#070914" stop-opacity="0"/><stop offset=".55" stop-color="#070914" stop-opacity=".62"/><stop offset="1" stop-color="#070914" stop-opacity=".8"/></linearGradient>
 <radialGradient id="sunglow"><stop offset="0" stop-color="#ffc98a" stop-opacity=".26"/><stop offset=".25" stop-color="#ffc98a" stop-opacity=".17"/><stop offset=".5" stop-color="#ffb070" stop-opacity=".075"/><stop offset=".75" stop-color="#ff9a6a" stop-opacity=".02"/><stop offset="1" stop-color="#ff9a6a" stop-opacity="0"/></radialGradient>
 <radialGradient id="warm" cx="72%" cy="66%" r="85%"><stop offset="0" stop-color="#ff8a5a" stop-opacity=".75"/><stop offset=".45" stop-color="#b84a6a" stop-opacity=".35"/><stop offset="1" stop-color="#2a1030" stop-opacity="0"/></radialGradient>
 <radialGradient id="dawn" cx="72%" cy="68%" r="70%"><stop offset="0" stop-color="#ffc9a0" stop-opacity=".5"/><stop offset=".5" stop-color="#8f7bd9" stop-opacity=".25"/><stop offset="1" stop-color="#2a2a60" stop-opacity="0"/></radialGradient>
