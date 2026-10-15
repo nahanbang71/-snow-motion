@@ -1,0 +1,94 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
+  <title>Incheon Airport neon sign</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#050816"/>
+      <stop offset="1" stop-color="#0b1230"/>
+    </linearGradient>
+
+    <!-- neon glow: tight core + wide halo -->
+    <filter id="glowCyan" x="-20%" y="-60%" width="140%" height="220%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="1.5" result="b1"/>
+      <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="b2"/>
+      <feGaussianBlur in="SourceGraphic" stdDeviation="14" result="b3"/>
+      <feComponentTransfer in="b2" result="b2d"><feFuncA type="linear" slope=".55"/></feComponentTransfer>
+      <feComponentTransfer in="b3" result="b3d"><feFuncA type="linear" slope=".3"/></feComponentTransfer>
+      <feMerge>
+        <feMergeNode in="b3d"/><feMergeNode in="b2d"/><feMergeNode in="b1"/><feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>    <filter id="glowPink" x="-20%" y="-60%" width="140%" height="220%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="1.5" result="b1"/>
+      <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="b2"/>
+      <feGaussianBlur in="SourceGraphic" stdDeviation="12" result="b3"/>
+      <feComponentTransfer in="b2" result="b2d"><feFuncA type="linear" slope=".55"/></feComponentTransfer>
+      <feComponentTransfer in="b3" result="b3d"><feFuncA type="linear" slope=".3"/></feComponentTransfer>
+      <feMerge>
+        <feMergeNode in="b3d"/><feMergeNode in="b2d"/><feMergeNode in="b1"/><feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Monoton&amp;display=swap");
+      .tube { font-family: "Monoton", "Arial Rounded MT Bold", "Segoe UI", Arial, sans-serif;
+              font-weight: 400; text-anchor: middle; }
+      .main { font-size: 175px; letter-spacing: 6px; }
+      .sub  { font-size: 115px; letter-spacing: 20px; }
+      .tag  { font-size: 44px;  letter-spacing: 26px; font-weight: 600; }
+      /* outer tube colour (saturated) + inner white-hot core */
+      .cyan-out { fill: #7fb2ff; stroke: #2f7bff; stroke-width: 4; stroke-linejoin: round; }
+      .pink-out { fill: #ff4a63; stroke: #ff1f3d; stroke-width: 5; stroke-linejoin: round; }
+      .amber    { fill: #ffffff; }
+
+      @keyframes hum   { 0%,100% {opacity:1} 50% {opacity:.93} }
+      @keyframes flick { 0%,18%,22%,62%,100% {opacity:1} 20% {opacity:.35} 64% {opacity:.55} 66% {opacity:1} }
+    </style>
+  </defs>
+
+  <!-- sample backdrop (delete this rect for a transparent overlay) -->
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+
+  <!-- faint wall reflection -->
+  <ellipse cx="960" cy="520" rx="760" ry="200" fill="#2f7bff" opacity=".06"/>
+
+  <!-- INCHEON -->
+  <g class="g-main" filter="url(#glowCyan)">
+    <text class="tube cyan-out main" x="960" y="500">INCHEON</text>
+  </g>
+
+  <!-- AIRPORT -->
+  <g class="g-sub" filter="url(#glowPink)">
+    <text class="tube pink-out sub" x="960" y="680">AIRPORT</text>
+  </g>
+
+  <!-- ICN tag: small warm accent -->
+  <g filter="url(#glowPink)" opacity=".95">
+    <rect x="610" y="760" width="160" height="2" class="amber"/>
+    <rect x="1150" y="760" width="160" height="2" class="amber"/>
+    <text class="tube tag amber" x="960" y="775">ICN</text>
+  </g>
+</svg>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

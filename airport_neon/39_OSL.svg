@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
+  <title>OSL - Oslo Gardermoen Airport</title>
+  <defs>
+    <filter id="glow" x="-20%" y="-40%" width="140%" height="180%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="b1"/>
+      <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="b2"/>
+      <feGaussianBlur in="SourceGraphic" stdDeviation="16" result="b3"/>
+      <feComponentTransfer in="b2" result="b2d"><feFuncA type="linear" slope=".55"/></feComponentTransfer>
+      <feComponentTransfer in="b3" result="b3d"><feFuncA type="linear" slope=".3"/></feComponentTransfer>
+      <feMerge><feMergeNode in="b3d"/><feMergeNode in="b2d"/><feMergeNode in="b1"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Fascinate&amp;display=swap");
+      .t { font-family: "Fascinate", "Arial Rounded MT Bold", Arial, sans-serif; font-weight: 400;
+            text-anchor: middle; stroke-linejoin: round; paint-order: stroke fill; }
+      /* 5-second cycle: fade in, hold, fade out */
+      @keyframes show { 0% {opacity:0} 8% {opacity:1} 92% {opacity:1} 100% {opacity:0} }
+      .sign { animation: show 5s linear infinite; }
+    </style>
+  </defs>
+  <g class="sign" filter="url(#glow)">
+    <text class="t" x="960" y="500" font-size="320" letter-spacing="19" fill="#ff8a94" stroke="#ff2a3d" stroke-width="5">OSL</text>
+    <text class="t" x="960" y="640" font-size="84.0" letter-spacing="6.7" fill="#94b6ff" stroke="#3d7bff" stroke-width="3">OSLO GARDERMOEN AIRPORT</text>
+  </g>
+</svg>
