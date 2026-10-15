@@ -1,0 +1,63 @@
+﻿no,iata,airport,country,font,color,lines,file
+1,ICN,Incheon International Airport,South Korea,Michroma,#3d7bff,1,01_ICN_START.svg
+2,HND,Tokyo Haneda Airport,Japan,Michroma,#ff2a3d,1,02_HND.svg
+3,NRT,Narita International Airport,Japan,Michroma,#ff2a3d,1,03_NRT.svg
+4,NGO,Chubu Centrair International Airport,Japan,Michroma,#ff2a3d,2,04_NGO.svg
+5,KIX,Kansai International Airport,Japan,Michroma,#ff2a3d,1,05_KIX.svg
+6,FUK,Fukuoka Airport,Japan,Michroma,#ff2a3d,1,06_FUK.svg
+7,PEK,Beijing Capital International Airport,China,Michroma,#ff2a3d,2,07_PEK.svg
+8,PKX,Beijing Daxing International Airport,China,Michroma,#ff2a3d,2,08_PKX.svg
+9,PVG,Shanghai Pudong International Airport,China,Michroma,#ff2a3d,2,09_PVG.svg
+10,CAN,Guangzhou Baiyun International Airport,China,Michroma,#ff2a3d,2,10_CAN.svg
+11,HKG,Hong Kong International Airport,Hong Kong,Michroma,#ff2a3d,1,11_HKG.svg
+12,TPE,Taoyuan International Airport,Taiwan,Michroma,#ff2a3d,1,12_TPE.svg
+13,MNL,Ninoy Aquino International Airport,Philippines,Michroma,#3d7bff,2,13_MNL.svg
+14,CEB,Mactan-Cebu International Airport,Philippines,Michroma,#3d7bff,2,14_CEB.svg
+15,SGN,Tan Son Nhat International Airport,Vietnam,Michroma,#ff2a3d,2,15_SGN.svg
+16,BKK,Suvarnabhumi Airport,Thailand,Michroma,#ff2a3d,1,16_BKK.svg
+17,DMK,Don Mueang International Airport,Thailand,Michroma,#ff2a3d,1,17_DMK.svg
+18,KUL,Kuala Lumpur International Airport,Malaysia,Michroma,#3d7bff,2,18_KUL.svg
+19,SIN,Singapore Changi Airport,Singapore,Michroma,#ff2a3d,1,19_SIN.svg
+20,DPS,Ngurah Rai International Airport,Indonesia,Michroma,#ff2a3d,1,20_DPS.svg
+21,CGK,Soekarno-Hatta International Airport,Indonesia,Michroma,#ff2a3d,2,21_CGK.svg
+22,MLE,Velana International Airport,Maldives,Michroma,#19e68a,1,22_MLE.svg
+23,MAA,Chennai International Airport,India,Michroma,#ff9933,1,23_MAA.svg
+24,BLR,Kempegowda International Airport,India,Michroma,#ff9933,1,24_BLR.svg
+25,HYD,Rajiv Gandhi International Airport,India,Michroma,#ff9933,2,25_HYD.svg
+26,BOM,Chhatrapati Shivaji Maharaj International Airport,India,Michroma,#ff9933,2,26_BOM.svg
+27,DEL,Indira Gandhi International Airport,India,Michroma,#ff9933,2,27_DEL.svg
+28,DXB,Dubai International Airport,UAE,Michroma,#19e68a,1,28_DXB.svg
+29,AUH,Zayed International Airport,UAE,Michroma,#19e68a,1,29_AUH.svg
+30,DOH,Hamad International Airport,Qatar,Michroma,#d4145a,1,30_DOH.svg
+31,RUH,King Khalid International Airport,Saudi Arabia,Michroma,#19e68a,2,31_RUH.svg
+32,IST,Istanbul Airport,Turkey,Michroma,#ff2a3d,1,32_IST.svg
+33,ATH,Athens International Airport,Greece,Michroma,#3d9bff,1,33_ATH.svg
+34,FCO,Leonardo da Vinci-Fiumicino Airport,Italy,Michroma,#19e68a,2,34_FCO.svg
+35,MXP,Milan Malpensa Airport,Italy,Michroma,#19e68a,1,35_MXP.svg
+36,MUC,Munich Airport,Germany,Michroma,#ff2a3d,1,36_MUC.svg
+37,ZRH,Zurich Airport,Switzerland,Michroma,#ff2a3d,1,37_ZRH.svg
+38,FRA,Frankfurt Airport,Germany,Michroma,#ff2a3d,1,38_FRA.svg
+39,OSL,Oslo Gardermoen Airport,Norway,Michroma,#ff2a3d,1,39_OSL.svg
+40,KEF,Keflavik International Airport,Iceland,Michroma,#3d8bff,1,40_KEF.svg
+41,LHR,London Heathrow Airport,United Kingdom,Michroma,#3d7bff,1,41_LHR.svg
+42,LGW,London Gatwick Airport,United Kingdom,Michroma,#3d7bff,1,42_LGW.svg
+43,CDG,Paris Charles de Gaulle Airport,France,Michroma,#3d7bff,1,43_CDG.svg
+44,ORY,Paris Orly Airport,France,Michroma,#3d7bff,1,44_ORY.svg
+45,BCN,Barcelona-El Prat Airport,Spain,Michroma,#ff2a3d,1,45_BCN.svg
+46,MAD,Madrid-Barajas Airport,Spain,Michroma,#ff2a3d,1,46_MAD.svg
+47,LIS,Lisbon Airport,Portugal,Michroma,#19e68a,1,47_LIS.svg
+48,CMN,Mohammed V International Airport,Morocco,Michroma,#ff2a3d,1,48_CMN.svg
+49,CPT,Cape Town International Airport,South Africa,Michroma,#19e68a,1,49_CPT.svg
+50,GIG,Rio Galeao International Airport,Brazil,Michroma,#19e68a,1,50_GIG.svg
+51,GRU,Sao Paulo-Guarulhos International Airport,Brazil,Michroma,#19e68a,2,51_GRU.svg
+52,JFK,John F. Kennedy International Airport,United States,Michroma,#ff2a3d,2,52_JFK.svg
+53,ATL,Hartsfield-Jackson Atlanta International Airport,United States,Michroma,#ff2a3d,2,53_ATL.svg
+54,ORD,O'Hare International Airport,United States,Michroma,#ff2a3d,1,54_ORD.svg
+55,LAX,Los Angeles International Airport,United States,Michroma,#ff2a3d,2,55_LAX.svg
+56,SFO,San Francisco International Airport,United States,Michroma,#ff2a3d,2,56_SFO.svg
+57,NAN,"Nadi International Airport, Fiji",Fiji,Michroma,#4dd0ff,1,57_NAN.svg
+58,AKL,"Auckland Airport, New Zealand",New Zealand,Michroma,#3d7bff,1,58_AKL.svg
+59,MEL,"Melbourne Airport, Australia",Australia,Michroma,#19e68a,1,59_MEL.svg
+60,SYD,"Sydney Airport, Australia",Australia,Michroma,#19e68a,1,60_SYD.svg
+61,GMP,Gimpo International Airport,South Korea,Michroma,#3d7bff,1,61_GMP.svg
+62,ICN,Incheon International Airport,South Korea,Michroma,#3d7bff,1,62_ICN_FINAL.svg

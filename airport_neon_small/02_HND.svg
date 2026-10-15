@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
+  <title>HND - Tokyo Haneda Airport (small)</title>
+  <defs>
+    <filter id="glow" x="-10%" y="-80%" width="120%" height="260%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="0.8" result="b1"/>
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="b2"/>
+      <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="b3"/>
+      <feComponentTransfer in="b2" result="b2d"><feFuncA type="linear" slope=".45"/></feComponentTransfer>
+      <feComponentTransfer in="b3" result="b3d"><feFuncA type="linear" slope=".2"/></feComponentTransfer>
+      <feMerge><feMergeNode in="b3d"/><feMergeNode in="b2d"/><feMergeNode in="b1"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Michroma&amp;display=swap");
+      .t { font-family: "Michroma", "Arial Rounded MT Bold", Arial, sans-serif; font-weight: 400;
+            text-anchor: start; stroke-linejoin: round; paint-order: stroke fill; }
+      @keyframes show { 0% {opacity:0} 8% {opacity:1} 92% {opacity:1} 100% {opacity:0} }
+      .sign { animation: show 5s linear infinite; }
+    </style>
+  </defs>
+  <g class="sign" filter="url(#glow)">
+    <text class="t" x="72" y="112" font-size="46" letter-spacing="7.4" fill="#ffaab1" stroke="none">TOKYO HANEDA AIRPORT</text>
+  </g>
+</svg>
