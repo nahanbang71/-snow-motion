@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Boom Boom Drop 싱크 찍기</title>
+<style>
+  :root { --bg:#0d1020; --panel:#171b33; --line:#2a3057; --text:#eaf0ff; --dim:#8a93c4; --pink:#ff5fa8; --cyan:#4fe3ff; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family: system-ui, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif; }
+  .wrap { max-width: 920px; margin: 0 auto; padding: 20px 16px 60px; }
+  h1 { font-size: 20px; margin: 0 0 4px; }
+  p.sub { margin: 0 0 16px; color: var(--dim); font-size: 14px; line-height: 1.6; }
+  .bar { display:flex; flex-wrap:wrap; gap:10px; align-items:center; background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:12px; margin-bottom:12px; }
+  button, select, input[type=file] { background:#222850; color:var(--text); border:1px solid var(--line); border-radius:8px; padding:8px 12px; font-size:14px; }
+  button { cursor:pointer; } button:hover { border-color: var(--cyan); }
+  button.primary { background:var(--pink); color:#1a0a22; border-color:var(--pink); font-weight:700; }
+  input[type=range] { flex:1; min-width:160px; }
+  .time { font-variant-numeric: tabular-nums; min-width: 92px; color: var(--cyan); }
+  .stage { background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:22px 16px; text-align:center; margin-bottom:12px; }
+  .stage .sec { color:var(--dim); font-size:13px; }
+  .stage .cur { font-size: clamp(26px, 5vw, 46px); font-weight:800; margin:8px 0; line-height:1.25; }
+  .stage .nxt { color:var(--dim); font-size:16px; }
+  .hint { color:var(--dim); font-size:13px; margin:0 0 12px; line-height:1.6; }
+  kbd { background:#222850; border:1px solid var(--line); border-radius:5px; padding:1px 6px; font-size:12px; }
+  ol { list-style:none; margin:0; padding:0; background:var(--panel); border:1px solid var(--line); border-radius:12px; max-height:340px; overflow:auto; }
+  li { display:flex; gap:10px; padding:8px 12px; border-bottom:1px solid var(--line); cursor:pointer; align-items:baseline; }
+  li:last-child { border-bottom:0; }
+  li .n { width:28px; color:var(--dim); font-size:12px; }
+  li .t { width:64px; font-variant-numeric: tabular-nums; color:var(--cyan); font-size:13px; }
+  li .x { flex:1; }
+  li .s { color:var(--dim); font-size:11px; }
+  li.active { background:#2b2252; outline:1px solid var(--pink); }
+  li.done .x { color:#b9c3f2; }
+  textarea { width:100%; height:150px; background:#0a0d1c; color:#cfe; border:1px solid var(--line); border-radius:8px; padding:10px; font-family: ui-monospace, Menlo, Consolas, monospace; font-size:12px; margin-top:12px; }
+  label { font-size:13px; color:var(--dim); display:flex; gap:6px; align-items:center; }
+  input[type=number] { width:70px; background:#222850; color:var(--text); border:1px solid var(--line); border-radius:8px; padding:6px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Boom Boom Drop 싱크 찍기</h1>
+  <p class="sub">곡을 들으면서, 각 줄의 노래가 시작되는 순간에 <kbd>Space</kbd>를 누르세요. 줄 시작 시간이 기록됩니다.</p>
+
+  <div class="bar">
+    <input id="file" type="file" accept="audio/*">
+    <button id="play">▶ 재생</button>
+    <span class="time" id="time">0.00 / 0.00</span>
+    <input id="seek" type="range" min="0" max="1000" value="0">
+  </div>
+  <div class="bar">
+    <label>속도
+      <select id="rate">
+        <option value="1">1.0x</option>
+        <option value="0.75" selected>0.75x</option>
+        <option value="0.5">0.5x</option>
+      </select>
+    </label>
+    <label>반응 보정(ms) <input id="off" type="number" value="90" step="10" min="0" max="300"></label>
+    <button id="undo">↩ 되돌리기 (Backspace)</button>
+    <button id="restart">⏮ 처음부터 다시</button>
+  </div>
+
+  <div class="stage">
+    <div class="sec" id="sec">—</div>
+    <div class="cur" id="cur">먼저 mp3 파일을 선택하세요</div>
+    <div class="nxt" id="nxt"></div>
+  </div>
+
+  <p class="hint">
+    <kbd>Space</kbd> 지금 줄 시작 찍기 · <kbd>Backspace</kbd> 마지막 찍기 취소(1초 앞으로 이동) · <kbd>P</kbd> 재생/정지 ·
+    목록에서 줄을 클릭하면 그 줄부터 다시 찍을 수 있습니다.<br>
+    손이 늦게 눌리는 만큼 <b>반응 보정</b>이 시간을 앞당겨 줍니다(기본 90ms). 빠른 랩은 0.75x나 0.5x로 들으면서 찍으세요. 보정과 속도는 기록에 자동 반영됩니다.
+  </p>
+
+  <ol id="list"></ol>
+
+  <div class="bar" style="margin-top:12px">
+    <button class="primary" id="copy">결과 복사 (JSON)</button>
+    <button id="dl">파일로 저장</button>
+    <span id="msg" style="color:var(--dim);font-size:13px"></span>
+  </div>
+  <textarea id="out" readonly placeholder="찍은 결과가 여기에 쌓입니다. 끝나면 복사해서 Claude에게 붙여 넣어 주세요."></textarea>
+</div>
+
+<script>
+const LINES = [
+  ["Intro","YEAH, turn the lights off"],["Intro","진짜들이 판을 쓸어"],["Intro","LET IT, LET IT DROP!"],
+  ["Verse 1","땅이 울려대"],["Verse 1","heavy feet on the floor,"],["Verse 1","가짜들의 왕관, 손끝으로 깨"],
+  ["Verse 1","DROP THAT BEAT, 밑바닥에서 IGNITE"],["Verse 1","i don't play no game, I RULE THE NIGHT"],
+  ["Verse 1","단단히 벼린 블레이드, 절대로 안 부러져"],["Verse 1","무대 위 터진 에너지, 사방으로 번져"],
+  ["Verse 1","HEAR THAT ROAR, 멈출 생각 없어"],["Verse 1","더 세게 때려라, 비트 위를 덮어!"],
+  ["Pre-Chorus","BOOM BOOM, light the fire"],["Pre-Chorus","STOP STOP, raise it higher"],["Pre-Chorus","NO TALK, clear the zone"],["Pre-Chorus","BOOM BOOM, take the throne!"],
+  ["Pre-Chorus","BOOM, light the fire"],["Pre-Chorus","STOP STOP, raise it higher"],["Pre-Chorus","NO TALK, clear the zone"],["Pre-Chorus","BOOM BOOM, TAKE THE DROP!"],
+  ...[1,2].flatMap(k=>[["Chorus "+k,"BOOM BOOM, got the mic"],["Chorus "+k,"STOP STOP, watch me ignite"],["Chorus "+k,"BOOM BOOM, rockin' my feet"],["Chorus "+k,"DROP THE CROWN, TAKE THE STREAM!"]]),
+  ["Verse 2","no cap, no doubt, 길을 전부 열어"],["Verse 2","우리가 발을 딛는 순간 판을 먹어"],["Verse 2","sharp speed, 혀 끝에 박힌 리듬"],
+  ["Verse 2","판도를 바꿔버릴 결정적인 이름, LOCK IN"],["Verse 2","STEP FAST, 바로 지금, LOCK IN"],
+  ["Verse 2","STEP FAST, WE OWN THE RHYTHM!, LOCK IN"],["Verse 2","STEP FAST, WE OWN THE RHYTHM! LOCK IN"],["Verse 2","LOCK IN, STEP FAST, WE OWN THE RHYTHM!"],
+  ["Bridge","숨을 죽여, 공기가 떨려 떨려 떨려 떨려"],["Bridge","숨을 죽여, 공기가 떨려 떨려 떨려 떨려"],["Bridge","숨을 죽여, 공기가 떨려 떨려 떨려 떨려"],
+  ["Bridge","3, 2, 1..."],["Bridge","DROP IT DOWN!, DROP IT"],["Bridge","DROP IT"],
+  ...[3,4].flatMap(k=>[["Chorus "+k,"BOOM BOOM, got the mic"],["Chorus "+k,"STOP STOP, watch me ignite"],["Chorus "+k,"BOOM BOOM, rockin' my feet"],["Chorus "+k,"DROP THE CROWN, TAKE THE STREAM!"]]),
+  ["Outro","WE OWN THIS GAME"],["Outro","BOOM BOOM DROP"],
+].map(([sec,text],i)=>({i,sec,text,t:null}));
+
+const $ = id => document.getElementById(id);
+const audio = new Audio(); audio.preservesPitch = true;
+let idx = 0, loaded = false;
+
+function fmt(s){ return (s||0).toFixed(2); }
+function render(){
+  const ol = $("list"); ol.innerHTML = "";
+  LINES.forEach(l=>{
+    const li = document.createElement("li");
+    li.className = (l.i===idx?"active ":"") + (l.t!==null?"done":"");
+    li.innerHTML = `<span class="n">${l.i+1}</span><span class="t">${l.t===null?"—":fmt(l.t)}</span><span class="x"></span><span class="s">${l.sec}</span>`;
+    li.querySelector(".x").textContent = l.text;
+    li.onclick = ()=>{ idx = l.i; render(); };
+    ol.appendChild(li);
+  });
+  const a = ol.querySelector(".active"); if(a) a.scrollIntoView({block:"nearest"});
+  const cur = LINES[idx];
+  $("sec").textContent = cur ? `${cur.sec} · ${idx+1} / ${LINES.length}` : "완료!";
+  $("cur").textContent = cur ? cur.text : "모든 줄을 찍었습니다. 아래 결과를 복사하세요.";
+  $("nxt").textContent = LINES[idx+1] ? "다음: " + LINES[idx+1].text : "";
+  const data = LINES.filter(l=>l.t!==null).map(l=>({i:l.i,sec:l.sec,text:l.text,start:+l.t.toFixed(3)}));
+  $("out").value = JSON.stringify({offset_ms:+$("off").value, lines:data}, null, 1);
+}
+function tap(){
+  if(!loaded || idx>=LINES.length) return;
+  const real = audio.currentTime - (+$("off").value/1000)*audio.playbackRate;
+  LINES[idx].t = Math.max(0, real);
+  idx++; render();
+}
+function undo(){
+  if(idx===0 && LINES[0].t===null) return;
+  if(idx>0) idx--;
+  LINES[idx].t = null;
+  const prev = idx>0 ? LINES[idx-1].t : 0;
+  audio.currentTime = Math.max(0, (prev ?? 0) - 0.5);
+  render();
+}
+function toggle(){ if(!loaded) return; audio.paused ? audio.play() : audio.pause(); }
+
+$("file").onchange = e => {
+  const f = e.target.files[0]; if(!f) return;
+  audio.src = URL.createObjectURL(f); audio.playbackRate = +$("rate").value; loaded = true;
+  e.target.blur(); render();
+};
+$("play").onclick = toggle;
+$("undo").onclick = undo;
+$("restart").onclick = ()=>{ if(confirm("찍은 기록을 모두 지우고 처음부터 할까요?")){ LINES.forEach(l=>l.t=null); idx=0; audio.currentTime=0; render(); } };
+$("rate").onchange = e => { audio.playbackRate = +e.target.value; e.target.blur(); };
+$("off").onchange = render;
+$("seek").oninput = e => { if(audio.duration) audio.currentTime = audio.duration * e.target.value/1000; };
+audio.onplay = ()=> $("play").textContent = "⏸ 정지";
+audio.onpause = ()=> $("play").textContent = "▶ 재생";
+audio.ontimeupdate = ()=>{
+  $("time").textContent = `${fmt(audio.currentTime)} / ${fmt(audio.duration)}`;
+  if(audio.duration) $("seek").value = audio.currentTime/audio.duration*1000;
+};
+document.addEventListener("keydown", e=>{
+  if(e.target.tagName==="INPUT" && e.target.type==="number") return;
+  if(e.code==="Space"){ e.preventDefault(); document.activeElement.blur(); tap(); }
+  else if(e.code==="Backspace"){ e.preventDefault(); undo(); }
+  else if(e.code==="KeyP"){ toggle(); }
+});
+$("copy").onclick = async ()=>{
+  try{ await navigator.clipboard.writeText($("out").value); $("msg").textContent="복사됨"; }
+  catch(_){ $("out").select(); document.execCommand("copy"); $("msg").textContent="복사됨"; }
+};
+$("dl").onclick = ()=>{
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([$("out").value],{type:"application/json"}));
+  a.download = "boom-boom-drop-sync.json"; a.click();
+};
+render();
+</script>
+</body>
+</html>
