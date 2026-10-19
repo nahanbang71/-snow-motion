@@ -1,0 +1,522 @@
+[
+ {
+  "n": 1,
+  "sec": "Intro",
+  "text": "YEAH, turn the lights off",
+  "mode": "slam",
+  "icon": "star",
+  "seed": 1,
+  "tailShake": 0,
+  "big": false
+ },
+ {
+  "n": 2,
+  "sec": "Intro",
+  "text": "진짜들이 판을 쓸어",
+  "mode": "slam",
+  "icon": "heart",
+  "seed": 2,
+  "tailShake": 0,
+  "big": false
+ },
+ {
+  "n": 3,
+  "sec": "Intro",
+  "text": "LET IT, LET IT DROP!",
+  "mode": "slam",
+  "icon": "bolt",
+  "seed": 3,
+  "tailShake": 0,
+  "big": false
+ },
+ {
+  "n": 4,
+  "sec": "Verse1",
+  "text": "땅이 울려대",
+  "mode": "type",
+  "icon": "star",
+  "seed": 4,
+  "tailShake": 0,
+  "big": false
+ },
+ {
+  "n": 5,
+  "sec": "Verse1",
+  "text": "heavy feet on the floor,",
+  "mode": "type",
+  "icon": "heart",
+  "seed": 5,
+  "tailShake": 0,
+  "big": false
+ },
+ {
+  "n": 6,
+  "sec": "Verse1",
+  "text": "가짜들의 왕관, 손끝으로 깨",
+  "mode": "type",
+  "icon": "star",
+  "seed": 6,
+  "tailShake": 0,
+  "big": false
+ },
+ {
+  "n": 7,
+  "sec": "Verse1",
+  "text": "DROP THAT BEAT, 밑바닥에서 IGNITE",
+  "mode": "type",
+  "icon": "bolt",
+  "seed": 7,
+  "tailShake": 0,
+  "big": false
+ },
+ {
+  "n": 8,
+  "sec": "Verse1",
+  "text": "i don't play no game, I RULE THE NIGHT",
+  "mode": "type",
+  "icon": "sun",
+  "seed": 8,
+  "tailShake": 0,
+  "big": false
+ },
+ {
+  "n": 9,
+  "sec": "Verse1",
+  "text": "단단히 벼린 블레이드, 절대로 안 부러져",
+  "mode": "type",
+  "icon": "star",
+  "seed": 9,
+  "tailShake": 0,
+  "big": false
+ },
+ {
+  "n": 10,
+  "sec": "Verse1",
+  "text": "무대 위 터진 에너지, 사방으로 번져",
+  "mode": "type",
+  "icon": "heart",
+  "seed": 10,
+  "tailShake": 0,
+  "big": false
+ },
+ {
+  "n": 11,
+  "sec": "Verse1",
+  "text": "HEAR THAT ROAR, 멈출 생각 없어",
+  "mode": "type",
+  "icon": "star",
+  "seed": 11,
+  "tailShake": 0,
+  "big": false
+ },
+ {
+  "n": 12,
+  "sec": "Verse1",
+  "text": "더 세게 때려라, 비트 위를 덮어!",
+  "mode": "type",
+  "icon": "heart",
+  "seed": 12,
+  "tailShake": 0,
+  "big": false
+ },
+ {
+  "n": 13,
+  "sec": "PreChorus",
+  "text": "BOOM BOOM, light the fire",
+  "mode": "slam",
+  "icon": "bolt",
+  "seed": 13,
+  "tailShake": 0,
+  "big": false
+ },
+ {
+  "n": 14,
+  "sec": "PreChorus",
+  "text": "STOP STOP, raise it higher",
+  "mode": "slam",
+  "icon": "star",
+  "seed": 14,
+  "tailShake": 0,
+  "big": false
+ },
+ {
+  "n": 15,
+  "sec": "PreChorus",
+  "text": "NO TALK, clear the zone",
+  "mode": "slam",
+  "icon": "heart",
+  "seed": 15,
+  "tailShake": 0,
+  "big": false
+ },
+ {
+  "n": 16,
+  "sec": "PreChorus",
+  "text": "BOOM BOOM, take the throne!",
+  "mode": "slam",
+  "icon": "bolt",
+  "seed": 16,
+  "tailShake": 0,
+  "big": false
+ },
+ {
+  "n": 17,
+  "sec": "PreChorus",
+  "text": "BOOM, light the fire",
+  "mode": "slam",
+  "icon": "bolt",
+  "seed": 17,
+  "tailShake": 0,
+  "big": false
+ },
+ {
+  "n": 18,
+  "sec": "PreChorus",
+  "text": "STOP STOP, raise it higher",
+  "mode": "slam",
+  "icon": "sun",
+  "seed": 18,
+  "tailShake": 0,
+  "big": false
+ },
+ {
+  "n": 19,
+  "sec": "PreChorus",
+  "text": "NO TALK, clear the zone",
+  "mode": "slam",
+  "icon": "star",
+  "seed": 19,
+  "tailShake": 0,
+  "big": false
+ },
+ {
+  "n": 20,
+  "sec": "PreChorus",
+  "text": "BOOM BOOM, TAKE THE DROP!",
+  "mode": "slam",
+  "icon": "bolt",
+  "seed": 20,
+  "tailShake": 0,
+  "big": false
+ },
+ {
+  "n": 21,
+  "sec": "Chorus1",
+  "text": "BOOM BOOM, got the mic",
+  "mode": "slam",
+  "icon": "bolt",
+  "seed": 21,
+  "tailShake": 0,
+  "big": false
+ },
+ {
+  "n": 22,
+  "sec": "Chorus1",
+  "text": "STOP STOP, watch me ignite",
+  "mode": "slam",
+  "icon": "heart",
+  "seed": 22,
+  "tailShake": 0,
+  "big": false
+ },
+ {
+  "n": 23,
+  "sec": "Chorus1",
+  "text": "BOOM BOOM, rockin' my feet",
+  "mode": "slam",
+  "icon": "bolt",
+  "seed": 23,
+  "tailShake": 0,
+  "big": false
+ },
+ {
+  "n": 24,
+  "sec": "Chorus1",
+  "text": "DROP THE CROWN, TAKE THE STREAM!",
+  "mode": "slam",
+  "icon": "crown",
+  "seed": 24,
+  "tailShake": 0,
+  "big": false
+ },
+ {
+  "n": 25,
+  "sec": "Chorus2",
+  "text": "BOOM BOOM, got the mic",
+  "mode": "slam",
+  "icon": "bolt",
+  "seed": 25,
+  "tailShake": 0,
+  "big": false
+ },
+ {
+  "n": 26,
+  "sec": "Chorus2",
+  "text": "STOP STOP, watch me ignite",
+  "mode": "slam",
+  "icon": "star",
+  "seed": 26,
+  "tailShake": 0,
+  "big": false
+ },
+ {
+  "n": 27,
+  "sec": "Chorus2",
+  "text": "BOOM BOOM, rockin' my feet",
+  "mode": "slam",
+  "icon": "bolt",
+  "seed": 27,
+  "tailShake": 0,
+  "big": false
+ },
+ {
+  "n": 28,
+  "sec": "Chorus2",
+  "text": "DROP THE CROWN, TAKE THE STREAM!",
+  "mode": "slam",
+  "icon": "crown",
+  "seed": 28,
+  "tailShake": 0,
+  "big": false
+ },
+ {
+  "n": 29,
+  "sec": "Verse2",
+  "text": "no cap, no doubt, 길을 전부 열어",
+  "mode": "type",
+  "icon": "star",
+  "seed": 29,
+  "tailShake": 0,
+  "big": false
+ },
+ {
+  "n": 30,
+  "sec": "Verse2",
+  "text": "우리가 발을 딛는 순간 판을 먹어",
+  "mode": "type",
+  "icon": "heart",
+  "seed": 30,
+  "tailShake": 0,
+  "big": false
+ },
+ {
+  "n": 31,
+  "sec": "Verse2",
+  "text": "sharp speed, 혀 끝에 박힌 리듬",
+  "mode": "type",
+  "icon": "star",
+  "seed": 31,
+  "tailShake": 0,
+  "big": false
+ },
+ {
+  "n": 32,
+  "sec": "Verse2",
+  "text": "판도를 바꿔버릴 결정적인 이름, LOCK IN",
+  "mode": "type",
+  "icon": "heart",
+  "seed": 32,
+  "tailShake": 0,
+  "big": false
+ },
+ {
+  "n": 33,
+  "sec": "Verse2",
+  "text": "STEP FAST, 바로 지금, LOCK IN",
+  "mode": "type",
+  "icon": "sun",
+  "seed": 33,
+  "tailShake": 0,
+  "big": false
+ },
+ {
+  "n": 34,
+  "sec": "Verse2",
+  "text": "STEP FAST, WE OWN THE RHYTHM!, LOCK IN",
+  "mode": "type",
+  "icon": "star",
+  "seed": 34,
+  "tailShake": 0,
+  "big": false
+ },
+ {
+  "n": 35,
+  "sec": "Verse2",
+  "text": "STEP FAST, WE OWN THE RHYTHM! LOCK IN",
+  "mode": "type",
+  "icon": "heart",
+  "seed": 35,
+  "tailShake": 0,
+  "big": false
+ },
+ {
+  "n": 36,
+  "sec": "Verse2",
+  "text": "LOCK IN, STEP FAST, WE OWN THE RHYTHM!",
+  "mode": "type",
+  "icon": "star",
+  "seed": 36,
+  "tailShake": 0,
+  "big": false
+ },
+ {
+  "n": 37,
+  "sec": "Bridge",
+  "text": "숨을 죽여, 공기가 떨려 떨려 떨려 떨려",
+  "mode": "type",
+  "icon": "heart",
+  "seed": 37,
+  "tailShake": 4,
+  "big": false
+ },
+ {
+  "n": 38,
+  "sec": "Bridge",
+  "text": "숨을 죽여, 공기가 떨려 떨려 떨려 떨려",
+  "mode": "type",
+  "icon": "sun",
+  "seed": 38,
+  "tailShake": 4,
+  "big": false
+ },
+ {
+  "n": 39,
+  "sec": "Bridge",
+  "text": "숨을 죽여, 공기가 떨려 떨려 떨려 떨려",
+  "mode": "type",
+  "icon": "star",
+  "seed": 39,
+  "tailShake": 4,
+  "big": false
+ },
+ {
+  "n": 40,
+  "sec": "Bridge",
+  "text": "3, 2, 1...",
+  "mode": "countdown",
+  "icon": "heart",
+  "seed": 40,
+  "tailShake": 0,
+  "big": false
+ },
+ {
+  "n": 41,
+  "sec": "Bridge",
+  "text": "DROP IT DOWN!, DROP IT",
+  "mode": "slam",
+  "icon": "bolt",
+  "seed": 41,
+  "tailShake": 0,
+  "big": true
+ },
+ {
+  "n": 42,
+  "sec": "Bridge",
+  "text": "DROP IT",
+  "mode": "slam",
+  "icon": "bolt",
+  "seed": 42,
+  "tailShake": 0,
+  "big": true
+ },
+ {
+  "n": 43,
+  "sec": "Chorus3",
+  "text": "BOOM BOOM, got the mic",
+  "mode": "slam",
+  "icon": "bolt",
+  "seed": 43,
+  "tailShake": 0,
+  "big": false
+ },
+ {
+  "n": 44,
+  "sec": "Chorus3",
+  "text": "STOP STOP, watch me ignite",
+  "mode": "slam",
+  "icon": "star",
+  "seed": 44,
+  "tailShake": 0,
+  "big": false
+ },
+ {
+  "n": 45,
+  "sec": "Chorus3",
+  "text": "BOOM BOOM, rockin' my feet",
+  "mode": "slam",
+  "icon": "bolt",
+  "seed": 45,
+  "tailShake": 0,
+  "big": false
+ },
+ {
+  "n": 46,
+  "sec": "Chorus3",
+  "text": "DROP THE CROWN, TAKE THE STREAM!",
+  "mode": "slam",
+  "icon": "crown",
+  "seed": 46,
+  "tailShake": 0,
+  "big": false
+ },
+ {
+  "n": 47,
+  "sec": "Chorus4",
+  "text": "BOOM BOOM, got the mic",
+  "mode": "slam",
+  "icon": "bolt",
+  "seed": 47,
+  "tailShake": 0,
+  "big": false
+ },
+ {
+  "n": 48,
+  "sec": "Chorus4",
+  "text": "STOP STOP, watch me ignite",
+  "mode": "slam",
+  "icon": "sun",
+  "seed": 48,
+  "tailShake": 0,
+  "big": false
+ },
+ {
+  "n": 49,
+  "sec": "Chorus4",
+  "text": "BOOM BOOM, rockin' my feet",
+  "mode": "slam",
+  "icon": "bolt",
+  "seed": 49,
+  "tailShake": 0,
+  "big": false
+ },
+ {
+  "n": 50,
+  "sec": "Chorus4",
+  "text": "DROP THE CROWN, TAKE THE STREAM!",
+  "mode": "slam",
+  "icon": "crown",
+  "seed": 50,
+  "tailShake": 0,
+  "big": false
+ },
+ {
+  "n": 51,
+  "sec": "Outro",
+  "text": "WE OWN THIS GAME",
+  "mode": "slam",
+  "icon": "star",
+  "seed": 51,
+  "tailShake": 0,
+  "big": false
+ },
+ {
+  "n": 52,
+  "sec": "Outro",
+  "text": "BOOM BOOM DROP",
+  "mode": "slam",
+  "icon": "bolt",
+  "seed": 52,
+  "tailShake": 0,
+  "big": false
+ }
+]
