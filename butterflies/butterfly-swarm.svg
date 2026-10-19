@@ -1,0 +1,265 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1344 768" width="1344" height="768">
+<title>Butterfly Swarm</title>
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6f675e"/><stop offset=".83" stop-color="#8d857a"/><stop offset=".831" stop-color="#a39b90"/><stop offset="1" stop-color="#7d756b"/></linearGradient>
+<radialGradient id="vig" cx=".5" cy=".48" r=".75"><stop offset=".45" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#1c1814" stop-opacity=".45"/></radialGradient>
+<linearGradient id="wing" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".92"/><stop offset=".6" stop-color="#f3f5f6" stop-opacity=".66"/><stop offset="1" stop-color="#e6ecef" stop-opacity=".5"/></linearGradient>
+<radialGradient id="irid"><stop offset="0" stop-color="#7fe6e0" stop-opacity=".75"/><stop offset="1" stop-color="#7fe6e0" stop-opacity="0"/></radialGradient>
+<filter id="b1" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="1.2"/></filter>
+<filter id="b2" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="3.5"/></filter>
+<filter id="soft"><feGaussianBlur stdDeviation="14"/></filter>
+<path id="fw" d="M2,-4 C16,-40 52,-62 88,-52 C86,-30 74,-4 4,9 Z"/>
+<path id="hw" d="M3,7 C40,8 68,22 58,46 C48,62 14,42 3,13 Z"/>
+<g id="wingR">
+ <use xlink:href="#fw" fill="url(#wing)" stroke="#fff" stroke-opacity=".85" stroke-width="1.2"/>
+ <use xlink:href="#hw" fill="url(#wing)" stroke="#fff" stroke-opacity=".85" stroke-width="1.2"/>
+ <g stroke="#fff" stroke-opacity=".45" stroke-width=".7" fill="none"><path d="M4,0 C30,-18 55,-30 76,-32"/><path d="M4,3 C34,-4 62,-12 86,-22"/><path d="M4,6 C30,8 55,6 70,-4"/><path d="M5,12 C28,18 46,30 54,44"/><path d="M5,9 C34,14 56,22 60,36"/></g>
+</g>
+<g id="body"><ellipse cx="0" cy="6" rx="3" ry="22" fill="#f4f4f2" stroke="#d9d6d0" stroke-width=".8"/><circle cx="0" cy="-17" r="3.6" fill="#f7f7f5"/><path d="M-1,-19 C-6,-32 -12,-38 -16,-40 M1,-19 C6,-32 12,-38 16,-40" stroke="#f1efe9" stroke-width="1" fill="none"/></g>
+<style>
+.ring{transform-origin:672px 372px;animation:swirl 5.2s cubic-bezier(.45,0,.9,.7) infinite}
+.d{animation:fly 5.2s cubic-bezier(.55,.02,.75,.6) infinite}
+.z{animation:grow 5.2s cubic-bezier(.55,.02,.75,.6) infinite}
+.v{animation:vis 5.2s linear infinite}
+.wr,.wl{transform-origin:0px 0px;animation:flap .5s ease-in-out infinite}
+.streak{animation:drift 5.2s ease-in-out infinite}
+@keyframes swirl{0%{transform:rotate(0)}100%{transform:rotate(95deg)}}
+@keyframes fly{0%,18%{transform:translate(0px,0px)}100%{transform:translate(var(--dx),var(--dy))}}
+@keyframes grow{0%,18%{transform:scale(1)}100%{transform:scale(var(--s))}}
+@keyframes vis{0%{opacity:0}9%{opacity:1}86%{opacity:1}100%{opacity:0}}
+@keyframes flap{0%,100%{transform:scaleX(1)}50%{transform:scaleX(.28)}}
+@keyframes drift{0%,100%{transform:translateX(-14px)}50%{transform:translateX(14px)}}
+@keyframes wash{0%,80%{opacity:0}100%{opacity:.55}}
+.wash{animation:wash 5.2s ease-in infinite}
+</style>
+</defs>
+<rect width="1344" height="768" fill="url(#bg)"/>
+<g class="streak" filter="url(#soft)" fill="#fff" opacity=".16">
+<polygon points="-60,40 260,0 560,640 200,700"/>
+<polygon points="330,0 520,0 820,640 600,660"/>
+<polygon points="640,0 760,0 1100,620 940,640"/>
+<polygon points="900,0 1010,0 1344,560 1250,600"/>
+</g>
+<rect y="637" width="1344" height="3" fill="#fff" opacity=".18"/>
+<g class="ring">
+
+<g class="d" style="--dx:82px;--dy:486px"><g transform="translate(777.5,645.4) scale(1.14)"><g class="z" style="--s:1.28"><g class="v"><g transform="rotate(164)">
+<g class="wr" style="animation-duration:0.59s;animation-delay:-0.48s"><use xlink:href="#wingR"/></g>
+<g transform="scale(-1,1)"><g class="wl" style="animation-duration:0.59s;animation-delay:-0.48s"><use xlink:href="#wingR"/></g></g>
+<use xlink:href="#body"/></g></g></g></g></g>
+<g class="d" style="--dx:-332px;--dy:20px"><g transform="translate(397.9,380.8) scale(1.32)"><g class="z" style="--s:1.39"><g class="v"><g transform="rotate(277)">
+<g class="wr" style="animation-duration:0.40s;animation-delay:-0.14s"><use xlink:href="#wingR"/><ellipse cx="38" cy="30" rx="18" ry="12" fill="url(#irid)"/></g>
+<g transform="scale(-1,1)"><g class="wl" style="animation-duration:0.40s;animation-delay:-0.14s"><use xlink:href="#wingR"/></g></g>
+<use xlink:href="#body"/></g></g></g></g></g>
+<g class="d" style="--dx:133px;--dy:277px"><g transform="translate(742.1,616.1) scale(1.28)"><g class="z" style="--s:1.41"><g class="v"><g transform="rotate(95)">
+<g class="wr" style="animation-duration:0.47s;animation-delay:-0.07s"><use xlink:href="#wingR"/></g>
+<g transform="scale(-1,1)"><g class="wl" style="animation-duration:0.47s;animation-delay:-0.07s"><use xlink:href="#wingR"/></g></g>
+<use xlink:href="#body"/></g></g></g></g></g>
+<g class="d" style="--dx:46px;--dy:-436px"><g transform="translate(665.2,62.3) scale(0.98)"><g class="z" style="--s:1.41"><g class="v"><g transform="rotate(342)">
+<g class="wr" style="animation-duration:0.39s;animation-delay:-0.50s"><use xlink:href="#wingR"/></g>
+<g transform="scale(-1,1)"><g class="wl" style="animation-duration:0.39s;animation-delay:-0.50s"><use xlink:href="#wingR"/></g></g>
+<use xlink:href="#body"/></g></g></g></g></g>
+<g class="d" style="--dx:-237px;--dy:-303px"><g transform="translate(570.1,146.5) scale(0.96)"><g class="z" style="--s:1.42"><g class="v"><g transform="rotate(300)">
+<g class="wr" style="animation-duration:0.61s;animation-delay:-0.58s"><use xlink:href="#wingR"/></g>
+<g transform="scale(-1,1)"><g class="wl" style="animation-duration:0.61s;animation-delay:-0.58s"><use xlink:href="#wingR"/></g></g>
+<use xlink:href="#body"/></g></g></g></g></g>
+<g class="d" style="--dx:-435px;--dy:139px"><g transform="translate(418.7,508.5) scale(0.80)"><g class="z" style="--s:1.44"><g class="v"><g transform="rotate(191)">
+<g class="wr" style="animation-duration:0.51s;animation-delay:-0.20s"><use xlink:href="#wingR"/></g>
+<g transform="scale(-1,1)"><g class="wl" style="animation-duration:0.51s;animation-delay:-0.20s"><use xlink:href="#wingR"/></g></g>
+<use xlink:href="#body"/></g></g></g></g></g>
+<g class="d" style="--dx:559px;--dy:-256px"><g transform="translate(930.3,286.4) scale(0.86)"><g class="z" style="--s:1.60"><g class="v"><g transform="rotate(361)">
+<g class="wr" style="animation-duration:0.44s;animation-delay:-0.31s"><use xlink:href="#wingR"/><ellipse cx="38" cy="30" rx="18" ry="12" fill="url(#irid)"/></g>
+<g transform="scale(-1,1)"><g class="wl" style="animation-duration:0.44s;animation-delay:-0.31s"><use xlink:href="#wingR"/></g></g>
+<use xlink:href="#body"/></g></g></g></g></g>
+<g class="d" style="--dx:661px;--dy:78px"><g transform="translate(959.5,484.2) scale(1.28)"><g class="z" style="--s:1.60"><g class="v"><g transform="rotate(118)">
+<g class="wr" style="animation-duration:0.48s;animation-delay:-0.45s"><use xlink:href="#wingR"/><ellipse cx="38" cy="30" rx="18" ry="12" fill="url(#irid)"/></g>
+<g transform="scale(-1,1)"><g class="wl" style="animation-duration:0.48s;animation-delay:-0.45s"><use xlink:href="#wingR"/></g></g>
+<use xlink:href="#body"/></g></g></g></g></g>
+<g class="d" style="--dx:383px;--dy:-153px"><g transform="translate(907.6,283.8) scale(1.19)"><g class="z" style="--s:1.61"><g class="v"><g transform="rotate(491)">
+<g class="wr" style="animation-duration:0.62s;animation-delay:-0.35s"><use xlink:href="#wingR"/></g>
+<g transform="scale(-1,1)"><g class="wl" style="animation-duration:0.62s;animation-delay:-0.35s"><use xlink:href="#wingR"/></g></g>
+<use xlink:href="#body"/></g></g></g></g></g>
+<g class="d" style="--dx:500px;--dy:93px"><g transform="translate(911.5,430.1) scale(1.17)"><g class="z" style="--s:1.64"><g class="v"><g transform="rotate(61)">
+<g class="wr" style="animation-duration:0.45s;animation-delay:-0.48s"><use xlink:href="#wingR"/></g>
+<g transform="scale(-1,1)"><g class="wl" style="animation-duration:0.45s;animation-delay:-0.48s"><use xlink:href="#wingR"/></g></g>
+<use xlink:href="#body"/></g></g></g></g></g>
+<g class="d" style="--dx:-348px;--dy:-278px"><g transform="translate(365.1,222.9) scale(1.27)"><g class="z" style="--s:1.67"><g class="v"><g transform="rotate(234)">
+<g class="wr" style="animation-duration:0.44s;animation-delay:-0.08s"><use xlink:href="#wingR"/></g>
+<g transform="scale(-1,1)"><g class="wl" style="animation-duration:0.44s;animation-delay:-0.08s"><use xlink:href="#wingR"/></g></g>
+<use xlink:href="#body"/></g></g></g></g></g>
+<g class="d" style="--dx:309px;--dy:-6px"><g transform="translate(932.1,364.8) scale(0.84)"><g class="z" style="--s:1.71"><g class="v"><g transform="rotate(111)">
+<g class="wr" style="animation-duration:0.39s;animation-delay:-0.26s"><use xlink:href="#wingR"/><ellipse cx="38" cy="30" rx="18" ry="12" fill="url(#irid)"/></g>
+<g transform="scale(-1,1)"><g class="wl" style="animation-duration:0.39s;animation-delay:-0.26s"><use xlink:href="#wingR"/></g></g>
+<use xlink:href="#body"/></g></g></g></g></g>
+<g class="d" style="--dx:231px;--dy:-243px"><g transform="translate(852.1,229.2) scale(1.25)"><g class="z" style="--s:1.83"><g class="v"><g transform="rotate(402)">
+<g class="wr" style="animation-duration:0.61s;animation-delay:-0.13s"><use xlink:href="#wingR"/></g>
+<g transform="scale(-1,1)"><g class="wl" style="animation-duration:0.61s;animation-delay:-0.13s"><use xlink:href="#wingR"/></g></g>
+<use xlink:href="#body"/></g></g></g></g></g>
+<g class="d" style="--dx:-478px;--dy:97px"><g transform="translate(361.7,439.3) scale(1.08)"><g class="z" style="--s:1.83"><g class="v"><g transform="rotate(257)">
+<g class="wr" style="animation-duration:0.61s;animation-delay:-0.42s"><use xlink:href="#wingR"/></g>
+<g transform="scale(-1,1)"><g class="wl" style="animation-duration:0.61s;animation-delay:-0.42s"><use xlink:href="#wingR"/></g></g>
+<use xlink:href="#body"/></g></g></g></g></g>
+<g class="d" style="--dx:184px;--dy:-331px"><g transform="translate(877.1,145.9) scale(0.96)"><g class="z" style="--s:1.85"><g class="v"><g transform="rotate(425)">
+<g class="wr" style="animation-duration:0.59s;animation-delay:-0.12s"><use xlink:href="#wingR"/></g>
+<g transform="scale(-1,1)"><g class="wl" style="animation-duration:0.59s;animation-delay:-0.12s"><use xlink:href="#wingR"/></g></g>
+<use xlink:href="#body"/></g></g></g></g></g>
+<g class="d" style="--dx:208px;--dy:-345px"><g transform="translate(768.6,119.9) scale(1.24)"><g class="z" style="--s:1.90"><g class="v"><g transform="rotate(304)">
+<g class="wr" style="animation-duration:0.40s;animation-delay:-0.44s"><use xlink:href="#wingR"/></g>
+<g transform="scale(-1,1)"><g class="wl" style="animation-duration:0.40s;animation-delay:-0.44s"><use xlink:href="#wingR"/></g></g>
+<use xlink:href="#body"/></g></g></g></g></g>
+<g class="d" style="--dx:177px;--dy:-450px"><g transform="translate(699.2,79.6) scale(0.88)"><g class="z" style="--s:1.91"><g class="v"><g transform="rotate(411)">
+<g class="wr" style="animation-duration:0.58s;animation-delay:-0.35s"><use xlink:href="#wingR"/></g>
+<g transform="scale(-1,1)"><g class="wl" style="animation-duration:0.58s;animation-delay:-0.35s"><use xlink:href="#wingR"/></g></g>
+<use xlink:href="#body"/></g></g></g></g></g>
+<g class="d" style="--dx:514px;--dy:-283px"><g transform="translate(894.9,185.6) scale(0.87)"><g class="z" style="--s:1.91"><g class="v"><g transform="rotate(474)">
+<g class="wr" style="animation-duration:0.44s;animation-delay:-0.54s"><use xlink:href="#wingR"/></g>
+<g transform="scale(-1,1)"><g class="wl" style="animation-duration:0.44s;animation-delay:-0.54s"><use xlink:href="#wingR"/></g></g>
+<use xlink:href="#body"/></g></g></g></g></g>
+<g class="d" style="--dx:-259px;--dy:-193px"><g transform="translate(500.3,221.3) scale(0.81)"><g class="z" style="--s:1.97"><g class="v"><g transform="rotate(278)">
+<g class="wr" style="animation-duration:0.60s;animation-delay:-0.06s"><use xlink:href="#wingR"/></g>
+<g transform="scale(-1,1)"><g class="wl" style="animation-duration:0.60s;animation-delay:-0.06s"><use xlink:href="#wingR"/></g></g>
+<use xlink:href="#body"/></g></g></g></g></g>
+<g class="d" style="--dx:312px;--dy:178px"><g transform="translate(817.8,564.0) scale(0.93)"><g class="z" style="--s:2.02"><g class="v"><g transform="rotate(106)">
+<g class="wr" style="animation-duration:0.48s;animation-delay:-0.22s"><use xlink:href="#wingR"/></g>
+<g transform="scale(-1,1)"><g class="wl" style="animation-duration:0.48s;animation-delay:-0.22s"><use xlink:href="#wingR"/></g></g>
+<use xlink:href="#body"/></g></g></g></g></g>
+<g class="d" style="--dx:-327px;--dy:-77px"><g transform="translate(330.4,362.9) scale(0.88)"><g class="z" style="--s:2.12"><g class="v"><g transform="rotate(331)">
+<g class="wr" style="animation-duration:0.61s;animation-delay:-0.13s"><use xlink:href="#wingR"/></g>
+<g transform="scale(-1,1)"><g class="wl" style="animation-duration:0.61s;animation-delay:-0.13s"><use xlink:href="#wingR"/></g></g>
+<use xlink:href="#body"/></g></g></g></g></g>
+<g class="d" style="--dx:-462px;--dy:-372px"><g transform="translate(487.2,160.2) scale(1.02)"><g class="z" style="--s:2.16"><g class="v"><g transform="rotate(373)">
+<g class="wr" style="animation-duration:0.58s;animation-delay:-0.42s"><use xlink:href="#wingR"/></g>
+<g transform="scale(-1,1)"><g class="wl" style="animation-duration:0.58s;animation-delay:-0.42s"><use xlink:href="#wingR"/></g></g>
+<use xlink:href="#body"/></g></g></g></g></g>
+<g class="d" style="--dx:-148px;--dy:246px"><g transform="translate(437.9,618.1) scale(1.02)"><g class="z" style="--s:2.21"><g class="v"><g transform="rotate(204)">
+<g class="wr" style="animation-duration:0.42s;animation-delay:-0.54s"><use xlink:href="#wingR"/></g>
+<g transform="scale(-1,1)"><g class="wl" style="animation-duration:0.42s;animation-delay:-0.54s"><use xlink:href="#wingR"/></g></g>
+<use xlink:href="#body"/></g></g></g></g></g>
+<g class="d" style="--dx:-295px;--dy:383px"><g transform="translate(492.0,628.3) scale(1.16)"><g class="z" style="--s:2.30"><g class="v"><g transform="rotate(149)">
+<g class="wr" style="animation-duration:0.42s;animation-delay:-0.47s"><use xlink:href="#wingR"/></g>
+<g transform="scale(-1,1)"><g class="wl" style="animation-duration:0.42s;animation-delay:-0.47s"><use xlink:href="#wingR"/></g></g>
+<use xlink:href="#body"/></g></g></g></g></g>
+<g class="d" style="--dx:276px;--dy:217px"><g transform="translate(867.9,569.2) scale(1.29)"><g class="z" style="--s:2.41"><g class="v"><g transform="rotate(146)">
+<g class="wr" style="animation-duration:0.47s;animation-delay:-0.53s"><use xlink:href="#wingR"/></g>
+<g transform="scale(-1,1)"><g class="wl" style="animation-duration:0.47s;animation-delay:-0.53s"><use xlink:href="#wingR"/></g></g>
+<use xlink:href="#body"/></g></g></g></g></g>
+<g class="d" style="--dx:308px;--dy:206px"><g transform="translate(877.7,489.9) scale(1.22)"><g class="z" style="--s:2.43"><g class="v"><g transform="rotate(148)">
+<g class="wr" style="animation-duration:0.52s;animation-delay:-0.35s"><use xlink:href="#wingR"/></g>
+<g transform="scale(-1,1)"><g class="wl" style="animation-duration:0.52s;animation-delay:-0.35s"><use xlink:href="#wingR"/></g></g>
+<use xlink:href="#body"/></g></g></g></g></g>
+<g class="d" style="--dx:-422px;--dy:121px"><g transform="translate(386.6,561.1) scale(1.05)"><g class="z" style="--s:2.47"><g class="v"><g transform="rotate(211)">
+<g class="wr" style="animation-duration:0.50s;animation-delay:-0.32s"><use xlink:href="#wingR"/></g>
+<g transform="scale(-1,1)"><g class="wl" style="animation-duration:0.50s;animation-delay:-0.32s"><use xlink:href="#wingR"/></g></g>
+<use xlink:href="#body"/></g></g></g></g></g>
+<g class="d" style="--dx:637px;--dy:-110px"><g transform="translate(1024.1,291.5) scale(1.25)"><g class="z" style="--s:2.48"><g class="v"><g transform="rotate(493)">
+<g class="wr" style="animation-duration:0.55s;animation-delay:-0.03s"><use xlink:href="#wingR"/></g>
+<g transform="scale(-1,1)"><g class="wl" style="animation-duration:0.55s;animation-delay:-0.03s"><use xlink:href="#wingR"/></g></g>
+<use xlink:href="#body"/></g></g></g></g></g>
+<g class="d" style="--dx:118px;--dy:-357px"><g transform="translate(761.3,144.4) scale(0.91)"><g class="z" style="--s:2.57"><g class="v"><g transform="rotate(413)">
+<g class="wr" style="animation-duration:0.49s;animation-delay:-0.41s"><use xlink:href="#wingR"/></g>
+<g transform="scale(-1,1)"><g class="wl" style="animation-duration:0.49s;animation-delay:-0.41s"><use xlink:href="#wingR"/></g></g>
+<use xlink:href="#body"/></g></g></g></g></g>
+<g class="d" style="--dx:-124px;--dy:469px"><g transform="translate(655.6,598.8) scale(0.81)"><g class="z" style="--s:2.57"><g class="v"><g transform="rotate(190)">
+<g class="wr" style="animation-duration:0.44s;animation-delay:-0.22s"><use xlink:href="#wingR"/><ellipse cx="38" cy="30" rx="18" ry="12" fill="url(#irid)"/></g>
+<g transform="scale(-1,1)"><g class="wl" style="animation-duration:0.44s;animation-delay:-0.22s"><use xlink:href="#wingR"/></g></g>
+<use xlink:href="#body"/></g></g></g></g></g>
+<g class="d" style="--dx:728px;--dy:371px"><g transform="translate(833.8,531.5) scale(0.89)"><g class="z" style="--s:3.37"><g class="v" filter="url(#b1)"><g transform="rotate(133)">
+<g class="wr" style="animation-duration:0.44s;animation-delay:-0.23s"><use xlink:href="#wingR"/></g>
+<g transform="scale(-1,1)"><g class="wl" style="animation-duration:0.44s;animation-delay:-0.23s"><use xlink:href="#wingR"/></g></g>
+<use xlink:href="#body"/></g></g></g></g></g>
+<g class="d" style="--dx:-593px;--dy:-290px"><g transform="translate(407.5,306.0) scale(1.23)"><g class="z" style="--s:3.56"><g class="v" filter="url(#b1)"><g transform="rotate(217)">
+<g class="wr" style="animation-duration:0.58s;animation-delay:-0.16s"><use xlink:href="#wingR"/><ellipse cx="38" cy="30" rx="18" ry="12" fill="url(#irid)"/></g>
+<g transform="scale(-1,1)"><g class="wl" style="animation-duration:0.58s;animation-delay:-0.16s"><use xlink:href="#wingR"/></g></g>
+<use xlink:href="#body"/></g></g></g></g></g>
+<g class="d" style="--dx:464px;--dy:-365px"><g transform="translate(861.5,241.4) scale(1.05)"><g class="z" style="--s:3.59"><g class="v" filter="url(#b1)"><g transform="rotate(411)">
+<g class="wr" style="animation-duration:0.58s;animation-delay:-0.00s"><use xlink:href="#wingR"/></g>
+<g transform="scale(-1,1)"><g class="wl" style="animation-duration:0.58s;animation-delay:-0.00s"><use xlink:href="#wingR"/></g></g>
+<use xlink:href="#body"/></g></g></g></g></g>
+<g class="d" style="--dx:-327px;--dy:382px"><g transform="translate(499.2,652.1) scale(0.92)"><g class="z" style="--s:3.75"><g class="v" filter="url(#b1)"><g transform="rotate(188)">
+<g class="wr" style="animation-duration:0.60s;animation-delay:-0.50s"><use xlink:href="#wingR"/></g>
+<g transform="scale(-1,1)"><g class="wl" style="animation-duration:0.60s;animation-delay:-0.50s"><use xlink:href="#wingR"/></g></g>
+<use xlink:href="#body"/></g></g></g></g></g>
+<g class="d" style="--dx:235px;--dy:403px"><g transform="translate(749.3,583.8) scale(0.83)"><g class="z" style="--s:3.78"><g class="v" filter="url(#b1)"><g transform="rotate(182)">
+<g class="wr" style="animation-duration:0.39s;animation-delay:-0.00s"><use xlink:href="#wingR"/><ellipse cx="38" cy="30" rx="18" ry="12" fill="url(#irid)"/></g>
+<g transform="scale(-1,1)"><g class="wl" style="animation-duration:0.39s;animation-delay:-0.00s"><use xlink:href="#wingR"/></g></g>
+<use xlink:href="#body"/></g></g></g></g></g>
+<g class="d" style="--dx:-444px;--dy:353px"><g transform="translate(430.6,522.8) scale(1.25)"><g class="z" style="--s:3.91"><g class="v" filter="url(#b1)"><g transform="rotate(290)">
+<g class="wr" style="animation-duration:0.52s;animation-delay:-0.16s"><use xlink:href="#wingR"/></g>
+<g transform="scale(-1,1)"><g class="wl" style="animation-duration:0.52s;animation-delay:-0.16s"><use xlink:href="#wingR"/></g></g>
+<use xlink:href="#body"/></g></g></g></g></g>
+<g class="d" style="--dx:-827px;--dy:221px"><g transform="translate(349.6,471.5) scale(1.11)"><g class="z" style="--s:3.98"><g class="v" filter="url(#b1)"><g transform="rotate(191)">
+<g class="wr" style="animation-duration:0.51s;animation-delay:-0.46s"><use xlink:href="#wingR"/></g>
+<g transform="scale(-1,1)"><g class="wl" style="animation-duration:0.51s;animation-delay:-0.46s"><use xlink:href="#wingR"/></g></g>
+<use xlink:href="#body"/></g></g></g></g></g>
+<g class="d" style="--dx:-229px;--dy:445px"><g transform="translate(598.4,633.2) scale(0.82)"><g class="z" style="--s:3.98"><g class="v" filter="url(#b1)"><g transform="rotate(172)">
+<g class="wr" style="animation-duration:0.61s;animation-delay:-0.27s"><use xlink:href="#wingR"/></g>
+<g transform="scale(-1,1)"><g class="wl" style="animation-duration:0.61s;animation-delay:-0.27s"><use xlink:href="#wingR"/></g></g>
+<use xlink:href="#body"/></g></g></g></g></g>
+<g class="d" style="--dx:-95px;--dy:-463px"><g transform="translate(617.7,156.4) scale(0.82)"><g class="z" style="--s:4.05"><g class="v" filter="url(#b1)"><g transform="rotate(332)">
+<g class="wr" style="animation-duration:0.51s;animation-delay:-0.45s"><use xlink:href="#wingR"/></g>
+<g transform="scale(-1,1)"><g class="wl" style="animation-duration:0.51s;animation-delay:-0.45s"><use xlink:href="#wingR"/></g></g>
+<use xlink:href="#body"/></g></g></g></g></g>
+<g class="d" style="--dx:-434px;--dy:-367px"><g transform="translate(469.2,236.8) scale(0.83)"><g class="z" style="--s:4.07"><g class="v" filter="url(#b1)"><g transform="rotate(257)">
+<g class="wr" style="animation-duration:0.45s;animation-delay:-0.30s"><use xlink:href="#wingR"/><ellipse cx="38" cy="30" rx="18" ry="12" fill="url(#irid)"/></g>
+<g transform="scale(-1,1)"><g class="wl" style="animation-duration:0.45s;animation-delay:-0.30s"><use xlink:href="#wingR"/></g></g>
+<use xlink:href="#body"/></g></g></g></g></g>
+<g class="d" style="--dx:-161px;--dy:464px"><g transform="translate(662.8,635.1) scale(0.85)"><g class="z" style="--s:4.16"><g class="v" filter="url(#b1)"><g transform="rotate(179)">
+<g class="wr" style="animation-duration:0.42s;animation-delay:-0.01s"><use xlink:href="#wingR"/></g>
+<g transform="scale(-1,1)"><g class="wl" style="animation-duration:0.42s;animation-delay:-0.01s"><use xlink:href="#wingR"/></g></g>
+<use xlink:href="#body"/></g></g></g></g></g>
+<g class="d" style="--dx:234px;--dy:-379px"><g transform="translate(740.0,89.4) scale(0.82)"><g class="z" style="--s:4.21"><g class="v" filter="url(#b1)"><g transform="rotate(331)">
+<g class="wr" style="animation-duration:0.51s;animation-delay:-0.38s"><use xlink:href="#wingR"/></g>
+<g transform="scale(-1,1)"><g class="wl" style="animation-duration:0.51s;animation-delay:-0.38s"><use xlink:href="#wingR"/></g></g>
+<use xlink:href="#body"/></g></g></g></g></g>
+<g class="d" style="--dx:-239px;--dy:-529px"><g transform="translate(551.3,70.4) scale(1.00)"><g class="z" style="--s:4.27"><g class="v" filter="url(#b1)"><g transform="rotate(312)">
+<g class="wr" style="animation-duration:0.43s;animation-delay:-0.30s"><use xlink:href="#wingR"/><ellipse cx="38" cy="30" rx="18" ry="12" fill="url(#irid)"/></g>
+<g transform="scale(-1,1)"><g class="wl" style="animation-duration:0.43s;animation-delay:-0.30s"><use xlink:href="#wingR"/></g></g>
+<use xlink:href="#body"/></g></g></g></g></g>
+<g class="d" style="--dx:-749px;--dy:8px"><g transform="translate(369.9,346.0) scale(1.26)"><g class="z" style="--s:4.41"><g class="v" filter="url(#b2)"><g transform="rotate(349)">
+<g class="wr" style="animation-duration:0.43s;animation-delay:-0.19s"><use xlink:href="#wingR"/></g>
+<g transform="scale(-1,1)"><g class="wl" style="animation-duration:0.43s;animation-delay:-0.19s"><use xlink:href="#wingR"/></g></g>
+<use xlink:href="#body"/></g></g></g></g></g>
+<g class="d" style="--dx:-193px;--dy:403px"><g transform="translate(450.3,605.8) scale(1.16)"><g class="z" style="--s:4.74"><g class="v" filter="url(#b2)"><g transform="rotate(292)">
+<g class="wr" style="animation-duration:0.61s;animation-delay:-0.39s"><use xlink:href="#wingR"/></g>
+<g transform="scale(-1,1)"><g class="wl" style="animation-duration:0.61s;animation-delay:-0.39s"><use xlink:href="#wingR"/></g></g>
+<use xlink:href="#body"/></g></g></g></g></g>
+<g class="d" style="--dx:-738px;--dy:91px"><g transform="translate(363.2,332.2) scale(0.81)"><g class="z" style="--s:4.95"><g class="v" filter="url(#b2)"><g transform="rotate(269)">
+<g class="wr" style="animation-duration:0.62s;animation-delay:-0.47s"><use xlink:href="#wingR"/></g>
+<g transform="scale(-1,1)"><g class="wl" style="animation-duration:0.62s;animation-delay:-0.47s"><use xlink:href="#wingR"/></g></g>
+<use xlink:href="#body"/></g></g></g></g></g>
+<g class="d" style="--dx:958px;--dy:71px"><g transform="translate(967.2,383.0) scale(0.87)"><g class="z" style="--s:4.96"><g class="v" filter="url(#b2)"><g transform="rotate(141)">
+<g class="wr" style="animation-duration:0.48s;animation-delay:-0.59s"><use xlink:href="#wingR"/><ellipse cx="38" cy="30" rx="18" ry="12" fill="url(#irid)"/></g>
+<g transform="scale(-1,1)"><g class="wl" style="animation-duration:0.48s;animation-delay:-0.59s"><use xlink:href="#wingR"/></g></g>
+<use xlink:href="#body"/></g></g></g></g></g>
+<g class="d" style="--dx:-684px;--dy:-130px"><g transform="translate(402.6,230.4) scale(0.85)"><g class="z" style="--s:5.13"><g class="v" filter="url(#b2)"><g transform="rotate(331)">
+<g class="wr" style="animation-duration:0.61s;animation-delay:-0.38s"><use xlink:href="#wingR"/></g>
+<g transform="scale(-1,1)"><g class="wl" style="animation-duration:0.61s;animation-delay:-0.38s"><use xlink:href="#wingR"/></g></g>
+<use xlink:href="#body"/></g></g></g></g></g>
+<g class="d" style="--dx:366px;--dy:559px"><g transform="translate(934.9,590.3) scale(1.17)"><g class="z" style="--s:5.16"><g class="v" filter="url(#b2)"><g transform="rotate(130)">
+<g class="wr" style="animation-duration:0.58s;animation-delay:-0.17s"><use xlink:href="#wingR"/></g>
+<g transform="scale(-1,1)"><g class="wl" style="animation-duration:0.58s;animation-delay:-0.17s"><use xlink:href="#wingR"/></g></g>
+<use xlink:href="#body"/></g></g></g></g></g>
+<g class="d" style="--dx:-435px;--dy:-340px"><g transform="translate(525.0,157.8) scale(0.87)"><g class="z" style="--s:5.27"><g class="v" filter="url(#b2)"><g transform="rotate(262)">
+<g class="wr" style="animation-duration:0.40s;animation-delay:-0.50s"><use xlink:href="#wingR"/></g>
+<g transform="scale(-1,1)"><g class="wl" style="animation-duration:0.40s;animation-delay:-0.50s"><use xlink:href="#wingR"/></g></g>
+<use xlink:href="#body"/></g></g></g></g></g>
+<g class="d" style="--dx:360px;--dy:-411px"><g transform="translate(839.7,129.8) scale(0.88)"><g class="z" style="--s:5.28"><g class="v" filter="url(#b2)"><g transform="rotate(328)">
+<g class="wr" style="animation-duration:0.38s;animation-delay:-0.04s"><use xlink:href="#wingR"/></g>
+<g transform="scale(-1,1)"><g class="wl" style="animation-duration:0.38s;animation-delay:-0.04s"><use xlink:href="#wingR"/></g></g>
+<use xlink:href="#body"/></g></g></g></g></g>
+<g class="d" style="--dx:-444px;--dy:672px"><g transform="translate(603.4,636.0) scale(0.98)"><g class="z" style="--s:5.47"><g class="v" filter="url(#b2)"><g transform="rotate(235)">
+<g class="wr" style="animation-duration:0.57s;animation-delay:-0.49s"><use xlink:href="#wingR"/></g>
+<g transform="scale(-1,1)"><g class="wl" style="animation-duration:0.57s;animation-delay:-0.49s"><use xlink:href="#wingR"/></g></g>
+<use xlink:href="#body"/></g></g></g></g></g>
+<g class="d" style="--dx:547px;--dy:156px"><g transform="translate(937.9,443.3) scale(0.86)"><g class="z" style="--s:5.49"><g class="v" filter="url(#b2)"><g transform="rotate(54)">
+<g class="wr" style="animation-duration:0.53s;animation-delay:-0.22s"><use xlink:href="#wingR"/></g>
+<g transform="scale(-1,1)"><g class="wl" style="animation-duration:0.53s;animation-delay:-0.22s"><use xlink:href="#wingR"/></g></g>
+<use xlink:href="#body"/></g></g></g></g></g>
+<g class="d" style="--dx:551px;--dy:-62px"><g transform="translate(1007.1,335.1) scale(0.96)"><g class="z" style="--s:5.79"><g class="v" filter="url(#b2)"><g transform="rotate(465)">
+<g class="wr" style="animation-duration:0.46s;animation-delay:-0.18s"><use xlink:href="#wingR"/></g>
+<g transform="scale(-1,1)"><g class="wl" style="animation-duration:0.46s;animation-delay:-0.18s"><use xlink:href="#wingR"/></g></g>
+<use xlink:href="#body"/></g></g></g></g></g>
+</g>
+<rect width="1344" height="768" fill="url(#vig)"/>
+<rect class="wash" width="1344" height="768" fill="#f4f1ec" opacity="0"/>
+</svg>
