@@ -1,0 +1,12 @@
+# quality: 얼굴 전체를 합성하고 감정 레이어(고개 끄덕임/미세 움직임)를 얹는다. 후보 3개, 최대 스텝.
+model: latentsync
+takes: 3
+paste_mode: face
+emotion: true
+restore: true
+upscale: true
+interpolate: true
+precision: fp16
+offload: none
+fill_missing: score
+# steps / guidance 를 비워 두면 모델별 최대 품질 값이 쓰인다.

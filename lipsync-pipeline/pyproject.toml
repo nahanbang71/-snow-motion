@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lipsync-pipeline"
+version = "0.1.0"
+description = "실사 인물 영상 + 노래 음원 -> 감정이 살아있는 립싱크 영상 파이프라인"
+requires-python = ">=3.10"
+dependencies = [
+    "numpy>=1.24",
+    "scipy>=1.10",
+    "opencv-python-headless>=4.8",
+    "pyyaml>=6",
+]
+
+[project.optional-dependencies]
+# 얼굴 검출(mediapipe). 없으면 OpenCV Haar 로 대체됨
+face = ["mediapipe>=0.10"]
+# 보컬 분리 (torch 는 환경에 맞게 따로 설치하는 것을 권장)
+separate = ["demucs>=4.0"]
+dev = ["pytest>=7"]
+
+[project.scripts]
+lipsync-pipeline = "lipsync_pipeline.cli:main"
+lipsync = "lipsync_pipeline.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["lipsync_pipeline*", "lipsync*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
