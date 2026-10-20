@@ -52,8 +52,15 @@ Step "3/6 파이프라인 설치 (numpy, scipy, opencv, pyyaml, pytest)"
 
 if (-not $SkipMediaPipe) {
     Step "4/6 mediapipe 설치 (얼굴 랜드마크: 각도/눈 감김/입 위치). 실패해도 OpenCV Haar 로 대체 동작합니다."
-    & $vpy -m pip install mediapipe
-    if ($LASTEXITCODE -ne 0) { Write-Host "mediapipe 설치 실패 -> scan 단계는 Haar(정면 얼굴만, 각도/눈 감김 판정 없음)로 동작합니다." -ForegroundColor Yellow }
+    # 최신 mediapipe(1.x)는 mp.solutions 가 삭제되어 얼굴 검출이 실패한다 -> 0.10.21 로 고정 (Windows/Python 3.12 에서 검증).
+    # 이 버전은 numpy<2 와 opencv-contrib 를 요구하므로, 충돌하는 opencv-python-headless 를 제거하고 contrib 로 통일한다.
+    & $vpy -m pip install "mediapipe==0.10.21"
+    if ($LASTEXITCODE -ne 0) {
+        Write-Host "mediapipe 설치 실패 -> scan 단계는 Haar(정면 얼굴만, 각도/눈 감김 판정 없음)로 동작합니다." -ForegroundColor Yellow
+    } else {
+        & $vpy -m pip uninstall -y opencv-python-headless opencv-contrib-python
+        & $vpy -m pip install "opencv-contrib-python==4.11.0.86" "numpy==1.26.4"
+    }
 } else { Step "4/6 mediapipe 건너뜀" }
 
 if (-not $SkipDemucs) {

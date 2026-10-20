@@ -59,6 +59,8 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--size", type=int, default=512, help="얼굴 크롭 해상도 (기본 512 = 최대 품질)")
     p.add_argument("--min-face-px", type=int, default=96, help="이보다 작은 얼굴은 립싱크 건너뜀")
     p.add_argument("--apply-bad-cuts", action="store_true", help="입 가림/측면/각도 문제 컷도 건너뛰지 않고 립싱크 적용 (얼굴 없음/작음은 항상 건너뜀)")
+    p.add_argument("--metal-thr", type=float, default=None,
+                   help="마이크(무채색) 입 가림 판정 임계값 (기본 0.115, 낮출수록 가림으로 더 많이 판정). face_track.json 의 metal_ratio 를 보고 조정")
     p.add_argument("--no-export-crop", action="store_true")
 
     p = sub.add_parser("segments", help="5a. 무음 기준 문장 단위 구간 분할 (0.5초 겹침) + 입력 자르기"); _add_name(p)
@@ -180,7 +182,7 @@ def dispatch(a) -> None:
         box = tuple(float(v) for v in a.box.split(",")) if a.box else None
         if box and len(box) != 4:
             raise PipelineError("--box 는 x,y,w,h 네 값이어야 합니다.")
-        run_scan(ws, a.backend, box, a.stride, a.crop_scale, a.size, not a.no_export_crop, a.min_face_px, a.apply_bad_cuts)
+        run_scan(ws, a.backend, box, a.stride, a.crop_scale, a.size, not a.no_export_crop, a.min_face_px, a.apply_bad_cuts, a.metal_thr)
     elif c == "segments":
         from .segments import run_segments
         run_segments(ws, a.overlap_sec, a.min_len_sec, a.max_len_sec, a.replan)

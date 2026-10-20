@@ -28,6 +28,7 @@ class FaceDet:
     eye_closed: Optional[bool] = None  # 눈 감김 (EAR 기반, mediapipe 만)
     occluded: bool = False            # 입이 마이크/손/머리카락 등에 가려졌는지
     occlusion_score: float = 0.0
+    metal_ratio: float = 0.0          # 무채색(마이크) 픽셀 비율
     hand_overlap: bool = False
 
 
@@ -62,6 +63,23 @@ def mouth_occlusion_score(frame: np.ndarray, mouth: Box, face: Box) -> float:
     px = ycc[outer[1]:outer[3], outer[0]:outer[2]]
     skin = (np.abs(px[..., 1] - ref[1]) < 16) & (np.abs(px[..., 2] - ref[2]) < 16) & (np.abs(px[..., 0] - ref[0]) < 70)
     return float((~skin)[ring].mean()) if ring.any() else 0.0
+
+
+def mouth_metal_ratio(frame: np.ndarray, mouth: Box) -> float:
+    """입 주변(입 포함)에서 '무채색 + 어두운~중간 밝기' 픽셀 비율 (0~1). 마이크(금속/검정)를 잡는 지표.
+
+    피부/입술/입 안(붉은 계열)과 치아(밝음)는 걸리지 않고, 마이크는 Cr/Cb 가 128 근처인 무채색이다.
+    flow1 영상 6프레임으로 보정했다: 가려짐 0.13~0.25 / 보임 0.04~0.10. 표본이 적으니 영상마다 --metal-thr 로 조정할 것."""
+    H, W = frame.shape[:2]
+    mx, my, mw, mh = mouth
+    cx, cy = mx + mw / 2, my + mh / 2
+    x0, x1 = int(max(cx - 0.8 * mw, 0)), int(min(cx + 0.8 * mw, W))
+    y0, y1 = int(max(cy - 1.0 * mh, 0)), int(min(cy + 1.4 * mh, H))
+    if x1 - x0 < 3 or y1 - y0 < 3:
+        return 0.0
+    ycc = cv2.cvtColor(frame[y0:y1, x0:x1], cv2.COLOR_BGR2YCrCb).astype(np.float32)
+    neutral = (np.abs(ycc[..., 1] - 128) < 9) & (np.abs(ycc[..., 2] - 128) < 9) & (ycc[..., 0] < 170)
+    return float(neutral.mean())
 
 
 # ---------------------------------------------------------------- 검출기
@@ -218,7 +236,8 @@ def build_track(dets: Sequence[Optional[FaceDet]], frame_w: int, frame_h: int, f
                        "roll": None if d is None or d.roll is None else round(d.roll, 1),
                        "eye_closed": None if d is None else d.eye_closed,
                        "occluded": False if d is None else bool(d.occluded),
-                       "occlusion_score": 0.0 if d is None else round(d.occlusion_score, 3)})
+                       "occlusion_score": 0.0 if d is None else round(d.occlusion_score, 3),
+                       "metal_ratio": 0.0 if d is None else round(d.metal_ratio, 3)})
     detected = sum(1 for d in dets if d is not None)
     return {"frame_width": frame_w, "frame_height": frame_h, "fps": fps, "out_size": out_size,
             "crop_scale": crop_scale, "n_frames": n, "detected_ratio": round(detected / max(n, 1), 4),
@@ -226,10 +245,13 @@ def build_track(dets: Sequence[Optional[FaceDet]], frame_w: int, frame_h: int, f
 
 
 OCCLUSION_THR = 0.45
+METAL_OCC_THR = 0.115      # mouth_metal_ratio 기준. 마이크 가림 판정(영상마다 조정 필요)
 
 
 def detect_video(ws: Workspace, backend: str = "auto", fixed_box: Optional[Box] = None, stride: int = 1,
-                 sample_frames: Optional[list] = None, n_samples: int = 40) -> list[Optional[FaceDet]]:
+                 sample_frames: Optional[list] = None, n_samples: int = 40,
+                 metal_thr: Optional[float] = None) -> list[Optional[FaceDet]]:
+    metal_thr = METAL_OCC_THR if metal_thr is None else metal_thr
     v = video_stream_info(ws.video_noaudio)
     det = make_detector(backend, fixed_box)
     out: list[Optional[FaceDet]] = []
@@ -240,7 +262,8 @@ def detect_video(ws: Workspace, backend: str = "auto", fixed_box: Optional[Box] 
             d = det(frame)
             if d is not None:
                 d.occlusion_score = mouth_occlusion_score(frame, d.mouth, d.box)
-                d.occluded = d.occlusion_score > OCCLUSION_THR or d.hand_overlap
+                d.metal_ratio = mouth_metal_ratio(frame, d.mouth)
+                d.occluded = d.occlusion_score > OCCLUSION_THR or d.metal_ratio > metal_thr or d.hand_overlap
         out.append(d)                  # 건너뛴 프레임은 None -> build_track 에서 보간
         if sample_frames is not None and i % every == 0:
             sample_frames.append(cv2.resize(frame, (v["width"] // 2, v["height"] // 2), interpolation=cv2.INTER_AREA))
@@ -321,7 +344,7 @@ def mouth_relative(track_frame: dict) -> Box:
 
 def run_scan(ws: Workspace, backend: str = "auto", fixed_box: Optional[Box] = None, stride: int = 1,
              crop_scale: float = 1.6, size: int = 512, export_crop: bool = True,
-             min_face_px: int = 96, apply_bad_cuts: bool = False) -> dict:
+             min_face_px: int = 96, apply_bad_cuts: bool = False, metal_thr: Optional[float] = None) -> dict:
     """영상 사전 점검: 컷 감지 + 컷별 얼굴/각도/눈/입 가림 판정(cuts_report.csv) + 워터마크 경고 + 얼굴 트랙.
 
     기본 정책: 얼굴 없음/너무 작음/측면/입 가려짐 구간은 립싱크를 건너뛰고 원본을 유지한다 (apply_bad_cuts 로 해제)."""
@@ -332,7 +355,7 @@ def run_scan(ws: Workspace, backend: str = "auto", fixed_box: Optional[Box] = No
     cut_info = cutmod.run_cuts(ws)
     ranges = [tuple(r) for r in cut_info["cuts"]]
     samples: list = []
-    dets = detect_video(ws, backend, fixed_box, stride, samples)
+    dets = detect_video(ws, backend, fixed_box, stride, samples, metal_thr=metal_thr)
     track = build_track(dets, v["width"], v["height"], v["fps"], crop_scale, out_size=size, ranges=ranges)
     if apply_bad_cuts:     # 얼굴만 있으면 측면/가림이어도 적용 (사용자가 명시한 경우)
         mask = cutmod.eligible_mask(track["frames"], ranges, v["fps"], min_face_px, 180.0, 180.0, False)

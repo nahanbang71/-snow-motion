@@ -297,6 +297,18 @@ def test_mouth_occlusion_score_distinguishes_covered_mouth():
     assert face.mouth_occlusion_score(open_mouth, mouth, face_box) < 0.1
 
 
+def test_mouth_metal_ratio_flags_gray_mic_but_not_open_mouth():
+    mouth = (130.0, 150.0, 60.0, 25.0)
+    clean = _skin_frame()
+    mic = clean.copy()
+    cv2.rectangle(mic, (120, 140), (200, 200), (95, 95, 95), -1)             # 회색 마이크(무채색)
+    open_mouth = clean.copy()
+    cv2.ellipse(open_mouth, (160, 170), (20, 14), 0, 0, 360, (20, 20, 90), -1)   # 붉은 입 안
+    assert face.mouth_metal_ratio(clean, mouth) < face.METAL_OCC_THR
+    assert face.mouth_metal_ratio(open_mouth, mouth) < face.METAL_OCC_THR
+    assert face.mouth_metal_ratio(mic, mouth) > face.METAL_OCC_THR
+
+
 def _moving_frames(n=30, overlay=True):
     rng = np.random.default_rng(0)
     out = []
