@@ -332,3 +332,12 @@ def test_watermark_overlay_warning_only():
     assert any("얼굴 근처" in m for m in msgs)
     assert not any("얼굴 근처" in m for m in wm.watermark_warnings(found, [[0, 0, 20, 20]]))
     assert not hasattr(wm, "remove_watermark")        # 제거 기능은 만들지 않는다
+
+
+def test_workspace_root_is_absolute(tmp_path, monkeypatch):
+    """외부 모델은 자기 저장소를 cwd 로 실행되므로, 작업 폴더가 상대경로로 남으면 입력 파일을 못 찾는다."""
+    from lipsync_pipeline.utils import Workspace
+    monkeypatch.chdir(tmp_path)
+    ws = Workspace.open("abs_test", "work", must_exist=False)
+    assert ws.root.is_absolute()
+    assert ws.p("segments/001/input.mp4").is_absolute()

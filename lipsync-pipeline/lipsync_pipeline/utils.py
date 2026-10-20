@@ -69,7 +69,8 @@ class Workspace:
     @classmethod
     def open(cls, name: str, work_root: Path | str = "work", must_exist: bool = True) -> "Workspace":
         name = sanitize_name(name)
-        root = Path(work_root) / name
+        # 절대경로로 고정한다: 외부 모델(LatentSync 등)은 자기 저장소 폴더를 cwd 로 실행되므로 상대경로면 입력 파일을 못 찾는다.
+        root = (Path(work_root) / name).resolve()
         if must_exist and not root.is_dir():
             raise PipelineError(
                 f"작업 폴더 '{root}' 가 없습니다. 먼저 `prepare` 단계를 실행해 주세요."
