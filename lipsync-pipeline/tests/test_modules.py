@@ -341,3 +341,20 @@ def test_workspace_root_is_absolute(tmp_path, monkeypatch):
     ws = Workspace.open("abs_test", "work", must_exist=False)
     assert ws.root.is_absolute()
     assert ws.p("segments/001/input.mp4").is_absolute()
+
+
+def test_conform_to_source_fixes_fps_and_frame_count(tmp_path):
+    """LatentSync 처럼 24fps 입력을 25fps(프레임 수 다름)로 만들어 내는 모델의 출력을 입력과 같게 맞춘다."""
+    import subprocess
+    from lipsync_pipeline.models.base import conform_to_source
+    from lipsync_pipeline.utils import video_stream_info
+    src, out = tmp_path / "src.mp4", tmp_path / "out.mp4"
+    def mk(p, fps, n):
+        subprocess.run(["ffmpeg", "-y", "-v", "error", "-f", "lavfi", "-i", f"testsrc=size=64x64:rate={fps}",
+                        "-frames:v", str(n), "-pix_fmt", "yuv420p", str(p)], check=True)
+    mk(src, 24, 55)
+    mk(out, 25, 59)
+    conform_to_source(src, out)
+    a, b = video_stream_info(src), video_stream_info(out)
+    assert b["frames"] == a["frames"] == 55
+    assert abs(b["fps"] - 24) < 1e-3

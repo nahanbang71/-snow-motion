@@ -139,6 +139,7 @@ class BaseLipSyncModel(ABC):
         req.options = self.resolve(req.options)
         self.check_environment(req.options)
         out = self.generate(req)
+        conform_to_source(req.video, out)      # 모델이 fps 를 바꿔 만든 경우(LatentSync = 25fps) 입력과 같게 되돌림
         self.validate_output(req.video, out)
         return out
 
@@ -153,6 +154,27 @@ class BaseLipSyncModel(ABC):
             )
         if abs(a["frames"] - b["frames"]) > frame_tolerance:
             raise PipelineError(f"출력 프레임 수({b['frames']})가 입력({a['frames']})과 다릅니다.")
+
+
+def conform_to_source(src: Path, out: Path) -> None:
+    """모델 출력의 fps/프레임 수를 입력(src)과 똑같이 맞춘다.
+
+    LatentSync 는 입력이 24fps 여도 25fps 로 다시 만들어(예: 55프레임 -> 59프레임) 프레임 수 검사에 걸렸다.
+    시간 기준으로 fps 를 변환하고, 모자라면 마지막 프레임을 복제, 넘치면 잘라서 프레임 수를 정확히 맞춘다. 소리는 보존."""
+    out = Path(out)
+    if not out.is_file():
+        return
+    a, b = video_stream_info(src), video_stream_info(out)
+    if abs(a["fps"] - b["fps"]) < 1e-3 and a["frames"] == b["frames"]:
+        return
+    n = a["frames"]
+    tmp = out.with_name(out.stem + ".conform.mp4")
+    run([find_binary("ffmpeg"), "-y", "-v", "error", "-i", out,
+         "-vf", f"fps={a['fps_rational']},tpad=stop_mode=clone:stop={n}",
+         "-map", "0:v:0", "-map", "0:a?", "-frames:v", str(n),
+         "-c:v", "libx264", "-crf", "8", "-preset", "slow", "-pix_fmt", "yuv420p", "-c:a", "copy", tmp],
+        "출력 fps/프레임 수 맞춤")
+    os.replace(tmp, out)
 
 
 class BasePostProcessor(ABC):
