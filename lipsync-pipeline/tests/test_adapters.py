@@ -163,3 +163,70 @@ def test_infinitetalk_generate_with_fake_tool_resizes_to_input(tmp_path, monkeyp
     m.generate(req)
     v = video_stream_info(tmp_path / "out.mp4")
     assert (v["width"], v["height"]) == (512, 512)                                           # 640x640 버킷 출력을 입력 해상도로
+
+
+# ------------------------------------------------------------ Wan2.2-S2V
+def _wan_req(tmp_path, **opt):
+    m = get_lipsync_model("wan_s2v")
+    return m, LipSyncRequest(tmp_path / "input.mp4", tmp_path / "audio.wav", tmp_path / "out.mp4", 24.0, m.resolve(GenerationOptions(seed=11, **opt)))
+
+
+def test_wan_s2v_command_matches_official_cli(tmp_path):
+    m, req = _wan_req(tmp_path)
+    cmd = m.build_command(req, tmp_path / "ref.png", tmp_path / "result.mp4")
+    get = lambda k: cmd[cmd.index(k) + 1]
+    assert cmd[1] == "generate.py" and get("--task") == "s2v-14B" and get("--ckpt_dir") == "Wan2.2-S2V-14B"
+    # 예제 기본값(고양이 프롬프트/예제 이미지/예제 오디오)으로 조용히 채워지지 않도록 항상 명시한다
+    assert get("--prompt") == "a person is singing" and get("--image") == str(tmp_path / "ref.png") and get("--audio") == str(tmp_path / "audio.wav")
+    assert get("--save_file") == str(tmp_path / "result.mp4")                                 # 확장자 포함 전체 파일명
+    assert get("--sample_steps") == "40" and get("--sample_guide_scale") == "4.5" and get("--base_seed") == "11"
+    assert get("--size") == "1280*720" and "--start_from_ref" in cmd
+    assert get("--offload_model") == "False" and "--convert_model_dtype" not in cmd and "--t5_cpu" not in cmd
+    assert "--pose_video" not in cmd and "--enable_tts" not in cmd
+
+
+def test_wan_s2v_offload_modes_and_validation(tmp_path):
+    m, a = _wan_req(tmp_path, offload="model")
+    cmd = m.build_command(a, tmp_path / "r.png", tmp_path / "o.mp4")
+    assert cmd[cmd.index("--offload_model") + 1] == "True" and "--convert_model_dtype" in cmd and "--t5_cpu" not in cmd
+    m, b = _wan_req(tmp_path, offload="sequential")
+    cmd = m.build_command(b, tmp_path / "r.png", tmp_path / "o.mp4")
+    assert "--convert_model_dtype" in cmd and "--t5_cpu" in cmd
+    m, c = _wan_req(tmp_path, extra={"size": "1920*1080"})
+    with pytest.raises(PipelineError, match="--size"):
+        m.build_command(c, tmp_path / "r.png", tmp_path / "o.mp4")
+    m, d = _wan_req(tmp_path, extra={"infer_frames": 48, "num_clip": 2})
+    cmd = m.build_command(d, tmp_path / "r.png", tmp_path / "o.mp4")
+    assert cmd[cmd.index("--infer_frames") + 1] == "48" and cmd[cmd.index("--num_clip") + 1] == "2"
+
+
+def test_wan_s2v_sizes_are_the_official_buckets():
+    from lipsync_pipeline.models import wan_s2v as w
+    assert w.DEFAULT_SIZE in w.SIZES and w.SAMPLE_FPS == 16
+    assert max(int(a) * int(b) for a, b in (s.split("*") for s in w.SIZES)) == 1280 * 720 == int(w.DEFAULT_SIZE.split("*")[0]) * int(w.DEFAULT_SIZE.split("*")[1])
+
+
+def test_wan_s2v_generate_with_fake_tool(tmp_path, monkeypatch):
+    import subprocess
+    from lipsync_pipeline.utils import video_stream_info
+    repo = tmp_path / "Wan2.2"; (repo / "Wan2.2-S2V-14B").mkdir(parents=True)
+    (repo / "generate.py").write_text(
+        "import argparse, os, subprocess\n"
+        "p = argparse.ArgumentParser()\n"
+        "for k in ('--image', '--audio', '--save_file', '--prompt'): p.add_argument(k)\n"
+        "a, _ = p.parse_known_args()\n"
+        "assert os.path.isfile(a.image) and os.path.isfile(a.audio) and a.save_file.endswith('.mp4') and 'cat' not in a.prompt\n"
+        "subprocess.run(['ffmpeg', '-y', '-v', 'error', '-f', 'lavfi', '-i', 'testsrc=size=960x960:rate=16:duration=1', '-pix_fmt', 'yuv420p', a.save_file], check=True)\n")
+    monkeypatch.setenv("WAN22_DIR", str(repo))
+    src = tmp_path / "input.mp4"
+    subprocess.run(["ffmpeg", "-y", "-v", "error", "-f", "lavfi", "-i", "testsrc=size=512x512:rate=24:duration=1", "-pix_fmt", "yuv420p", str(src)], check=True)
+    (tmp_path / "audio.wav").write_bytes(b"RIFF")
+    m = get_lipsync_model("wan_s2v")
+    req = LipSyncRequest(src, tmp_path / "audio.wav", tmp_path / "out.mp4", 24.0, m.resolve(GenerationOptions()))
+    m.check_environment(req.options)
+    m.generate(req)
+    v = video_stream_info(tmp_path / "out.mp4")
+    assert (v["width"], v["height"]) == (512, 512)
+    monkeypatch.delenv("WAN22_DIR")
+    with pytest.raises(PipelineError, match="WAN22_DIR"):
+        m.check_environment(req.options)
