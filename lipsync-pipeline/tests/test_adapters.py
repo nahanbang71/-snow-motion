@@ -230,3 +230,138 @@ def test_wan_s2v_generate_with_fake_tool(tmp_path, monkeypatch):
     monkeypatch.delenv("WAN22_DIR")
     with pytest.raises(PipelineError, match="WAN22_DIR"):
         m.check_environment(req.options)
+
+
+# ------------------------------------------------------------ 후처리 어댑터 (CodeFormer / Real-ESRGAN / RIFE)
+def _make_video(path, size="64x64", rate=24, dur=1.0):
+    import subprocess
+    subprocess.run(["ffmpeg", "-y", "-v", "error", "-f", "lavfi", "-i", f"testsrc=size={size}:rate={rate}:duration={dur}",
+                    "-pix_fmt", "yuv420p", str(path)], check=True)
+    return path
+
+
+def test_codeformer_command_and_folder_name_rule(tmp_path):
+    from lipsync_pipeline.models import get_post_processor
+    cf = get_post_processor("restore", "codeformer")
+    cmd = cf.build_command(tmp_path / "frames", tmp_path / "out", 0.7)
+    assert cmd[1] == "inference_codeformer.py" and "--has_aligned" in cmd
+    assert cmd[cmd.index("-w") + 1] == "0.7" and cmd[cmd.index("--input_path") + 1] == str(tmp_path / "frames")
+    assert cf.restored_dir(tmp_path / "out") == tmp_path / "out" / "restored_faces"
+    with pytest.raises(PipelineError, match="확장자"):            # 폴더 이름이 .png 로 끝나면 CodeFormer 가 단일 이미지로 오인
+        cf.build_command(tmp_path / "frames.png", tmp_path / "out", 0.7)
+
+
+def test_codeformer_process_with_fake_tool(tmp_path, monkeypatch):
+    from lipsync_pipeline.models import get_post_processor
+    from lipsync_pipeline.utils import video_stream_info
+    repo = tmp_path / "CodeFormer"; repo.mkdir()
+    (repo / "inference_codeformer.py").write_text(
+        "import argparse, glob, os, cv2\n"
+        "p = argparse.ArgumentParser(); p.add_argument('-w', type=float); p.add_argument('--has_aligned', action='store_true')\n"
+        "p.add_argument('--input_path'); p.add_argument('--output_path'); a = p.parse_args()\n"
+        "assert a.has_aligned and os.path.isdir(a.input_path)\n"
+        "os.makedirs(os.path.join(a.output_path, 'restored_faces'))\n"
+        "for f in sorted(glob.glob(os.path.join(a.input_path, '*.png'))):\n"
+        "    img = cv2.resize(cv2.imread(f), (512, 512))\n"                        # has_aligned 는 항상 512x512 로 복원
+        "    cv2.imwrite(os.path.join(a.output_path, 'restored_faces', os.path.basename(f)), img)\n")
+    monkeypatch.setenv("CODEFORMER_DIR", str(repo))
+    src = _make_video(tmp_path / "in.mp4")
+    out = get_post_processor("restore", "codeformer").process(src, tmp_path / "restored.mp4", {"weight": 0.5})
+    v = video_stream_info(out)
+    assert (v["width"], v["height"], v["frames"]) == (512, 512, 24)
+
+
+def test_realesrgan_video_command_output_rule_and_fp32(tmp_path):
+    from lipsync_pipeline.models import get_post_processor
+    re_ = get_post_processor("upscale", "realesrgan")
+    cmd = re_.build_command(tmp_path / "in.mp4", tmp_path / "out", 2, "RealESRGAN_x4plus", True)
+    get = lambda k: cmd[cmd.index(k) + 1]
+    assert cmd[1] == "inference_realesrgan_video.py" and get("-n") == "RealESRGAN_x4plus"           # 기본 모델(anime)에 의존하지 않음
+    assert get("--outscale") == "2" and get("--suffix") == "out" and "--fp32" in cmd and "--tile" not in cmd
+    assert "--fp32" not in re_.build_command(tmp_path / "i.mp4", tmp_path / "o", 2, "m", False)
+    assert "--tile" in re_.build_command(tmp_path / "i.mp4", tmp_path / "o", 2, "m", True, tile=400)
+    assert re_.expected_video(tmp_path / "out", Path("/x/input.mp4")) == tmp_path / "out" / "input_out.mp4"
+
+
+def test_realesrgan_frame_fallback_command_forces_fp32(tmp_path):
+    from lipsync_pipeline.models import get_post_processor
+    cmd = get_post_processor("upscale", "realesrgan").build_frames_command(tmp_path / "f", tmp_path / "o", 2, "RealESRGAN_x4plus")
+    assert cmd[1] == "inference_realesrgan.py" and "--fp32" in cmd and cmd[cmd.index("--suffix") + 1] == "" and cmd[cmd.index("--ext") + 1] == "png"
+
+
+def _fake_realesrgan_repo(repo):
+    repo.mkdir()
+    (repo / "inference_realesrgan_video.py").write_text(
+        "import argparse, os, subprocess\n"
+        "p = argparse.ArgumentParser(); p.add_argument('-i'); p.add_argument('-o'); p.add_argument('--suffix', default='out')\n"
+        "p.add_argument('-s', '--outscale', type=float); a, _ = p.parse_known_args()\n"
+        "os.makedirs(a.o, exist_ok=True); stem = os.path.splitext(os.path.basename(a.i))[0]\n"
+        "subprocess.run(['ffmpeg', '-y', '-v', 'error', '-i', a.i, '-vf', f'scale=iw*{a.outscale}:ih*{a.outscale}', '-pix_fmt', 'yuv420p', os.path.join(a.o, f'{stem}_{a.suffix}.mp4')], check=True)\n")
+    (repo / "inference_realesrgan.py").write_text(
+        "import argparse, glob, os, cv2\n"
+        "p = argparse.ArgumentParser(); p.add_argument('-i'); p.add_argument('-o'); p.add_argument('--suffix', default='out')\n"
+        "p.add_argument('-s', '--outscale', type=float); a, _ = p.parse_known_args()\n"
+        "os.makedirs(a.o, exist_ok=True)\n"
+        "for f in sorted(glob.glob(os.path.join(a.i, '*.png'))):\n"
+        "    img = cv2.imread(f); img = cv2.resize(img, None, fx=a.outscale, fy=a.outscale)\n"
+        "    name = os.path.splitext(os.path.basename(f))[0]; cv2.imwrite(os.path.join(a.o, f'{name}_{a.suffix}.png' if a.suffix else f'{name}.png'), img)\n")
+
+
+@pytest.mark.parametrize("gpus", [1, 0])
+def test_realesrgan_process_video_script_or_cpu_frame_fallback(tmp_path, monkeypatch, gpus):
+    from lipsync_pipeline.models import get_post_processor
+    from lipsync_pipeline.utils import video_stream_info
+    repo = tmp_path / "Real-ESRGAN"; _fake_realesrgan_repo(repo)
+    monkeypatch.setenv("REALESRGAN_DIR", str(repo))
+    src = _make_video(tmp_path / "내 입력 영상.mp4", dur=0.5)                 # 한글/공백 경로
+    out = get_post_processor("upscale", "realesrgan").process(src, tmp_path / "up.mp4", {"scale": 2, "cuda_devices": gpus})
+    v = video_stream_info(out)
+    assert (v["width"], v["height"], v["frames"]) == (128, 128, 12) and abs(v["fps"] - 24) < 0.01
+
+
+def test_realesrgan_cuda_probe_failure_means_unknown(monkeypatch):
+    from lipsync_pipeline.models import realesrgan as r
+    monkeypatch.setenv("LIPSYNC_TOOL_PYTHON", "/nonexistent/python")
+    assert r.cuda_device_count() == -1
+
+
+def test_rife_command_uses_png_mode_and_absolute_model(tmp_path):
+    from lipsync_pipeline.models import get_post_processor
+    rf = get_post_processor("interpolate", "rife")
+    cmd = rf.build_command(tmp_path / "RIFE", tmp_path / "in.mp4", 2)
+    assert cmd[1] == str(tmp_path / "RIFE" / "inference_video.py") and "--multi=2" in cmd and "--png" in cmd
+    assert f"--model={tmp_path / 'RIFE' / 'train_log'}" in cmd and "--fp16" not in cmd and "--output" not in " ".join(cmd)   # mp4v 출력 안 씀
+    assert "--fp16" in rf.build_command(tmp_path / "RIFE", tmp_path / "in.mp4", 2, fp16=True)
+    with pytest.raises(PipelineError, match="scale"):
+        rf.build_command(tmp_path / "RIFE", tmp_path / "in.mp4", 2, scale=0.7)       # 허용: 0.25/0.5/1/2/4
+    with pytest.raises(PipelineError, match="2 이상"):
+        rf.build_command(tmp_path / "RIFE", tmp_path / "in.mp4", 1)
+    assert rf.output_fps("24/1", 2) == "48/1" and rf.output_fps("30000/1001", 2) == "60000/1001"
+    assert rf.expected_frames(24, 2) == 47            # (n-1)*multi + 1
+
+
+def test_rife_process_with_fake_tool(tmp_path, monkeypatch):
+    from lipsync_pipeline.models import get_post_processor
+    from lipsync_pipeline.utils import video_stream_info
+    repo = tmp_path / "Practical-RIFE"; (repo / "train_log").mkdir(parents=True)
+    (repo / "inference_video.py").write_text(
+        "import argparse, os, subprocess, glob, shutil, tempfile, cv2\n"
+        "p = argparse.ArgumentParser(); p.add_argument('--video'); p.add_argument('--multi', type=int); p.add_argument('--png', action='store_true')\n"
+        "p.add_argument('--model'); p.add_argument('--scale'); a, _ = p.parse_known_args()\n"
+        "assert a.png and os.path.isfile(os.path.join(a.model, 'flownet.pkl'))\n"
+        "d = tempfile.mkdtemp(); subprocess.run(['ffmpeg', '-y', '-v', 'error', '-i', a.video, os.path.join(d, '%d.png')], check=True)\n"
+        "fr = sorted(glob.glob(os.path.join(d, '*.png')), key=lambda x: int(os.path.basename(x)[:-4])); os.makedirs('vid_out', exist_ok=True)\n"
+        "out = []\n"
+        "for i in range(len(fr) - 1):\n"
+        "    out += [fr[i]] + [fr[i]] * (a.multi - 1)\n"
+        "out.append(fr[-1])\n"
+        "for k, f in enumerate(out): shutil.copyfile(f, 'vid_out/{:0>7d}.png'.format(k))\n")
+    monkeypatch.setenv("RIFE_DIR", str(repo))
+    rf = get_post_processor("interpolate", "rife")
+    src = _make_video(tmp_path / "in.mp4", dur=0.5)
+    with pytest.raises(PipelineError, match="flownet.pkl"):
+        rf.process(src, tmp_path / "x.mp4", {"multi": 2})
+    (repo / "train_log" / "flownet.pkl").write_text("w")
+    out = rf.process(src, tmp_path / "interp.mp4", {"multi": 2})
+    v = video_stream_info(out)
+    assert abs(v["fps"] - 48) < 0.01 and v["frames"] == 23 and (v["width"], v["height"]) == (64, 64)          # 12 -> (12-1)*2+1
