@@ -173,7 +173,9 @@ def run_tool(cmd: list, cwd: Path, what: str) -> None:
 
 
 def py() -> str:
-    return sys.executable
+    """외부 모델 저장소를 실행할 파이썬. 모델이 옛 파이썬/torch 를 요구하면(예: LatentSync = 3.10 + torch 2.5.1)
+    LIPSYNC_TOOL_PYTHON 에 그 가상환경의 python 경로를 지정한다. 없으면 현재 인터프리터."""
+    return os.environ.get("LIPSYNC_TOOL_PYTHON") or sys.executable
 
 
 def extract_frames(video: Path, outdir: Path) -> int:
