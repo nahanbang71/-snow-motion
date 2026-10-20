@@ -177,6 +177,19 @@ def conform_to_source(src: Path, out: Path) -> None:
     os.replace(tmp, out)
 
 
+def resize_to_source(src: Path, out: Path) -> None:
+    """모델 출력의 해상도를 입력(src)과 똑같이 맞춘다 (얼굴 전체 생성 계열은 자체 해상도 버킷으로 만든다). 소리는 보존."""
+    out = Path(out)
+    a, b = video_stream_info(src), video_stream_info(out)
+    if (a["width"], a["height"]) == (b["width"], b["height"]):
+        return
+    tmp = out.with_name(out.stem + ".resize.mp4")
+    run([find_binary("ffmpeg"), "-y", "-v", "error", "-i", out, "-vf", f"scale={a['width']}:{a['height']}:flags=lanczos",
+         "-map", "0:v:0", "-map", "0:a?", "-c:v", "libx264", "-crf", "8", "-preset", "slow", "-pix_fmt", "yuv420p",
+         "-c:a", "copy", tmp], "출력 해상도 맞춤")
+    os.replace(tmp, out)
+
+
 class BasePostProcessor(ABC):
     name: ClassVar[str] = "base"
     kind: ClassVar[str] = "restore"
