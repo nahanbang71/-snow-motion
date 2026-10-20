@@ -405,3 +405,43 @@ def test_every_adapter_command_uses_its_own_tool_python(tmp_path, monkeypatch):
     ls = get_lipsync_model("latentsync")
     req = LipSyncRequest(tmp_path / "i.mp4", tmp_path / "a.wav", tmp_path / "o.mp4", 24.0, ls.resolve(GenerationOptions()))
     assert ls.build_command(req, tmp_path)[0] == "/common/python"
+
+
+def test_latentsync_pads_crop_so_face_detector_sees_margin_and_restores_original_size(tmp_path, monkeypatch):
+    """얼굴이 화면을 꽉 채우면 LatentSync 검출기가 실패한다(실측). 여백을 붙여 모델에 넘기고 결과는 원래 크기로 되돌린다."""
+    import shutil
+    import subprocess
+    import cv2
+    from lipsync_pipeline.models import latentsync as ls
+    from lipsync_pipeline.models.base import GenerationOptions, LipSyncRequest
+    from lipsync_pipeline.utils import video_stream_info
+
+    src = tmp_path / "내 입력.mp4"
+    subprocess.run(["ffmpeg", "-y", "-v", "error", "-f", "lavfi", "-i", "testsrc=size=96x96:rate=24", "-frames:v", "12",
+                    "-pix_fmt", "yuv420p", str(src)], check=True)
+    seen = {}
+
+    def fake_tool(cmd, cwd, what):                         # 모델이 받은 입력의 크기를 기록하고, 그대로 복사해서 결과로 낸다
+        cmd = [str(c) for c in cmd]
+        vin, vout = cmd[cmd.index("--video_path") + 1], cmd[cmd.index("--video_out_path") + 1]
+        seen["size"] = (video_stream_info(Path(vin))["width"], video_stream_info(Path(vin))["height"])
+        shutil.copy(vin, vout)
+
+    monkeypatch.setattr(ls, "run_tool", fake_tool)
+    m = get_lipsync_model("latentsync")
+    opts = m.resolve(GenerationOptions(tool_dir=str(tmp_path)))
+    out = tmp_path / "out.mp4"
+    req = LipSyncRequest(src, tmp_path / "a.wav", out, 24.0, opts)
+    m.generate(req)
+
+    side = ls.padded_canvas_side(96, 96)
+    assert seen["size"] == (side, side) and side > 96 and 96 / side <= 0.6 + 0.02       # 모델은 여백 있는 큰 캔버스를 받는다
+    info = video_stream_info(out)
+    assert (info["width"], info["height"], info["frames"]) == (96, 96, 12)                # 결과는 원래 크기/프레임 수
+    assert not list(tmp_path.glob("*.pad_*.mp4"))                                           # 임시 파일 정리
+
+    def first(p):
+        ok, f = cv2.VideoCapture(str(p)).read()
+        assert ok
+        return f.astype("int16")
+    assert abs(first(src) - first(out)).mean() < 4                                          # 가운데 영역이 원본과 같다(손실 압축 오차만)
