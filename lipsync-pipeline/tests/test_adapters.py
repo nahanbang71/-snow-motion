@@ -46,7 +46,10 @@ def test_musetalk_config_format_and_output_rule(tmp_path):
     import yaml
     m = get_lipsync_model("musetalk")
     cfg = yaml.safe_load(m.build_config(Path("/tmp/x/input.mp4"), Path("/tmp/x/audio.wav")))
-    assert cfg == {"task_0": {"video_path": "/tmp/x/input.mp4", "audio_path": "/tmp/x/audio.wav", "result_name": "take.mp4"}}
+    t = cfg["task_0"]      # Windows 는 경로 구분자가 \ 라서 문자열이 아니라 Path 로 비교한다
+    assert set(cfg) == {"task_0"} and set(t) == {"video_path", "audio_path", "result_name"}
+    assert Path(t["video_path"]) == Path("/tmp/x/input.mp4") and Path(t["audio_path"]) == Path("/tmp/x/audio.wav")
+    assert t["result_name"] == "take.mp4"
     assert m.expected_output(Path("/r")) == Path("/r/v15/take.mp4")                        # <result_dir>/<version>/<result_name>
 
 
@@ -132,7 +135,8 @@ def test_infinitetalk_input_json_and_output_rule(tmp_path):
     import json as _json
     m = get_lipsync_model("infinitetalk")
     data = _json.loads(m.build_input_json(Path("/t/내 폴더/input.mp4"), Path("/t/내 폴더/audio.wav")))
-    assert set(data) == {"prompt", "cond_video", "cond_audio"} and data["cond_audio"] == {"person1": "/t/내 폴더/audio.wav"}
+    assert set(data) == {"prompt", "cond_video", "cond_audio"}
+    assert set(data["cond_audio"]) == {"person1"} and Path(data["cond_audio"]["person1"]) == Path("/t/내 폴더/audio.wav")   # Windows 경로 구분자 대응
     assert m.expected_output(Path("/r/result")) == Path("/r/result.mp4")                    # --save_file 는 확장자 없는 접두사
     from lipsync_pipeline.models import infinitetalk as it
     assert it.FPS == 25 and ("MeiGen-AI/InfiniteTalk", [], "weights/InfiniteTalk", None) in it.WEIGHT_DOWNLOADS
