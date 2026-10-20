@@ -59,7 +59,7 @@ class WanS2VModel(BaseLipSyncModel):
         size = o.extra.get("size", DEFAULT_SIZE)
         if size not in SIZES:
             raise PipelineError(f"Wan2.2-S2V --size 는 {SIZES} 중 하나입니다: {size}")
-        cmd = [py(), "generate.py", "--task", "s2v-14B", "--size", size, "--ckpt_dir", o.extra.get("ckpt_dir", CKPT_DIR),
+        cmd = [py("wan_s2v"), "generate.py", "--task", "s2v-14B", "--size", size, "--ckpt_dir", o.extra.get("ckpt_dir", CKPT_DIR),
                "--prompt", o.extra.get("prompt", DEFAULT_PROMPT), "--image", ref_image, "--audio", req.audio,
                "--save_file", save_file, "--sample_steps", o.steps, "--sample_guide_scale", o.guidance,
                "--base_seed", o.seed, "--start_from_ref",

@@ -365,3 +365,39 @@ def test_rife_process_with_fake_tool(tmp_path, monkeypatch):
     out = rf.process(src, tmp_path / "interp.mp4", {"multi": 2})
     v = video_stream_info(out)
     assert abs(v["fps"] - 48) < 0.01 and v["frames"] == 23 and (v["width"], v["height"]) == (64, 64)          # 12 -> (12-1)*2+1
+
+
+# ------------------------------------------------------------ 도구별 파이썬 선택
+def test_tool_python_precedence(monkeypatch):
+    import sys
+    from lipsync_pipeline.models.base import py
+    for k in ("LIPSYNC_TOOL_PYTHON", "LIPSYNC_TOOL_PYTHON_RIFE"):
+        monkeypatch.delenv(k, raising=False)
+    assert py() == py("rife") == sys.executable
+    monkeypatch.setenv("LIPSYNC_TOOL_PYTHON", "/envs/common/bin/python")
+    assert py() == py("rife") == "/envs/common/bin/python"
+    monkeypatch.setenv("LIPSYNC_TOOL_PYTHON_RIFE", "/envs/rife/bin/python")
+    assert py("rife") == "/envs/rife/bin/python" and py("codeformer") == "/envs/common/bin/python" and py() == "/envs/common/bin/python"
+
+
+def test_every_adapter_command_uses_its_own_tool_python(tmp_path, monkeypatch):
+    from lipsync_pipeline.models import get_post_processor
+    monkeypatch.setenv("LIPSYNC_TOOL_PYTHON", "/common/python")
+    for n in ("MUSETALK", "INFINITETALK", "WAN_S2V", "CODEFORMER", "REALESRGAN", "RIFE"):
+        monkeypatch.setenv(f"LIPSYNC_TOOL_PYTHON_{n}", f"/envs/{n.lower()}/python")
+    mk = lambda n: (get_lipsync_model(n), None)
+    for name, build in (
+        ("musetalk", lambda m, r: m.build_command(r, tmp_path / "c.yaml", tmp_path / "r")),
+        ("infinitetalk", lambda m, r: m.build_command(r, tmp_path / "i.json", tmp_path / "r", tmp_path / "e")),
+        ("wan_s2v", lambda m, r: m.build_command(r, tmp_path / "r.png", tmp_path / "o.mp4")),
+    ):
+        m = get_lipsync_model(name)
+        req = LipSyncRequest(tmp_path / "i.mp4", tmp_path / "a.wav", tmp_path / "o.mp4", 24.0, m.resolve(GenerationOptions()))
+        assert build(m, req)[0] == f"/envs/{name}/python"
+    assert get_post_processor("restore", "codeformer").build_command(tmp_path / "f", tmp_path / "o", 0.7)[0] == "/envs/codeformer/python"
+    assert get_post_processor("upscale", "realesrgan").build_command(tmp_path / "i.mp4", tmp_path / "o", 2, "m", True)[0] == "/envs/realesrgan/python"
+    assert get_post_processor("interpolate", "rife").build_command(tmp_path / "R", tmp_path / "i.mp4", 2)[0] == "/envs/rife/python"
+    # LatentSync 는 건드리지 않았으므로 기존대로 공통 변수를 쓴다
+    ls = get_lipsync_model("latentsync")
+    req = LipSyncRequest(tmp_path / "i.mp4", tmp_path / "a.wav", tmp_path / "o.mp4", 24.0, ls.resolve(GenerationOptions()))
+    assert ls.build_command(req, tmp_path)[0] == "/common/python"

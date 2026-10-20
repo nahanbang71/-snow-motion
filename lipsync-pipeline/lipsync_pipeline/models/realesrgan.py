@@ -36,7 +36,7 @@ DEFAULT_MODEL = "RealESRGAN_x4plus"
 def cuda_device_count() -> int:
     """도구 파이썬(LIPSYNC_TOOL_PYTHON 또는 현재 인터프리터)에서 보이는 CUDA 장치 수. 확인 실패 시 -1."""
     try:
-        out = subprocess.run([py(), "-c", "import torch; print(torch.cuda.device_count())"], capture_output=True,
+        out = subprocess.run([py("realesrgan"), "-c", "import torch; print(torch.cuda.device_count())"], capture_output=True,
                              text=True, timeout=120).stdout.strip().splitlines()
         return int(out[-1])
     except Exception:
@@ -50,7 +50,7 @@ class RealESRGAN(BasePostProcessor):
 
     def build_command(self, src: Path, outdir: Path, scale: float, model: str, fp32: bool, tile: int = 0) -> list:
         """영상 스크립트 (GPU 필요)."""
-        cmd = [py(), "inference_realesrgan_video.py", "-i", src, "-o", outdir, "-n", model,
+        cmd = [py("realesrgan"), "inference_realesrgan_video.py", "-i", src, "-o", outdir, "-n", model,
                "--outscale", scale, "--suffix", "out"]
         if tile:
             cmd += ["--tile", tile]
@@ -60,7 +60,7 @@ class RealESRGAN(BasePostProcessor):
 
     def build_frames_command(self, framedir: Path, outdir: Path, scale: float, model: str, tile: int = 0) -> list:
         """프레임 스크립트 (CPU 폴백). CPU 에서는 half 가 불가하므로 항상 --fp32."""
-        cmd = [py(), "inference_realesrgan.py", "-i", framedir, "-o", outdir, "-n", model, "--outscale", scale,
+        cmd = [py("realesrgan"), "inference_realesrgan.py", "-i", framedir, "-o", outdir, "-n", model, "--outscale", scale,
                "--suffix", "", "--ext", "png", "--fp32"]
         if tile:
             cmd += ["--tile", tile]

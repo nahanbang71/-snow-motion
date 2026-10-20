@@ -78,7 +78,7 @@ class InfiniteTalkModel(BaseLipSyncModel):
         size = o.extra.get("size", "infinitetalk-720")
         if size not in SIZES:
             raise PipelineError(f"InfiniteTalk --size 는 {SIZES} 중 하나입니다: {size}")
-        cmd = [py(), "generate_infinitetalk.py", "--ckpt_dir", CKPT_DIR, "--wav2vec_dir", WAV2VEC_DIR,
+        cmd = [py("infinitetalk"), "generate_infinitetalk.py", "--ckpt_dir", CKPT_DIR, "--wav2vec_dir", WAV2VEC_DIR,
                "--infinitetalk_dir", INFINITETALK_WEIGHTS, "--input_json", input_json,
                "--size", size, "--sample_steps", o.steps, "--sample_text_guide_scale", o.guidance,
                "--mode", "streaming", "--max_frame_num", max(1000, max_frame_num),

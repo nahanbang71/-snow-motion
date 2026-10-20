@@ -42,7 +42,7 @@ class RIFE(BasePostProcessor):
             raise PipelineError("RIFE --multi 는 2 이상이어야 합니다.")
         if scale not in SCALES:
             raise PipelineError(f"RIFE --scale 은 {SCALES} 중 하나입니다: {scale}")
-        cmd = [py(), repo / "inference_video.py", f"--multi={multi}", f"--video={src}", "--png",
+        cmd = [py("rife"), repo / "inference_video.py", f"--multi={multi}", f"--video={src}", "--png",
                f"--model={repo / 'train_log'}", f"--scale={scale}"]
         if fp16:
             cmd.append("--fp16")

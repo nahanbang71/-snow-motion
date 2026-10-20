@@ -39,7 +39,7 @@ class CodeFormer(BasePostProcessor):
     def build_command(self, frames: Path, out: Path, weight: float) -> list:
         if str(frames).endswith(_SINGLE_FILE_SUFFIXES):
             raise PipelineError(f"CodeFormer 는 이름이 이미지/영상 확장자로 끝나는 폴더를 파일로 오인합니다: {frames}")
-        return [str(c) for c in (py(), "inference_codeformer.py", "-w", weight, "--has_aligned",
+        return [str(c) for c in (py("codeformer"), "inference_codeformer.py", "-w", weight, "--has_aligned",
                                  "--input_path", frames, "--output_path", out)]
 
     @staticmethod

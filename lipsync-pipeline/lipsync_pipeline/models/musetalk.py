@@ -86,7 +86,7 @@ class MuseTalkModel(BaseLipSyncModel):
         o = req.options
         if o.precision == "bf16":
             raise PipelineError("MuseTalk 는 bf16 을 지원하지 않습니다 (fp16 은 --use_float16, fp32 는 플래그 없음).")
-        cmd = [py(), "-m", "scripts.inference", "--inference_config", cfg_path, "--result_dir", result_dir,
+        cmd = [py("musetalk"), "-m", "scripts.inference", "--inference_config", cfg_path, "--result_dir", result_dir,
                "--unet_model_path", UNET_MODEL, "--unet_config", UNET_CONFIG, "--version", "v15"]
         if o.precision == "fp16":
             cmd.append("--use_float16")

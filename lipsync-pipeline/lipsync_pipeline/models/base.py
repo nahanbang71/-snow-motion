@@ -210,9 +210,15 @@ def run_tool(cmd: list, cwd: Path, what: str):
     return run([str(c) for c in cmd], what, cwd=cwd, env=env)     # CompletedProcess (stdout/stderr 포함)
 
 
-def py() -> str:
+def py(tool: str = "") -> str:
     """외부 모델 저장소를 실행할 파이썬. 모델이 옛 파이썬/torch 를 요구하면(예: LatentSync = 3.10 + torch 2.5.1)
-    LIPSYNC_TOOL_PYTHON 에 그 가상환경의 python 경로를 지정한다. 없으면 현재 인터프리터."""
+    LIPSYNC_TOOL_PYTHON 에 그 가상환경의 python 경로를 지정한다. 도구마다 요구 환경이 달라 충돌하면(예: RIFE 는 numpy<=1.23.5)
+    LIPSYNC_TOOL_PYTHON_<도구이름 대문자>(예: LIPSYNC_TOOL_PYTHON_RIFE)로 그 도구만 따로 지정할 수 있다.
+    우선순위: 도구별 변수 > LIPSYNC_TOOL_PYTHON > 현재 인터프리터."""
+    if tool:
+        specific = os.environ.get(f"LIPSYNC_TOOL_PYTHON_{tool.upper()}")
+        if specific:
+            return specific
     return os.environ.get("LIPSYNC_TOOL_PYTHON") or sys.executable
 
 
