@@ -7,10 +7,14 @@
 - 한국어 경로/공백 파일명 지원, 로그·오류 메시지는 한국어.
 - 중간 결과는 **덮어쓰지 않고 전부 보존**합니다(다시 만들면 `_archive/`, 후보는 번호 이어서, 최종본은 `finalize/<tag>/`).
 
-> ⚠️ **검증 범위**: 이 저장소는 GPU 없는 환경에서 작성되었습니다. CPU로 검증된 것은 전처리/분석/구간 분할/후보 관리/UI 서버/합성/배치 등
-> `tests/` 의 합성 샘플(testsrc + sine) 테스트가 다루는 부분입니다. **LatentSync / MuseTalk / InfiniteTalk / Wan2.2-S2V / CodeFormer /
-> Real-ESRGAN / RIFE / SyncNet 어댑터와 Colab·RunPod·Windows 설치 스크립트는 한 번도 실행해 보지 못했습니다**(코드에 `TODO(미검증)` 표시).
-> 외부 저장소의 인자 이름·체크포인트 이름은 기억에 의존했으므로 처음 실행할 때 각 저장소 README 와 대조해 주세요.
+> ⚠️ **검증 범위** (이 저장소는 GPU 없는 환경에서 작성되었습니다)
+> - **CPU 테스트로 검증됨**: 전처리/분석/구간 분할/후보 관리/UI 서버/합성/배치, 그리고 모든 외부 모델 어댑터의 **명령 조립·설정 파일 형식·출력 경로 규칙**
+>   (가짜 도구 스크립트로 입출력 흐름까지 확인 — `tests/test_adapters.py`).
+> - **공식 저장소 코드를 읽어 대조함(실행은 안 함)**: MuseTalk / InfiniteTalk / Wan2.2-S2V / CodeFormer / Real-ESRGAN / RIFE(Practical-RIFE) 어댑터.
+>   각 어댑터 파일 상단 주석에 확인한 저장소 커밋과 파일·줄 번호가 있습니다. 저장소가 바뀌면 줄 번호는 어긋날 수 있으니 커밋 해시로 찾으세요.
+> - **Colab 에서 실제로 실행해 본 것**: LatentSync 어댑터(및 그 설치 절차)뿐입니다.
+> - **한 번도 실행해 보지 못함**: 위 6개 모델의 GPU 실행 자체, SyncNet 점수(스켈레톤), mediapipe 기반 각도/눈 감김/손 검출, RunPod·Windows 설치 스크립트.
+>   코드의 `TODO(미검증)` 표시를 확인하세요.
 
 ## 파이프라인
 
@@ -96,13 +100,32 @@ python -m lipsync finalize 노래1 --tag 조합2 --no-interpolate   # 다른 선
 PC 에서 만든 `gpu_upload.zip` 만 있으면 됩니다(영상 전체가 아니라 구간별 입력만 담깁니다).
 
 - **Colab**: `gpu/colab_notebook.ipynb` 를 열고 위에서부터 실행 — 설정 → 설치 → 모델 다운로드 → 업로드 → 실행 → `gpu_result.zip` 다운로드.
-- **RunPod**: `bash gpu/runpod_setup.sh latentsync` (대상: `latentsync | musetalk | infinitetalk | wan_s2v | postprocess`) 후
+- **RunPod**: `bash gpu/runpod_setup.sh latentsync musetalk` (대상: `latentsync | musetalk | infinitetalk | wan_s2v | codeformer | realesrgan | rife`) 후
   ```bash
-  source ~/.lipsync_env
-  python -m lipsync unpack 노래1 gpu_upload.zip
-  python -m lipsync run 노래1 --preset quality --stages emotion,lipsync            # 후보 3개/구간, 최대 스텝, fp16
-  python -m lipsync pack 노래1 --kind result                                       # → work/노래1/gpu_result.zip 내려받기
+  source ~/.lipsync_env ; cd /workspace/-snow-motion/lipsync-pipeline
+  python -m lipsync unpack 노래1 gpu_upload.zip --work-root "$WORK_ROOT"
+  python -m lipsync run 노래1 --work-root "$WORK_ROOT" --preset quality --stages emotion,lipsync   # 후보 3개/구간, 최대 스텝, fp16
+  python -m lipsync pack 노래1 --work-root "$WORK_ROOT" --kind result                              # → $WORK_ROOT/노래1/gpu_result.zip 내려받기
   ```
+  후처리(CodeFormer/Real-ESRGAN/RIFE)도 GPU 에서 하려면 PC 에서 `pack --kind full` → 여기서 `unpack` → `python -m lipsync finalize 노래1 --work-root "$WORK_ROOT"`.
+
+### Colab 에서 실제로 겪은 문제와 처리 (실측 교훈)
+| 문제 | 처리 |
+|---|---|
+| 코랩 파이썬이 3.13 이라 LatentSync 의 `torch==2.5.1` 이 설치되지 않음 | `uv venv --python 3.10` 로 가상환경을 따로 만들고 환경변수 `LIPSYNC_TOOL_PYTHON=<그 환경의 python>` 으로 지정. 모델마다 요구 환경이 충돌하면(예: RIFE 는 `numpy<=1.23.5`, CodeFormer 는 Python 3.8 권장) `LIPSYNC_TOOL_PYTHON_<이름 대문자>`(예: `LIPSYNC_TOOL_PYTHON_RIFE`)로 그 도구만 따로 지정 — 우선순위: 도구별 > 공통 > 현재 인터프리터 |
+| `huggingface-cli` 가 삭제됨 | `hf download <repo> [파일...] --local-dir <폴더>` 를 쓴다. **`--exclude` 뒤의 인자는 파일명으로 해석되므로 쓰지 않는다**(필요한 파일을 위치 인자로 나열) |
+| 외부 모델 실행 시 matplotlib 오류 | 주피터/코랩이 넣어 둔 `MPLBACKEND` 가 별도 가상환경에 없음 → 외부 모델 실행 시 `MPLBACKEND=Agg` (어댑터가 자동으로 덮어씀, 환경 파일에도 기록) |
+| LatentSync 가 24fps 입력을 25fps 로 만들어 프레임 수 검사 실패 | 파이프라인이 모델 출력의 fps/프레임 수를 입력과 같게 맞춘다(`models/base.py` `conform_to_source`). 해상도가 다른 얼굴 전체 생성 계열은 `resize_to_source` 도 적용 |
+| 외부 모델이 입력 파일을 못 찾음 | 외부 모델은 저장소 폴더를 cwd 로 실행되므로 **작업 폴더는 절대경로**여야 한다(`--work-root "$WORK_ROOT"`) |
+
+### 공식 코드와 대조하며 확인된 모델별 주의점
+- **MuseTalk**: 영상·오디오 경로를 따옴표 없이 셸 명령에 넣어서 공백/한글 공백 경로가 깨집니다 → 어댑터가 공백 없는 임시 폴더로 복사해서 실행. 처리 중 예외를 삼켜 **종료 코드 0** 으로 끝나므로 출력 파일 존재로 성공을 판단합니다. `--use_float16` 을 빼면 품질이 좋아집니다(README 안내) → 품질 우선이면 `--precision fp32`. 샘플링 스텝/offload 옵션 없음.
+- **InfiniteTalk**: 진입점은 `python generate_infinitetalk.py` (`-m` 아님). fps 25 고정, 출력 해상도는 640/960 정사각 버킷 → 입력 해상도로 되돌립니다. `--sample_steps` 기본 40 이 문서상 값(더 큰 값 안내 없음). offload 는 `--offload_model` / `--num_persistent_param_in_dit 0`.
+- **Wan2.2-S2V**: `--prompt/--image/--audio` 를 안 주면 예제(흰 고양이 등)로 **조용히** 채워지므로 항상 명시합니다. 출력 fps 16 고정 → 24fps 입력이면 프레임 복제로 움직임이 끊겨 보일 수 있음. 최소 80GB VRAM 안내, 작은 GPU 는 `--offload model|sequential`.
+- **CodeFormer**: `--has_aligned` 는 `restored_faces/` 에만 쓰고 항상 512x512 로 복원. 프레임 폴더 이름이 `.png` 등으로 끝나면 파일로 오인합니다.
+- **Real-ESRGAN**: 영상 스크립트는 **CUDA 가 없으면 실행되지 않습니다**(`Pool(0)`) → GPU 가 없는 PC 에서는 어댑터가 프레임 단위 스크립트(CPU, 매우 느림)로 자동 폴백합니다. `-n` 기본값이 애니메이션용이라 `RealESRGAN_x4plus` 를 명시합니다.
+- **RIFE(Practical-RIFE)**: 기본 출력은 `mp4v` 코덱(손실)이라 `--png` 로 무손실 프레임을 받아 H.264 로 인코딩합니다. 가중치는 Google Drive/Baidu 링크뿐이라 **수동 설치**(`train_log/flownet.pkl`). 파이썬 3.11 이하.
+
 - **작은 VRAM**: `--offload model`(모델 단위 CPU offload) 또는 `--offload sequential`(레이어 단위, 가장 느리고 VRAM 최소). 정밀도는 `--precision fp16|bf16|fp32`.
   offload 를 실제로 적용하는 코드는 어댑터별 TODO 입니다(공식 코드에 옵션이 없으면 패치 필요).
 - 같은 구간을 다른 모델/설정으로 더 만들고 비교: `python -m lipsync lipsync 노래1 --model musetalk --takes 2 --segments 3 --label musetalk-a` →
@@ -155,7 +178,7 @@ class MyModel(BaseLipSyncModel):
         return req.output
 ```
 입출력 규격은 `models/base.py` 상단 주석: 출력은 **입력과 같은 해상도·fps·프레임 수**(±2프레임 허용, 아니면 오류).
-복원/업스케일/보간도 `BasePostProcessor` 로 같은 방식입니다. 현재 어댑터: `latentsync`, `musetalk`, `infinitetalk`, `wan_s2v`(모두 스켈레톤·미검증), `identity`(CPU 테스트용 복사), `codeformer`, `realesrgan`, `rife`.
+복원/업스케일/보간도 `BasePostProcessor` 로 같은 방식입니다. 현재 어댑터: `latentsync`(Colab 에서 실행 확인), `musetalk`, `infinitetalk`, `wan_s2v`, `codeformer`, `realesrgan`, `rife`(공식 코드 대조 완료·GPU 실행 미검증), `identity`(CPU 테스트용 복사).
 
 ## 📁 작업 폴더 구조 (`work/<이름>/`)
 ```
