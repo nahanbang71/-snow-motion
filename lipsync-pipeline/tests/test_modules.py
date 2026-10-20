@@ -221,9 +221,9 @@ def test_adapter_commands_handle_spaces_and_korean(tmp_path):
                          get_lipsync_model("latentsync").resolve(GenerationOptions(seed=7)))
     cmd = get_lipsync_model("latentsync").build_command(req, tmp_path)
     assert str(tmp_path / "내 입력.mp4") in cmd and "50" in cmd and "7" in cmd
-    mt = get_lipsync_model("musetalk")
-    yml = mt.build_config(req)
-    assert json.dumps(str(tmp_path / "내 입력.mp4"), ensure_ascii=False) in yml
+    # MuseTalk 는 경로를 따옴표 없이 셸에 넣으므로 어댑터가 공백 없는 임시 경로로 복사해 쓴다 (tests/test_adapters.py 참고).
+    yml = get_lipsync_model("musetalk").build_config(tmp_path / "x" / "input.mp4", tmp_path / "x" / "audio.wav")
+    assert json.dumps(str(tmp_path / "x" / "input.mp4"), ensure_ascii=False) in yml
 
 
 def test_gpu_adapters_fail_with_korean_message_when_not_installed(tmp_path, monkeypatch):

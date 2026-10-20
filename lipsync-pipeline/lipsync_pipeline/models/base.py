@@ -189,12 +189,12 @@ class BasePostProcessor(ABC):
 
 # ---------------------------------------------------------------- 공용 헬퍼
 
-def run_tool(cmd: list, cwd: Path, what: str) -> None:
+def run_tool(cmd: list, cwd: Path, what: str):
     """외부 모델 저장소의 스크립트를 실행 (LIPSYNC_TOOL_PYTHON 이 있으면 그 파이썬, 없으면 현재 인터프리터)."""
     # 코랩/주피터는 MPLBACKEND=module://matplotlib_inline... 을 환경에 넣어 두는데, 별도 가상환경(matplotlib_inline 없음)에서는
     # matplotlib 임포트가 ValueError 로 죽는다. 화면 없는 서버용 Agg 로 덮어쓴다.
     env = {**os.environ, "MPLBACKEND": "Agg"}
-    run([str(c) for c in cmd], what, cwd=cwd, env=env)
+    return run([str(c) for c in cmd], what, cwd=cwd, env=env)     # CompletedProcess (stdout/stderr 포함)
 
 
 def py() -> str:
