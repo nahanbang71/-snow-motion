@@ -1,0 +1,32 @@
+<!doctype html><meta charset="utf-8">
+<style>
+html,body{margin:0;background:transparent;width:1280px;height:720px;overflow:hidden}
+svg{position:absolute;inset:0}
+text{font-family:"WenQuanYi Zen Hei","Noto Sans CJK KR",sans-serif;font-weight:700;font-size:34px;text-anchor:middle}
+.cy{--c:#00e5ff}.pk{--c:#ff3df2}
+.b{fill:none;stroke:#eaffff;stroke-width:3.5;stroke-linejoin:round;filter:url(#cy)}
+.pk .b{stroke:#ffe6fc;filter:url(#pk)}
+.t{fill:#f2ffff;filter:url(#cy)}.pk .t{fill:#fff0fd;filter:url(#pk)}
+.cy{animation:fl 3.1s infinite}.pk{animation:fl 2.3s infinite .7s}
+@keyframes fl{0%,100%{opacity:1}6%{opacity:.55}8%{opacity:1}10%{opacity:.7}12%{opacity:1}55%{opacity:.95}57%{opacity:.45}59%{opacity:1}}
+.pop{animation:pop .5s cubic-bezier(.2,1.6,.4,1) both}
+@keyframes pop{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
+</style>
+<svg viewBox="0 0 1280 720" width="1280" height="720">
+<defs>
+ <filter id="cy" x="-40%" y="-80%" width="180%" height="260%"><feGaussianBlur in="SourceGraphic" stdDeviation="2" result="a"/><feGaussianBlur in="SourceGraphic" stdDeviation="7" result="b"/><feGaussianBlur in="SourceGraphic" stdDeviation="18" result="c"/>
+  <feFlood flood-color="#00e5ff"/><feComposite in2="b" operator="in" result="b2"/><feFlood flood-color="#0090ff"/><feComposite in2="c" operator="in" result="c2"/>
+  <feMerge><feMergeNode in="c2"/><feMergeNode in="c2"/><feMergeNode in="b2"/><feMergeNode in="b2"/><feMergeNode in="a"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+ <filter id="pk" x="-40%" y="-80%" width="180%" height="260%"><feGaussianBlur in="SourceGraphic" stdDeviation="2" result="a"/><feGaussianBlur in="SourceGraphic" stdDeviation="7" result="b"/><feGaussianBlur in="SourceGraphic" stdDeviation="18" result="c"/>
+  <feFlood flood-color="#ff3df2"/><feComposite in2="b" operator="in" result="b2"/><feFlood flood-color="#8a2bff"/><feComposite in2="c" operator="in" result="c2"/>
+  <feMerge><feMergeNode in="c2"/><feMergeNode in="c2"/><feMergeNode in="b2"/><feMergeNode in="b2"/><feMergeNode in="a"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<g class="cy"><g class="pop" style="transform-origin:300px 260px;animation-delay:0s">
+ <path d="M130 150 H470 Q500 150 500 180 V250 Q500 280 470 280 H260 L190 335 L215 280 H130 Q100 280 100 250 V180 Q100 150 130 150Z" fill="rgba(0,8,22,.55)"/>
+ <path class="b" d="M130 150 H470 Q500 150 500 180 V250 Q500 280 470 280 H260 L190 335 L215 280 H130 Q100 280 100 250 V180 Q100 150 130 150Z"/>
+ <text class="t" x="300" y="228">네온 말풍선 A (시안)</text></g></g>
+<g class="pk"><g class="pop" style="transform-origin:960px 480px;animation-delay:1.2s">
+ <path d="M830 400 H1130 Q1160 400 1160 430 V500 Q1160 530 1130 530 H990 L1050 590 L940 530 H830 Q800 530 800 500 V430 Q800 400 830 400Z" fill="rgba(0,8,22,.55)"/>
+ <path class="b" d="M830 400 H1130 Q1160 400 1160 430 V500 Q1160 530 1130 530 H990 L1050 590 L940 530 H830 Q800 530 800 500 V430 Q800 400 830 400Z"/>
+ <text class="t" x="980" y="478">파도가 온다! (핑크)</text></g></g>
+</svg>
