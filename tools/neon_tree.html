@@ -1,0 +1,166 @@
+<!doctype html>
+<meta charset="utf-8">
+<body style="margin:0;background:#000;overflow:hidden"><canvas id="c" width="1280" height="720"></canvas>
+<script>
+// Neon Christmas tree, 25.6 s.  window.drawFrame(t) renders the frame at time t (seconds), deterministic.
+const W = 1280, H = 720, DUR = 25.6;
+const cv = document.getElementById('c'), g = cv.getContext('2d');
+const CX = 640, TOP = 120, BOT = 620, HALF = 190, TURNS = 5.5;
+
+let seed = 7;
+const rnd = () => (seed = (seed * 1664525 + 1013904223) >>> 0) / 4294967296;
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const ease = x => (x = clamp(x), x * x * (3 - 2 * x));
+const NEON = [180, 205, 265, 300, 330];                       // cyan, blue, violet, magenta, pink
+const hueAt = u => { const f = clamp(u) * (NEON.length - 1), i = Math.min(NEON.length - 2, f | 0); return NEON[i] + (NEON[i + 1] - NEON[i]) * (f - i); };
+
+// point on a spiral strand: u 0..1 top->bottom
+function spiral(u, phase) {
+  const a = phase + u * TURNS * Math.PI * 2;
+  const r = HALF * (0.04 + 0.96 * u);
+  return { x: CX + r * Math.cos(a), y: TOP + u * (BOT - TOP) + 10 * Math.sin(a), z: Math.sin(a) };
+}
+
+// ---- pre-generated elements ----
+const sparks = [];                       // {u, phase, appear, size, hue, tw, off}
+function addLayer(n, phase, t0, t1, drawT0, drawT1, size) {
+  for (let i = 0; i < n; i++) {
+    const u = (i + rnd() * 0.8) / n;
+    // appears when the head of its strand reaches it, plus a little delay
+    const appear = drawT0 + u * (drawT1 - drawT0) + rnd() * 0.3;
+    sparks.push({ u, phase, appear: Math.max(appear, t0), size: size * (0.6 + rnd() * 0.8), hue: hueAt(u) + (rnd() - 0.5) * 24, tw: 1.5 + rnd() * 2.5, off: rnd() * 6.28, jx: (rnd() - 0.5) * 10, jy: (rnd() - 0.5) * 10 });
+  }
+}
+addLayer(34, 0, 0.5, 9, 0.5, 8.5, 7);                 // strand 1: few sparkles
+addLayer(46, Math.PI, 6, 13, 6, 12.5, 7);              // strand 2 (magenta side)
+const fills = [];                                      // small filler sparkles inside the silhouette
+for (let i = 0; i < 150; i++) {
+  const u = Math.sqrt(rnd()), r = HALF * (0.04 + 0.96 * u) * (rnd() * 2 - 1) * 0.95;
+  fills.push({ x: CX + r, y: TOP + u * (BOT - TOP) + (rnd() - 0.5) * 16, appear: 12 + (i / 150) * 5 + rnd() * 0.5, size: 2.5 + rnd() * 3.5, hue: hueAt(u) + (rnd() - 0.5) * 30, tw: 2 + rnd() * 3, off: rnd() * 6.28 });
+}
+const balls = [];                                      // neon ornaments
+for (let i = 0; i < 14; i++) {
+  const u = 0.18 + 0.78 * (i + rnd() * 0.6) / 14, a = rnd() * 2 - 1, r = HALF * (0.04 + 0.96 * u) * a * 0.82;
+  balls.push({ x: CX + r, y: TOP + u * (BOT - TOP) + 14, appear: 12.5 + i * 0.35, hue: [330, 180, 50, 290, 150][i % 5], rad: 7 + rnd() * 3, tw: 1 + rnd() * 1.5, off: rnd() * 6.28 });
+}
+const snow = [];                                       // falling neon snow, starts at ~17 s
+for (let i = 0; i < 130; i++) snow.push({ x: rnd() * W, y0: rnd() * (H + 80), v: 25 + rnd() * 60, sw: 8 + rnd() * 20, ph: rnd() * 6.28, size: 1.5 + rnd() * 3, hue: NEON[(rnd() * 5) | 0], appear: 17 + (i / 130) * 4 });
+const burst = [];                                      // finale firework
+for (let i = 0; i < 260; i++) {
+  const a = rnd() * 6.28, sp = 60 + rnd() * 520, oy = TOP + rnd() * (BOT - TOP), u = (oy - TOP) / (BOT - TOP);
+  burst.push({ x0: CX + (rnd() * 2 - 1) * HALF * u, y0: oy, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp - 80, size: 2 + rnd() * 6, hue: hueAt(rnd()) , tw: 3 + rnd() * 4, off: rnd() * 6.28, life: 2.6 + rnd() * 1.6, delay: rnd() * 0.5 });
+}
+
+// ---- drawing helpers (additive glow) ----
+function glow(x, y, r, hue, a) {
+  if (a <= 0.003) return;
+  const gr = g.createRadialGradient(x, y, 0, x, y, r);
+  gr.addColorStop(0, `hsla(${hue},100%,60%,${a})`);
+  gr.addColorStop(0.35, `hsla(${hue},100%,55%,${a * 0.35})`);
+  gr.addColorStop(1, `hsla(${hue},100%,50%,0)`);
+  g.fillStyle = gr; g.beginPath(); g.arc(x, y, r, 0, 6.2832); g.fill();
+}
+function star(x, y, s, hue, a, rot = 0) {              // 4-point sparkle with neon halo + white core
+  if (a <= 0.01 || s < 0.3) return;
+  glow(x, y, s * 3.2, hue, a * 0.55);
+  g.save(); g.translate(x, y); g.rotate(rot);
+  const L = s * 2.6, w = s * 0.16;
+  g.fillStyle = `hsla(${hue},100%,${58 + 14 * a}%,${a})`;
+  g.beginPath(); g.moveTo(0, -L); g.quadraticCurveTo(w, -w, L, 0); g.quadraticCurveTo(w, w, 0, L); g.quadraticCurveTo(-w, w, -L, 0); g.quadraticCurveTo(-w, -w, 0, -L); g.fill();
+  g.rotate(Math.PI / 4); g.scale(0.55, 0.55);
+  g.beginPath(); g.moveTo(0, -L); g.quadraticCurveTo(w, -w, L, 0); g.quadraticCurveTo(w, w, 0, L); g.quadraticCurveTo(-w, w, -L, 0); g.quadraticCurveTo(-w, -w, 0, -L); g.fill();
+  g.restore();
+  glow(x, y, s * 0.55, 0, a * 0.7);
+}
+const pop = (t, t0, d = 0.5) => ease((t - t0) / d);       // 0..1 fade/scale-in
+const tw = (t, f, o) => 0.62 + 0.38 * Math.sin(t * f + o);
+
+window.drawFrame = function (t) {
+  g.globalCompositeOperation = 'source-over';
+  g.fillStyle = '#02010a'; g.fillRect(0, 0, W, H);
+  g.globalCompositeOperation = 'lighter';
+
+  g.globalAlpha = 1 - ease((t - 21.2) / 1.8);             // tree dissolves into the finale burst
+  // soft ambient aura of the tree grows with time
+  const aura = ease((t - 6) / 14) * 0.22;
+  for (let i = 0; i < 3; i++) glow(CX, TOP + (BOT - TOP) * (0.45 + i * 0.12), 250 - i * 40, [290, 200, 320][i], aura * (0.7 - i * 0.15));
+
+  // strand comet heads + faint trail line
+  const heads = [
+    { phase: 0, t0: 0.5, t1: 8.5, hue0: 185 },
+    { phase: Math.PI, t0: 6, t1: 12.5, hue0: 305 },
+  ];
+  for (const s of heads) {
+    const p = ease((t - s.t0) / (s.t1 - s.t0));
+    if (p <= 0) continue;
+    const trailA = 0.35 * (p < 1 ? 1 : clamp(1 - (t - s.t1) / 6)) + 0.1;
+    g.lineCap = 'round';
+    for (let k = 0; k < 140; k++) {
+      const u0 = (k / 140) * p, u1 = ((k + 1) / 140) * p;
+      const A = spiral(u0, s.phase), B = spiral(u1, s.phase);
+      const front = 0.55 + 0.45 * (A.z * 0.5 + 0.5);
+      g.strokeStyle = `hsla(${hueAt(u0)},100%,60%,${trailA * front * (0.25 + 0.75 * (k / 140))})`;
+      g.lineWidth = 1.4 * front + 0.4;
+      g.beginPath(); g.moveTo(A.x, A.y); g.lineTo(B.x, B.y); g.stroke();
+    }
+    if (p < 1) { const h = spiral(p, s.phase); glow(h.x, h.y, 38, hueAt(p), 0.9); glow(h.x, h.y, 10, 0, 0.9); }
+  }
+
+  // spiral sparkles
+  for (const s of sparks) {
+    const k = pop(t, s.appear, 0.6); if (!k) continue;
+    const q = spiral(s.u, s.phase), front = 0.5 + 0.5 * (q.z * 0.5 + 0.5);
+    star(q.x + s.jx, q.y + s.jy, s.size * k * (0.7 + 0.3 * front), s.hue, k * tw(t, s.tw, s.off) * front, 0.3 * Math.sin(t * 0.8 + s.off));
+  }
+  // fillers
+  for (const f of fills) { const k = pop(t, f.appear, 0.7); if (k) star(f.x, f.y, f.size * k, f.hue, k * tw(t, f.tw, f.off) * 0.9); }
+
+  // ornaments
+  for (const b of balls) {
+    const k = pop(t, b.appear, 0.6); if (!k) continue;
+    const a = k * (0.75 + 0.25 * Math.sin(t * b.tw * 2 + b.off));
+    glow(b.x, b.y, b.rad * 5, b.hue, a * 0.55);
+    glow(b.x, b.y, b.rad * 1.6, b.hue, a);
+    g.fillStyle = `hsla(${b.hue},100%,85%,${a})`; g.beginPath(); g.arc(b.x, b.y, b.rad * 0.55 * k, 0, 6.2832); g.fill();
+  }
+
+  // top star
+  const ts = pop(t, 17, 1.2);
+  if (ts) {
+    const pulse = 1 + 0.12 * Math.sin(t * 3);
+    glow(CX, TOP - 8, 110 * ts * pulse, 50, 0.55 * ts);
+    star(CX, TOP - 8, 20 * ts * pulse, 50, ts, t * 0.5);
+    star(CX, TOP - 8, 12 * ts, 330, ts * 0.8, -t * 0.7);
+  }
+
+  // base / trunk glow
+  const gb = pop(t, 17.5, 1.5);
+  if (gb) {
+    for (let i = -3; i <= 3; i++) glow(CX + i * 55, BOT + 28, 80, hueAt(0.5 + i / 8), 0.28 * gb);
+    glow(CX, BOT + 40, 260, 290, 0.22 * gb);
+    g.fillStyle = `hsla(300,100%,75%,${0.65 * gb})`; g.fillRect(CX - 5, BOT + 6, 10, 38);
+    glow(CX, BOT + 25, 40, 300, 0.4 * gb);
+  }
+
+  g.globalAlpha = 1;
+  // neon snow
+  for (const f of snow) {
+    const k = pop(t, f.appear, 1); if (!k) continue;
+    const el = t - 17, y = (f.y0 + f.v * el) % (H + 80) - 40, x = f.x + Math.sin(el * 0.8 + f.ph) * f.sw;
+    star(x, y, f.size * k, f.hue, 0.8 * k * tw(t, 2.5, f.ph));
+  }
+
+  // finale burst
+  const tb = t - 21;
+  if (tb > 0) {
+    for (const p of burst) {
+      const e = tb - p.delay; if (e < 0) continue;
+      const l = e / p.life; if (l > 1) continue;
+      const drag = 1 - Math.exp(-e * 1.6) , x = p.x0 + p.vx * drag * 0.6, y = p.y0 + p.vy * drag * 0.6 + 70 * e * e;
+      star(x, y, p.size * (1 - l * 0.5), p.hue, (1 - l) * tw(t, p.tw, p.off) + 0.1 * (1 - l));
+    }
+    glow(CX, (TOP + BOT) / 2, 340 * ease(tb / 0.4), 300, 0.35 * (1 - ease(tb / 2.2)));
+  }
+};
+window.DUR = DUR;
+</script>
