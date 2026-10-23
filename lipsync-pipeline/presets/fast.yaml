@@ -1,0 +1,10 @@
+# fast: 입 영역만 다시 그리고 나머지는 원본 유지 (MuseTalk 계열). 후보 1개.
+# 주의: 이름과 달리 샘플링 스텝/정밀도 같은 품질 설정은 줄이지 않는다 (속도 최적화 금지 원칙).
+model: musetalk
+takes: 1
+paste_mode: mouth
+emotion: false
+restore: true
+upscale: true
+interpolate: true
+fill_missing: score

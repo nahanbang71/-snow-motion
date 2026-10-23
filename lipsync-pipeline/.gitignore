@@ -1,0 +1,38 @@
+# 작업 산출물 / 대용량 파일
+work/
+output/
+*.zip
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.webm
+*.wav
+*.mp3
+*.flac
+*.m4a
+*.aac
+*.ogg
+
+# 모델 / 가중치
+checkpoints/
+weights/
+models_cache/
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.onnx
+*.bin
+
+# 파이썬
+__pycache__/
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+build/
+dist/
+
+# Colab / 노트북
+.ipynb_checkpoints/
