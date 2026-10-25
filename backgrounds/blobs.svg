@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice">
+<style>.d{animation:d var(--t) ease-in-out infinite;animation-delay:var(--d)}@keyframes d{50%{transform:translate(var(--x),var(--y)) scale(1.2)}}</style>
+<defs><filter id="bb" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="90"/></filter></defs>
+<rect width="1920" height="1080" fill="#f0e8ff"/>
+<g filter="url(#bb)"><circle class="d" style="--x:150px;--y:44px;--t:9s;--d:0.0s" cx="1128" cy="150" r="295" fill="#ff5a8a"/><circle class="d" style="--x:-151px;--y:122px;--t:10s;--d:-1.5s" cx="812" cy="174" r="303" fill="#ffb04a"/><circle class="d" style="--x:-224px;--y:-218px;--t:11s;--d:-3.0s" cx="1102" cy="610" r="355" fill="#4adfff"/><circle class="d" style="--x:6px;--y:-178px;--t:12s;--d:-4.5s" cx="930" cy="858" r="369" fill="#7a5aff"/><circle class="d" style="--x:-164px;--y:-227px;--t:13s;--d:-6.0s" cx="827" cy="181" r="336" fill="#5affb0"/><circle class="d" style="--x:-79px;--y:-93px;--t:14s;--d:-7.5s" cx="864" cy="660" r="256" fill="#ff8aff"/><circle class="d" style="--x:395px;--y:250px;--t:15s;--d:-9.0s" cx="1167" cy="361" r="271" fill="#ffe14a"/><circle class="d" style="--x:-98px;--y:189px;--t:16s;--d:-10.5s" cx="1618" cy="210" r="270" fill="#3a8aff"/></g>
+</svg>
