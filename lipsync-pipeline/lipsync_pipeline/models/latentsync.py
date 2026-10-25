@@ -1,8 +1,10 @@
-"""LatentSync 어댑터 (스켈레톤).
+"""LatentSync 어댑터.
 
-TODO(미검증): 이 환경에는 GPU 가 없어 실행해 보지 못했다. 아래 CLI 형태는 LatentSync 공식 README 의
-`python -m scripts.inference ...` 예시를 기억에 의존해 옮긴 것이므로, 설치한 버전의 README/inference.sh 와
-인자 이름을 반드시 대조할 것.
+검증 상태: Colab(GPU)에서 실제로 실행해 본 유일한 어댑터다(README 의 "검증 범위", Colab 실측 커밋 기록 기준).
+설치 절차는 README 의 Colab 실측 교훈(Python 3.10 가상환경, 체크포인트 다운로드 인자, fps 맞춤)을 따른다.
+TODO(미검증): 설치한 버전에 따라 `--unet_config_path` 의 설정 파일 이름이 다를 수 있으므로 README/inference.sh 와
+대조할 것. 얼굴이 화면을 꽉 채우는 크롭은 블러 여백을 붙여 넣고 결과에서 잘라 되돌린다(아래 pad_video/crop_back, Colab 실측).
+precision / offload 를 넘기는 공식 인자가 있는지는 확인하지 못했다.
 
 사용법
   1) git clone https://github.com/bytedance/LatentSync  && cd LatentSync && pip install -r requirements.txt
@@ -12,7 +14,7 @@ TODO(미검증): 이 환경에는 GPU 가 없어 실행해 보지 못했다. 아
 
 입출력 규격은 base.py 상단 참고. LatentSync 는 자체 얼굴 검출/정렬을 하고 256px(v1.5) 또는 512px(v1.6) 모델이므로
 출력 해상도가 입력 크롭과 다르면 TODO 부분에서 리사이즈해야 한다.
-offload: TODO — 공식 코드에 offload 옵션이 없으면 diffusers 파이프라인에
+offload: 미확인 — 공식 코드에 offload 옵션이 없으면 diffusers 파이프라인에
   `pipeline.enable_model_cpu_offload()` / `enable_sequential_cpu_offload()` 를 넣는 패치가 필요하다.
 """
 import dataclasses
@@ -71,12 +73,12 @@ class LatentSyncModel(BaseLipSyncModel):
     def build_command(self, req: LipSyncRequest, repo: Path) -> list:
         o = req.options
         cmd = [py(), "-m", "scripts.inference",
-               "--unet_config_path", "configs/unet/stage2.yaml",       # TODO: 버전에 맞는 설정 파일
+               "--unet_config_path", "configs/unet/stage2.yaml",       # 버전에 맞는 설정 파일인지 확인
                "--inference_ckpt_path", "checkpoints/latentsync_unet.pt",
                "--inference_steps", o.steps, "--guidance_scale", o.guidance,
                "--seed", o.seed,
                "--video_path", req.video, "--audio_path", req.audio, "--video_out_path", req.output]
-        # TODO: precision / offload 를 넘기는 공식 인자가 없다면 환경변수나 패치로 전달
+        # precision / offload: 공식 인자가 없다면 환경변수나 패치로 전달 (미확인)
         return [str(c) for c in cmd]
 
     def check_environment(self, opts):

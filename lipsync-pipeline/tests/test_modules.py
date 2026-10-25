@@ -358,3 +358,41 @@ def test_conform_to_source_fixes_fps_and_frame_count(tmp_path):
     a, b = video_stream_info(src), video_stream_info(out)
     assert b["frames"] == a["frames"] == 55
     assert abs(b["fps"] - 24) < 1e-3
+
+
+# ---- mediapipe 호환 / 손 검출 판정 ------------------------------------------------
+
+def test_mediapipe_without_solutions_falls_back_to_haar(monkeypatch):
+    """mediapipe 1.x / 0.10.30+ 처럼 mp.solutions 가 없으면 auto 는 Haar 로 대체하고 mediapipe 지정은 한국어 오류."""
+    import sys, types
+    import pytest
+    from lipsync_pipeline import face as facemod
+    from lipsync_pipeline.utils import PipelineError
+
+    monkeypatch.setitem(sys.modules, "mediapipe", types.ModuleType("mediapipe"))
+    class FakeHaar:                                       # Haar 모델 파일 유무와 무관하게 대체 경로만 검사
+        pass
+    monkeypatch.setattr(facemod, "HaarDetector", FakeHaar)
+    assert isinstance(facemod.make_detector("auto"), FakeHaar)
+    with pytest.raises(PipelineError, match="mp.solutions"):
+        facemod.make_detector("mediapipe")
+
+
+def test_hand_over_mouth_overlap(monkeypatch):
+    """_hand_over: 손 랜드마크 bbox 가 입 bbox 와 겹칠 때만 True."""
+    import numpy as np
+    from types import SimpleNamespace as NS
+    from lipsync_pipeline import face as facemod
+
+    det = facemod.MediaPipeDetector.__new__(facemod.MediaPipeDetector)
+    def hands_at(x0, y0, x1, y1):
+        lm = [NS(x=x0, y=y0), NS(x=x1, y=y1)]            # 정규화 좌표
+        return NS(process=lambda rgb: NS(multi_hand_landmarks=[NS(landmark=lm)]))
+    frame = np.zeros((100, 200, 3), np.uint8)
+    mouth = (80.0, 60.0, 40.0, 20.0)                     # x, y, w, h (픽셀)
+    det._hands = hands_at(0.45, 0.55, 0.65, 0.85)        # 입과 겹침
+    assert det._hand_over(frame, mouth) is True
+    det._hands = hands_at(0.0, 0.0, 0.2, 0.3)            # 멀리 떨어짐
+    assert det._hand_over(frame, mouth) is False
+    det._hands = None                                    # Hands 초기화 실패 시
+    assert det._hand_over(frame, mouth) is False

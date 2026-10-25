@@ -10,13 +10,13 @@ requires-python = ">=3.10"
 dependencies = [
     "numpy>=1.24",
     "scipy>=1.10",
-    "opencv-python-headless>=4.8",
+    "opencv-python-headless>=4.8,<5",   # OpenCV 5 는 Haar 모델 파일(cv2/data)을 포함하지 않아 얼굴 검출 대체 경로가 깨진다
     "pyyaml>=6",
 ]
 
 [project.optional-dependencies]
-# 얼굴 검출(mediapipe). 없으면 OpenCV Haar 로 대체됨
-face = ["mediapipe>=0.10"]
+# 얼굴 검출(mediapipe, Python <= 3.12). 없으면 OpenCV Haar 로 대체됨
+face = ["mediapipe==0.10.21"]   # 0.10.30 이상/1.x 는 mp.solutions 가 없어 동작하지 않음 (Python 3.12 이하)
 # 보컬 분리 (torch 는 환경에 맞게 따로 설치하는 것을 권장)
 separate = ["demucs>=4.0"]
 dev = ["pytest>=7"]

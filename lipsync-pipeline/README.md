@@ -13,7 +13,7 @@
 > - **공식 저장소 코드를 읽어 대조함(실행은 안 함)**: MuseTalk / InfiniteTalk / Wan2.2-S2V / CodeFormer / Real-ESRGAN / RIFE(Practical-RIFE) 어댑터.
 >   각 어댑터 파일 상단 주석에 확인한 저장소 커밋과 파일·줄 번호가 있습니다. 저장소가 바뀌면 줄 번호는 어긋날 수 있으니 커밋 해시로 찾으세요.
 > - **Colab 에서 실제로 실행해 본 것**: LatentSync 어댑터(및 그 설치 절차)뿐입니다.
-> - **한 번도 실행해 보지 못함**: 위 6개 모델의 GPU 실행 자체, SyncNet 점수(스켈레톤), mediapipe 기반 각도/눈 감김/손 검출, RunPod·Windows 설치 스크립트.
+> - **한 번도 실행해 보지 못함**: 위 6개 모델의 GPU 실행 자체, SyncNet 점수(스켈레톤), 실제 손 영상에서의 손 검출, RunPod 설치 스크립트. (mediapipe 얼굴 검출은 `mediapipe==0.10.21`/Python 3.12 에서 초기화까지 확인, 손 겹침 판정 로직은 테스트로 확인)
 >   코드의 `TODO(미검증)` 표시를 확인하세요.
 
 ## 파이프라인
@@ -46,7 +46,7 @@ prepare → separate → analyze → scan → emotion → segments → lipsync �
 
 ### 0. 설치
 ```powershell
-git clone https://github.com/nahanbang71/-snow-motion ; cd -snow-motion\lipsync-pipeline
+git clone -b claude/adapter-audit https://github.com/nahanbang71/-snow-motion ; cd -snow-motion\lipsync-pipeline   # 기본 브랜치에는 lipsync-pipeline 이 없으니 브랜치를 지정
 .\scripts\setup_windows.ps1            # 가상환경 + numpy/scipy/opencv/pyyaml + mediapipe + CPU torch/demucs
 .\.venv\Scripts\Activate.ps1
 python -m pytest -q                    # (선택) CPU 테스트

@@ -37,7 +37,7 @@ def mouth_occlusion_score(frame: np.ndarray, mouth: Box, face: Box) -> float:
 
     피부색 기준은 같은 얼굴의 양 볼 영역에서 스스로 보정한다(피부톤/조명에 적응).
     입 안쪽/입술은 일부러 제외하므로 입을 크게 벌려도 점수가 오르지 않는다.
-    한계: 손은 피부색이라 이 지표로는 못 잡는다(mediapipe 손 검출 사용 시 hand_overlap 으로 보완, TODO 미검증).
+    한계: 손은 피부색이라 이 지표로는 못 잡는다(mediapipe 손 검출 사용 시 hand_overlap 으로 보완).
     머리카락·마이크·마스크처럼 색이 다른 가림 위주로 탐지한다."""
     H, W = frame.shape[:2]
     fx, fy, fw, fh = face
@@ -107,13 +107,16 @@ class HaarDetector:
 
 
 class MediaPipeDetector:
-    """TODO(검증 필요): mediapipe FaceMesh 로 얼굴 전체/입술 랜드마크 bbox 를 구한다."""
+    """mediapipe FaceMesh 로 얼굴 전체/입술 랜드마크 bbox 를 구한다. mp.solutions 가 있는 mediapipe<=0.10.21 에서 초기화까지 확인함."""
 
     def __init__(self):
         try:
             import mediapipe as mp
         except ImportError as e:
             raise PipelineError("mediapipe 가 설치되어 있지 않습니다. `pip install mediapipe` 또는 --backend haar 를 사용하세요.") from e
+        if not hasattr(mp, "solutions"):
+            raise PipelineError("설치된 mediapipe 에는 mp.solutions 가 없습니다(0.10.30 이상/1.x 에서 삭제됨). "
+                                "`pip install mediapipe==0.10.21` (Python 3.12 이하) 또는 --backend haar 를 사용하세요.")
         self._mesh = mp.solutions.face_mesh.FaceMesh(static_image_mode=False, max_num_faces=1, refine_landmarks=True)
         self._lips = sorted({i for pair in mp.solutions.face_mesh.FACEMESH_LIPS for i in pair})
         try:
@@ -146,7 +149,7 @@ class MediaPipeDetector:
         return FaceDet(face, mouth, 1.0, yaw, pitch, roll, eye_closed, hand_overlap=self._hand_over(frame, mouth))
 
     def _hand_over(self, frame, mouth) -> bool:
-        """TODO(미검증): mediapipe Hands 로 손이 입 bbox 와 겹치는지."""
+        """mediapipe Hands 로 손이 입 bbox 와 겹치는지. 겹침 판정은 tests 에서 가짜 손으로 확인(실제 손 영상 검출은 미검증)."""
         if self._hands is None:
             return False
         h, w = frame.shape[:2]

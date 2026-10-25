@@ -24,7 +24,7 @@ set -euo pipefail
 
 ROOT="${ROOT:-/workspace}"                     # 저장소/가중치/가상환경을 둘 위치 (RunPod 볼륨)
 REPO_URL="${REPO_URL:-https://github.com/nahanbang71/-snow-motion}"
-REPO_BRANCH="${REPO_BRANCH:-}"                 # 비우면 기본 브랜치
+REPO_BRANCH="${REPO_BRANCH:-claude/adapter-audit}"   # 립싱크 코드가 있는 브랜치 (저장소 기본 브랜치에는 lipsync-pipeline 이 없다)
 REPO_DIR="${REPO_DIR:-$ROOT/-snow-motion}"
 ENV_FILE="${ENV_FILE:-$HOME/.lipsync_env}"
 TARGETS=("$@")
@@ -49,6 +49,7 @@ say "[2/4] 파이프라인 설치 ($REPO_URL)"
 if [ ! -d "$REPO_DIR" ]; then
   git clone -q ${REPO_BRANCH:+--branch "$REPO_BRANCH"} "$REPO_URL" "$REPO_DIR"
 fi
+[ -d "$REPO_DIR/lipsync-pipeline" ] || { echo "lipsync-pipeline 폴더가 없습니다. REPO_BRANCH=<립싱크 브랜치> 로 다시 실행하세요 (현재: ${REPO_BRANCH:-기본 브랜치})." >&2; exit 1; }
 (cd "$REPO_DIR/lipsync-pipeline" && pip install -q -e .)
 mkdir -p "$WORK_ROOT"
 
