@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 2000 1359">
+<defs>
+<radialGradient id="pg" gradientUnits="userSpaceOnUse" cx="0" cy="0" r="330"><stop offset="0" stop-color="#b01e6a"/><stop offset=".25" stop-color="#e0507a" stop-opacity=".85"/><stop offset=".6" stop-color="#f6b8c8" stop-opacity=".7"/><stop offset="1" stop-color="#fbd9e3" stop-opacity=".55"/></radialGradient>
+<radialGradient id="cg"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity=".2"/></radialGradient>
+<linearGradient id="lg" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#e58aa6" stop-opacity=".6"/><stop offset="1" stop-color="#fdeef2" stop-opacity=".35"/></linearGradient>
+<g id="f"><g fill="url(#pg)" stroke="#d9889e" stroke-opacity=".8" stroke-width="4">
+<ellipse cx="0" cy="-186" rx="156" ry="186" transform="rotate(0)"/><ellipse cx="0" cy="-186" rx="156" ry="186" transform="rotate(72)"/><ellipse cx="0" cy="-186" rx="156" ry="186" transform="rotate(144)"/><ellipse cx="0" cy="-186" rx="156" ry="186" transform="rotate(216)"/><ellipse cx="0" cy="-186" rx="156" ry="186" transform="rotate(288)"/>
+</g><g stroke="#b01e6a" stroke-opacity=".6" stroke-width="3" fill="none" stroke-linecap="round"><path d="M0 0Q-8 -120 0 -225" transform="rotate(0)"/><path d="M0 0Q-8 -120 0 -225" transform="rotate(36)"/><path d="M0 0Q-8 -120 0 -225" transform="rotate(72)"/><path d="M0 0Q-8 -120 0 -225" transform="rotate(108)"/><path d="M0 0Q-8 -120 0 -225" transform="rotate(144)"/><path d="M0 0Q-8 -120 0 -225" transform="rotate(180)"/><path d="M0 0Q-8 -120 0 -225" transform="rotate(216)"/><path d="M0 0Q-8 -120 0 -225" transform="rotate(252)"/><path d="M0 0Q-8 -120 0 -225" transform="rotate(288)"/><path d="M0 0Q-8 -120 0 -225" transform="rotate(324)"/></g>
+<circle r="36" fill="url(#cg)"/><circle cx="60" cy="0" r="4" fill="#fff" fill-opacity=".8"/><circle cx="16" cy="58" r="7" fill="#fff" fill-opacity=".8"/><circle cx="-51" cy="31" r="10" fill="#fff" fill-opacity=".8"/><circle cx="-44" cy="-41" r="4" fill="#fff" fill-opacity=".8"/><circle cx="28" cy="-53" r="7" fill="#fff" fill-opacity=".8"/><circle cx="59" cy="13" r="10" fill="#fff" fill-opacity=".8"/><circle cx="3" cy="60" r="4" fill="#fff" fill-opacity=".8"/><circle cx="-57" cy="19" r="7" fill="#fff" fill-opacity=".8"/></g>
+<g id="l"><path d="M0 0C-70 -120 -30 -260 130 -330 150 -170 90 -40 0 0Z" fill="url(#lg)" stroke="#d9889e" stroke-opacity=".5" stroke-width="3"/><path d="M0 0C20 -100 70 -200 125 -320" stroke="#c0527a" stroke-opacity=".5" stroke-width="5" fill="none"/></g>
+</defs>
+<rect width="2000" height="1359" fill="#fff"/>
+<use href="#l" xlink:href="#l" transform="translate(850 420) rotate(-5) scale(1.1)"/>
+<use href="#l" xlink:href="#l" transform="translate(880 440) rotate(25) scale(1.0)"/>
+<use href="#l" xlink:href="#l" transform="translate(400 420) rotate(-20) scale(.55)"/>
+<use href="#l" xlink:href="#l" transform="translate(430 420) rotate(15) scale(.5)"/>
+<use href="#l" xlink:href="#l" transform="translate(1600 290) rotate(-10) scale(.5)"/>
+<use href="#l" xlink:href="#l" transform="translate(1700 280) rotate(55) scale(.45)"/>
+<use href="#l" xlink:href="#l" transform="translate(300 880) rotate(150) scale(.35)"/>
+<use href="#f" xlink:href="#f" transform="translate(280 580) scale(.95) rotate(10)"/>
+<use href="#f" xlink:href="#f" transform="translate(1270 490) scale(1.0) rotate(-12)"/>
+<use href="#f" xlink:href="#f" transform="translate(770 870) scale(1.35) rotate(20)"/>
+</svg>
