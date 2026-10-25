@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 640">
+<style>.s{transform:scale(0);animation:in .8s cubic-bezier(.2,1.5,.4,1) forwards;animation-delay:var(--d)}
+.b{animation:flip 3.2s ease-in-out infinite;animation-delay:calc(var(--d) + 1.6s)}
+@keyframes in{to{transform:scale(1)}}
+@keyframes flip{0%,60%,100%{transform:scale(1,1)}75%{transform:scale(0,1.05)}90%{transform:scale(1.08,.95)}}</style>
+<defs></defs>
+<g transform="translate(170 320)"><g class="s" style="--d:0.0s"><g class="b" style="--d:0.0s" fill="#111"><path d="M0 -160C10 -90 135 -50 135 50C135 120 70 130 25 100C25 130 40 150 70 160L-70 160C-40 150 -25 130 -25 100C-70 130 -135 120 -135 50C-135 -50 -10 -90 0 -160Z"/></g></g></g>
+<g transform="translate(483 320)"><g class="s" style="--d:0.35s"><g class="b" style="--d:0.35s" fill="#a01818"><path d="M0 -160C40 -100 100 -40 135 0C100 40 40 100 0 160C-40 100 -100 40 -135 0C-100 -40 -40 -100 0 -160Z"/></g></g></g>
+<g transform="translate(796 320)"><g class="s" style="--d:0.7s"><g class="b" style="--d:0.7s" fill="#111"><circle cx="0" cy="-85" r="70"/><circle cx="-72" cy="40" r="70"/><circle cx="72" cy="40" r="70"/><circle cy="10" r="45"/><path d="M-10 20C-10 100 -30 140 -70 160L70 160C30 140 10 100 10 20Z"/></g></g></g>
+<g transform="translate(1109 320)"><g class="s" style="--d:1.0499999999999998s"><g class="b" style="--d:1.0499999999999998s" fill="#a01818"><path d="M0 160C-30 80 -135 40 -135 -55C-135 -125 -60 -170 0 -100C60 -170 135 -125 135 -55C135 40 30 80 0 160Z"/></g></g></g>
+
+</svg>
