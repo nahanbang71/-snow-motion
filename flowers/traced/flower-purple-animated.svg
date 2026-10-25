@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<style>
+.all{transform-origin:256px 256px;animation:spin 24s linear infinite}
+.b{transform-origin:256px 256px;animation:breathe 4s ease-in-out 2s infinite}
+.p{transform-origin:256px 256px;transform:scale(0);animation:bloom 1.2s cubic-bezier(.2,1.4,.4,1) forwards}
+.v{opacity:0;animation:fade .8s ease forwards}
+.c{transform-origin:256px 256px;transform:scale(0);animation:bloom .8s cubic-bezier(.2,1.6,.4,1) 1.4s forwards,pulse 2s ease-in-out 2.4s infinite}
+@keyframes bloom{to{transform:scale(1)}}
+@keyframes fade{to{opacity:1}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes breathe{50%{transform:scale(1.06)}}
+@keyframes pulse{50%{transform:scale(1.15)}}
+</style>
+<g class="all"><g class="b">
+<g transform="rotate(0 256 256)"><g class="p" style="animation-delay:0.0s"><path d="M256 268C190 232 138 142 152 62C160 8 214 -4 256 22C298 -4 352 8 360 62C374 142 322 232 256 268Z" fill="#b399cc"/>
+<g stroke="#7d63a0" stroke-width="17" stroke-linecap="round" fill="none" class="v" style="animation-delay:0.8s"><path d="M256 52V158"/><path d="M212 96L222 132"/><path d="M298 96L290 132"/></g></g></g>
+<g transform="rotate(72 256 256)"><g class="p" style="animation-delay:0.25s"><path d="M256 268C190 232 138 142 152 62C160 8 214 -4 256 22C298 -4 352 8 360 62C374 142 322 232 256 268Z" fill="#7d6299"/>
+<g stroke="#5c4876" stroke-width="17" stroke-linecap="round" fill="none" class="v" style="animation-delay:1.05s"><path d="M256 52V158"/><path d="M212 96L222 132"/><path d="M298 96L290 132"/></g></g></g>
+<g transform="rotate(144 256 256)"><g class="p" style="animation-delay:0.5s"><path d="M256 268C190 232 138 142 152 62C160 8 214 -4 256 22C298 -4 352 8 360 62C374 142 322 232 256 268Z" fill="#b399cc"/>
+<g stroke="#7d63a0" stroke-width="17" stroke-linecap="round" fill="none" class="v" style="animation-delay:1.3s"><path d="M256 52V158"/><path d="M212 96L222 132"/><path d="M298 96L290 132"/></g></g></g>
+<g transform="rotate(216 256 256)"><g class="p" style="animation-delay:0.75s"><path d="M256 268C190 232 138 142 152 62C160 8 214 -4 256 22C298 -4 352 8 360 62C374 142 322 232 256 268Z" fill="#5c4876"/>
+<g stroke="#3e3052" stroke-width="17" stroke-linecap="round" fill="none" class="v" style="animation-delay:1.55s"><path d="M256 52V158"/><path d="M212 96L222 132"/><path d="M298 96L290 132"/></g></g></g>
+<g transform="rotate(288 256 256)"><g class="p" style="animation-delay:1.0s"><path d="M256 268C190 232 138 142 152 62C160 8 214 -4 256 22C298 -4 352 8 360 62C374 142 322 232 256 268Z" fill="#7d6299"/>
+<g stroke="#5c4876" stroke-width="17" stroke-linecap="round" fill="none" class="v" style="animation-delay:1.8s"><path d="M256 52V158"/><path d="M212 96L222 132"/><path d="M298 96L290 132"/></g></g></g>
+<circle class="c" cx="256" cy="256" r="53" fill="#f4d35a"/>
+</g></g>
+</svg>
