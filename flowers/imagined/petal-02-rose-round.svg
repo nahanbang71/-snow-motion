@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<style>
+.pop{transform:scale(0);animation:pop .9s cubic-bezier(.2,1.4,.4,1) forwards}
+.s{opacity:0;animation:fade .5s ease forwards}
+.spin{animation:spin 50s linear infinite}
+.tw{animation:tw 2.4s ease-in-out infinite}
+.pulse{animation:pulse 2.4s ease-in-out infinite}
+.sway{transform-origin:256px 470px;animation:sw 4s ease-in-out 1.6s infinite}
+@keyframes pop{to{transform:scale(1)}}
+@keyframes fade{to{opacity:1}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes tw{50%{opacity:.25}}
+@keyframes pulse{50%{transform:scale(1.12)}}
+@keyframes sw{50%{transform:rotate(3deg)}}
+</style>
+<defs><linearGradient id="g" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#c4183c"/><stop offset="1" stop-color="#ff8a8a"/></linearGradient></defs>
+<g class="sway"><g transform="translate(256 470)"><g class="pop" style="transform-origin:0 0;animation-duration:1.4s"><path d="M0 0C55.0 -95.0 165.0 -209.00000000000003 143.0 -304.0C121.00000000000001 -387.6 -121.00000000000001 -387.6 -143.0 -304.0C-165.0 -209.00000000000003 -55.0 -95.0 0 0Z" fill="url(#g)"/><g class="s" style="animation-delay:1s"><path d="M0 -10Q0.0 -140 0.0 -300" stroke="#8e1030" stroke-opacity=".55" stroke-width="7" stroke-linecap="round" fill="none"/><path d="M0 -10Q-12.0 -140 -40.0 -230" stroke="#8e1030" stroke-opacity=".55" stroke-width="7" stroke-linecap="round" fill="none"/><path d="M0 -10Q12.0 -140 40.0 -230" stroke="#8e1030" stroke-opacity=".55" stroke-width="7" stroke-linecap="round" fill="none"/><path d="M0 -10Q-22.5 -140 -75.0 -150" stroke="#8e1030" stroke-opacity=".55" stroke-width="7" stroke-linecap="round" fill="none"/><path d="M0 -10Q22.5 -140 75.0 -150" stroke="#8e1030" stroke-opacity=".55" stroke-width="7" stroke-linecap="round" fill="none"/></g></g>
+<g class="s" style="animation-delay:1.6s"><circle class="tw" cx="-30" cy="-200" r="5" fill="#fff"/><circle class="tw" style="animation-delay:.8s" cx="45" cy="-270" r="4" fill="#fff"/><circle class="tw" style="animation-delay:1.5s" cx="10" cy="-120" r="3.5" fill="#fff"/></g></g></g>
+</svg>
