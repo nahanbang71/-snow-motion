@@ -7,10 +7,11 @@ KEYWORDS = {
     'AMP': '&', 'AMPERSAND': '&', 'AT': '@', 'PERIOD': '.', 'DOT': '.', 'HYPHEN': '-', 'DASH': '-', 'COLON': ':',
     'SEMI': ';', 'SEMICOLON': ';', 'SLASH': '/', 'HASH': '#', 'PERCENT': '%', 'PLUS': '+', 'EQUALS': '=',
     'STAR': '*', 'UNDERSCORE': '_', 'LPAREN': '(', 'RPAREN': ')', 'QUOTE': '"', 'DQUOTE': '"', 'SPACE': ' ',
+    'DOLLAR': '$', 'EQUAL': '=', 'MINUS': '-', 'TILDE': '~', 'WON': '\u20a9',
 }
 PSNAMES = {',': 'comma', "'": 'quotesingle', '!': 'exclam', '?': 'question', '&': 'ampersand', '@': 'at', '.': 'period',
            '-': 'hyphen', ':': 'colon', ';': 'semicolon', '/': 'slash', '#': 'numbersign', '%': 'percent', '+': 'plus',
-           '=': 'equal', '*': 'asterisk', '_': 'underscore', '(': 'parenleft', ')': 'parenright', '"': 'quotedbl',
+           '=': 'equal', '$': 'dollar', '~': 'asciitilde', '\u20a9': 'uni20A9', '*': 'asterisk', '_': 'underscore', '(': 'parenleft', ')': 'parenright', '"': 'quotedbl',
            '0': 'zero', '1': 'one', '2': 'two', '3': 'three', '4': 'four', '5': 'five', '6': 'six', '7': 'seven',
            '8': 'eight', '9': 'nine'}
 LETTERS = [chr(c) for c in range(ord('A'), ord('Z') + 1)]
@@ -39,7 +40,7 @@ def glyph_name(ch):
 def clean_family(raw):
     """'bold_calligraphy_alphabet_30chars_white_1024x1024' -> 'Bold Calligraphy Alphabet'"""
     s = re.sub(r'[_\-]+', ' ', raw)
-    s = re.sub(r'\b\d+\s*chars?\b|\b\d{3,4}x\d{3,4}\b|\b\d+\s*pct\b', ' ', s, flags=re.I)
+    s = re.sub(r'\b\d+\s*chars?\b|\b\d{3,4}x\d{3,4}\b|\b\d+\s*pct\b|\bfull\s*\d+\b', ' ', s, flags=re.I)
     s = re.sub(r'\s+', ' ', s).strip()
     def fix(w):
         if w.isupper() and w.isalpha() and len(w) > 2:

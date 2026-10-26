@@ -97,6 +97,7 @@ def main(argv=None):
     ap.add_argument('--svg-px', type=int, default=384, help='max size of the PNG embedded per colour glyph')
     ap.add_argument('-j', '--jobs', type=int, default=min(4, os.cpu_count() or 1), help='packs converted in parallel')
     ap.add_argument('--web-px', type=int, default=1024, help='max glyph image size inside the web packs')
+    ap.add_argument('--include-symbol-packs', action='store_true', help='also build packs that contain only punctuation / symbols')
     ap.add_argument('--webpacks-only', action='store_true', help='skip font building, only (re)write the web app packs (fast)')
     ap.add_argument('--webpacks', default=None, help='also write normalised web pack zips for the web app here')
     ap.add_argument('--watermarks', default=None, help='copy watermark images found in packs here')
@@ -132,6 +133,9 @@ def main(argv=None):
             print(f'[{os.path.basename(src)}] {len(marks)} watermark images (use --watermarks DIR to export them)')
         for p in gpacks:
             if a.only.lower() not in p.name.lower():
+                continue
+            if pk.is_symbols_only(p) and not a.include_symbol_packs:
+                print(f'SKIP {p.name}: only symbols/punctuation ({len(p.glyphs)} glyphs), not a usable font by itself (--include-symbol-packs to build it)')
                 continue
             base_name, n = p.name, 2
             while p.name in used_names:                      # two packs that clean up to the same name

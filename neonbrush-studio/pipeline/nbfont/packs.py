@@ -94,7 +94,33 @@ def discover(path, overrides=None):
         if relabel:
             p.notes.append(f'{len(relabel)} file labels remapped by pack_overrides.json')
         packs.append(p)
+    packs = _merge_complementary(packs, base)
     return packs, marks
+
+
+def _merge_complementary(packs, base):
+    """Folders of one zip that hold *different* characters (e.g. '1_upper+digits', '2_lowercase', '3_symbols') are
+    parts of one font; folders that repeat the same characters (e.g. 4 styles) stay separate fonts."""
+    if len(packs) < 2:
+        return packs
+    seen = set()
+    for p in packs:
+        if seen & set(p.glyphs):
+            return packs
+        seen |= set(p.glyphs)
+    merged = Pack(name=clean_family(base), source=packs[0].source, folder='')
+    for p in packs:
+        merged.glyphs.update(p.glyphs)
+        merged.skipped += p.skipped
+        merged.notes += p.notes
+        merged.options.update(p.options)
+    merged.notes.append(f'{len(packs)} sub folders merged into one font ({len(merged.glyphs)} glyphs)')
+    return [merged]
+
+
+def is_symbols_only(pack):
+    """No letters and no digits: an add-on set of punctuation / symbols, not a usable font on its own."""
+    return not any(c.isalnum() for c in pack.glyphs)
 
 
 def _find_override(overrides, base, sub):

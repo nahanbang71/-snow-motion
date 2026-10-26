@@ -16,6 +16,33 @@ SB = 50            # side bearing
 SPACE = 300
 
 
+XSET = 'acemnorsuvwxz'
+DESC = 'gpqy'
+
+
+def _lowercase_baselines(boxes):
+    """{char: pixel row that maps to the baseline} for real lowercase glyphs. Tiles of such packs are centred
+    vertically (no baseline information), so it is rebuilt from letter shapes: x-height letters and ascenders
+    stand on the baseline, g p q y hang from the x-height line, j descends as far as the others."""
+    low = [c for c in boxes if 'a' <= c <= 'z']
+    if len(low) < 5:
+        return {}
+    xs = [boxes[c][3] - boxes[c][1] for c in XSET if c in boxes]
+    xh = statistics.median(xs) if xs else statistics.median(boxes[c][3] - boxes[c][1] for c in low)
+    deps = [boxes[c][3] - boxes[c][1] - xh for c in DESC if c in boxes]
+    dep = max(statistics.median(deps), 0) if deps else 0.3 * xh
+    out = {}
+    for c in low:
+        x0, y0, x1, y1 = boxes[c]
+        if c in DESC:
+            out[c] = y0 + xh
+        elif c == 'j':
+            out[c] = y1 - dep
+        else:
+            out[c] = y1
+    return out
+
+
 def plan(boxes, mode='auto', cap=CAP):
     """boxes: {char: (x0, y0, x1, y1)} in px (bbox of ink). Returns (info, {char: placement}).
     placement: scale (units/px), x0 (px), ybase (px that maps to y=0), adv (units)."""
@@ -41,7 +68,16 @@ def plan(boxes, mode='auto', cap=CAP):
             h = boxes[c][3] - boxes[c][1]
             fit_scales.append(min(max(cap / h, .8 * k), 1.45 * k))
     kp = statistics.median(fit_scales) if fit_scales else k        # punctuation scale (k in align mode)
+    lower = _lowercase_baselines(boxes)
     for c, (x0, y0, x1, y1) in boxes.items():
+        if c in lower:                                    # real lowercase: x-height letters sit on the baseline
+            ks = kp if mode == 'fit' else k
+            place[c] = {'scale': ks, 'x0': x0, 'ybase': lower[c], 'adv': round((x1 - x0) * ks + 2 * SB)}
+            continue
+        if c == '.':                                      # full stop always sits on the baseline
+            ks = kp if mode in ('fit', 'align') else k
+            place[c] = {'scale': ks, 'x0': x0, 'ybase': y1, 'adv': round((x1 - x0) * ks + 2 * SB)}
+            continue
         if mode in ('fit', 'align') and (c in LETTERS or c in DIGITS):
             ks = min(max(cap / (y1 - y0), .8 * k), 1.45 * k) if mode == 'fit' else k
             yb = y1                                       # bottom sits on the baseline

@@ -3,13 +3,15 @@ from PIL import Image, ImageDraw, ImageFont
 
 from . import layout as lay
 
-LINES = ['ABCDEFGHIJKLM', 'NOPQRSTUVWXYZ', '0123456789 ,\'!?', 'The quick brown fox']
+LINES = ['ABCDEFGHIJKLM', 'NOPQRSTUVWXYZ', '0123456789 ,\'!?', 'The quick brown fox', 'abcdefghijklm', 'nopqrstuvwxyz', '& @ $ % # ( ) + - = / * ~ . :']
 
 
-def _lines(have):
+def _lines(have, real_lower=False):
     out = []
     for line in LINES:
-        t = ''.join(c for c in line if c == ' ' or c.upper() in have or c in have)
+        if line[:1].islower() and line.isalpha() and not real_lower:      # lowercase rows only for packs with real lowercase glyphs
+            continue
+        t = ''.join(c for c in line if c == ' ' or c in have or (c.upper() in have and not c.islower()) or (c.islower() and c in have))
         if t.strip():
             out.append(t)
     return out
@@ -17,8 +19,9 @@ def _lines(have):
 
 def mono(font_path, out_png, bg='#202124', fg='#ffffff', size=120):
     from fontTools.ttLib import TTFont
-    have = {chr(c) for c in TTFont(font_path).getBestCmap()}
-    lines = _lines(have)
+    tt = TTFont(font_path)
+    have = {chr(c) for c in tt.getBestCmap()}
+    lines = _lines(have, 'a' in tt.getGlyphOrder())
     f = ImageFont.truetype(font_path, size)
     im = Image.new('RGB', (1800, int((len(lines) + .4) * size * 1.35)), bg)
     d = ImageDraw.Draw(im)
@@ -30,13 +33,13 @@ def mono(font_path, out_png, bg='#202124', fg='#ffffff', size=120):
 def color(arrays, place, out_png, bg='#202124', size=120):
     """Typeset with the original PNGs (what an OpenType-SVG capable app shows)."""
     s = size / lay.UPM
-    lines = _lines(set(arrays))
+    lines = _lines(set(arrays), any('a' <= c <= 'z' for c in arrays))
     im = Image.new('RGBA', (1800, int((len(lines) + .4) * size * 1.35)), bg)
     for i, line in enumerate(lines):
         pen = 40.0
         base = 20 + i * size * 1.35 + size * 0.95
         for c in line:
-            c = c.upper() if c.isalpha() else c
+            c = c if c in arrays else c.upper()
             if c == ' ':
                 pen += lay.SPACE * s; continue
             if c not in arrays:

@@ -89,12 +89,14 @@ def _cmap(chars, lower):
     for ch in chars:
         gn = glyph_name(ch)
         cmap[ord(ch)] = gn
-        if ch.isascii() and ch.isalpha() and lower:
-            cmap[ord(ch.lower())] = gn
         if ch == "'":
             cmap[0x2019] = gn
         if ch == '"':
             cmap[0x201D] = gn
+    if lower:                                   # a-z -> capital glyph, only where the pack has no real lowercase glyph
+        for ch in chars:
+            if ch.isascii() and ch.isupper() and ord(ch.lower()) not in cmap:
+                cmap[ord(ch.lower())] = glyph_name(ch)
     return cmap
 
 

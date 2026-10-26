@@ -90,6 +90,52 @@ class Overrides(unittest.TestCase):
         shutil.rmtree(d)
 
 
+class Merging(unittest.TestCase):
+    def _zip(self, folders):
+        d = tempfile.mkdtemp()
+        zpath = os.path.join(d, 'Style_Full83_1024x1024.zip')
+        with zipfile.ZipFile(zpath, 'w') as z:
+            for folder, stems in folders.items():
+                for stem in stems:
+                    b = io.BytesIO(); Image.new('RGBA', (64, 64), (255, 255, 255, 255)).save(b, 'PNG'); z.writestr(f'{folder}/{stem}.png', b.getvalue())
+        return d, zpath
+
+    def test_complementary_folders_become_one_font(self):
+        d, z = self._zip({'1_upper': list('ABCDEF'), '2_lower': list('abcdef') + ['PERIOD'], '3_sym': ['AMP', 'DOLLAR', 'TILDE', 'WON', 'MINUS', 'EQUAL']})
+        ps, _ = packs.discover(z)
+        self.assertEqual(len(ps), 1)
+        self.assertEqual(ps[0].name, 'Style')
+        self.assertTrue(set('ABCabc.&$~=-\u20a9') <= set(ps[0].glyphs))
+        shutil.rmtree(d)
+
+    def test_same_glyphs_in_each_folder_stay_separate(self):
+        d, z = self._zip({'S1': list('ABCDEF'), 'S2': list('ABCDEF')})
+        self.assertEqual(len(packs.discover(z)[0]), 2)
+        shutil.rmtree(d)
+
+    def test_symbols_only(self):
+        d, z = self._zip({'S1': ['AMP', 'AT', 'HASH', 'PERCENT', 'PLUS', 'SLASH']})
+        p = packs.discover(z)[0][0]
+        self.assertTrue(packs.is_symbols_only(p))
+        shutil.rmtree(d)
+
+
+class Lowercase(unittest.TestCase):
+    def test_baselines(self):
+        from nbfont import layout
+        boxes = {c: (100, 300, 500, 780) for c in 'acemnorsuvwxz'}          # x-height letters, bottom 780
+        boxes.update({c: (100, 300, 500, 960) for c in 'gpqy'})              # descenders hang below
+        boxes['j'] = (100, 250, 500, 960)
+        boxes['b'] = (100, 100, 500, 780)
+        for c in 'ABCDE':
+            boxes[c] = (100, 150, 500, 870)
+        info, pl = layout.plan(boxes)
+        self.assertEqual(pl['a']['ybase'], 780)                              # stands on the baseline
+        self.assertEqual(pl['b']['ybase'], 780)
+        self.assertEqual(pl['g']['ybase'], 300 + 480)                        # bowl top at x-height -> same baseline row
+        self.assertEqual(pl['j']['ybase'], 780)                              # descends as far as g/p/q/y
+
+
 class FontBuild(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
