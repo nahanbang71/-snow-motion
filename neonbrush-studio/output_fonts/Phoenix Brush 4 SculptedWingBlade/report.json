@@ -1,0 +1,46 @@
+{
+ "family": "Phoenix Brush 4 SculptedWingBlade",
+ "chars": "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!#$%&'()*+,-./:=?@~₩",
+ "layout": {
+  "mode": "fit",
+  "scale": 0.9615384615384616,
+  "base_px": 876.25,
+  "top_px": 148.25,
+  "centered": true,
+  "cv": 0.029
+ },
+ "is_color": true,
+ "files": {
+  "ttf": "PhoenixBrush4SculptedWingBlade-Regular.ttf",
+  "otf": "PhoenixBrush4SculptedWingBlade-Regular.otf",
+  "color": "PhoenixBrush4SculptedWingBlade-Color.otf"
+ },
+ "glyph_report": {},
+ "notes": [
+  "3 sub folders merged into one font (82 glyphs)"
+ ],
+ "skipped": [
+  "10.png"
+ ],
+ "verify": [
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Phoenix Brush 4 SculptedWingBlade/PhoenixBrush4SculptedWingBlade-Regular.ttf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54
+  },
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Phoenix Brush 4 SculptedWingBlade/PhoenixBrush4SculptedWingBlade-Regular.otf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54
+  },
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Phoenix Brush 4 SculptedWingBlade/PhoenixBrush4SculptedWingBlade-Color.otf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54,
+   "svg_docs": 82
+  }
+ ]
+}

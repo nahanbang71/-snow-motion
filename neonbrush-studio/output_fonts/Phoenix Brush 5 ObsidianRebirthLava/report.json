@@ -1,0 +1,46 @@
+{
+ "family": "Phoenix Brush 5 ObsidianRebirthLava",
+ "chars": "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!#$%&'()*+,-./:=?@~₩",
+ "layout": {
+  "mode": "fit",
+  "scale": 0.9446693657219973,
+  "base_px": 882.5,
+  "top_px": 141.5,
+  "centered": true,
+  "cv": 0.014
+ },
+ "is_color": true,
+ "files": {
+  "ttf": "PhoenixBrush5ObsidianRebirthLava-Regular.ttf",
+  "otf": "PhoenixBrush5ObsidianRebirthLava-Regular.otf",
+  "color": "PhoenixBrush5ObsidianRebirthLava-Color.otf"
+ },
+ "glyph_report": {},
+ "notes": [
+  "3 sub folders merged into one font (82 glyphs)"
+ ],
+ "skipped": [
+  "10.png"
+ ],
+ "verify": [
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Phoenix Brush 5 ObsidianRebirthLava/PhoenixBrush5ObsidianRebirthLava-Regular.ttf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54
+  },
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Phoenix Brush 5 ObsidianRebirthLava/PhoenixBrush5ObsidianRebirthLava-Regular.otf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54
+  },
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Phoenix Brush 5 ObsidianRebirthLava/PhoenixBrush5ObsidianRebirthLava-Color.otf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54,
+   "svg_docs": 82
+  }
+ ]
+}

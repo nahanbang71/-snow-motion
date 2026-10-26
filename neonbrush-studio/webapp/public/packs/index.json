@@ -231,6 +231,20 @@
   "bytes": 3975461
  },
  {
+  "file": "PhoenixBrush4SculptedWingBlade.zip",
+  "name": "Phoenix Brush 4 SculptedWingBlade",
+  "isColor": true,
+  "glyphs": 82,
+  "bytes": 4328618
+ },
+ {
+  "file": "PhoenixBrush5ObsidianRebirthLava.zip",
+  "name": "Phoenix Brush 5 ObsidianRebirthLava",
+  "isColor": true,
+  "glyphs": 82,
+  "bytes": 5018180
+ },
+ {
   "file": "PinkCoralPlumBlossom.zip",
   "name": "Pink Coral Plum Blossom",
   "isColor": true,
