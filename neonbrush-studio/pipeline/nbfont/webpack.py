@@ -24,7 +24,7 @@ def write_webpack(path, name, arrays, boxes, place, is_color, source='', max_px=
                 r = max_px / max(im.size)
                 im = im.resize((max(1, round(im.width * r)), max(1, round(im.height * r))), Image.LANCZOS)
             # WebP keeps the alpha channel at a fraction of the PNG size: lossless for flat single-colour art, q92 for colour art
-            im.save(buf, 'WEBP', lossless=not is_color, quality=92, alpha_quality=100, method=6)
+            im.save(buf, 'WEBP', lossless=not is_color, quality=92, alpha_quality=100, method=4)
             fn = glyph_name(ch) + '.webp'
             z.writestr(fn, buf.getvalue())
             p = place[ch]
