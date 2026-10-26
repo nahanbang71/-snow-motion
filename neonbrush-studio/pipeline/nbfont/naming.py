@@ -39,7 +39,7 @@ def glyph_name(ch):
 def clean_family(raw):
     """'bold_calligraphy_alphabet_30chars_white_1024x1024' -> 'Bold Calligraphy Alphabet'"""
     s = re.sub(r'[_\-]+', ' ', raw)
-    s = re.sub(r'\b\d+\s*chars?\b|\b\d{3,4}x\d{3,4}\b|\bwhite\b', ' ', s, flags=re.I)
+    s = re.sub(r'\b\d+\s*chars?\b|\b\d{3,4}x\d{3,4}\b|\b\d+\s*pct\b', ' ', s, flags=re.I)
     s = re.sub(r'\s+', ' ', s).strip()
     def fix(w):
         if w.isupper() and w.isalpha() and len(w) > 2:

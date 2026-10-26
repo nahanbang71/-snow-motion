@@ -41,7 +41,7 @@ class Naming(unittest.TestCase):
         self.assertIsNone(naming.stem_to_char('BRSh_Design1'))
 
     def test_family(self):
-        self.assertEqual(naming.clean_family('bold_calligraphy_alphabet_30chars_white_1024x1024'), 'Bold Calligraphy Alphabet')
+        self.assertEqual(naming.clean_family('bold_calligraphy_alphabet_30chars_white_1024x1024'), 'Bold Calligraphy Alphabet White')
         self.assertEqual(naming.clean_family('DRY_SCRATCH'), 'Dry Scratch')
 
 
