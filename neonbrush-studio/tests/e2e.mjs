@@ -38,7 +38,7 @@ try {
   await page.setInputFiles('[data-testid=zip-input]', [join(ROOT, 'samples/TestMono.zip'), join(ROOT, 'samples/TestNeon.zip')]);
   await page.waitForFunction((n) => document.querySelectorAll('[data-testid=pack-item]').length >= n + 2, builtin, { timeout: 60000 });
   ok(true, 'raw .zip packs added');
-  await page.locator('[data-testid=pack-item]', { hasText: 'TestNeon' }).click();
+  await page.locator('[data-testid=pack-item]').filter({ has: page.locator('b', { hasText: /^TestNeon$/ }) }).click();
 
   // ---- typing
   await page.locator('[data-testid=text]').fill('');
@@ -57,7 +57,7 @@ try {
   const setRange = (id, v) => page.locator(`[data-testid=${id}]`).evaluate((el, val) => { const s = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set; s.call(el, val); el.dispatchEvent(new Event('input', { bubbles: true })); }, String(v));
   await setRange('tracking', 120);
   const wide = await inkPixels();
-  ok(wide.w > flat.w * 0.99, `tracking changes layout (width ${flat.w} -> ${wide.w})`);
+  ok(wide.h < flat.h, `tracking widens the text (preview height shrinks to fit: ${flat.h} -> ${wide.h})`);
   await setRange('arc', 70);
   const arched = await inkPixels();
   ok(arched.h > wide.h, `arc bends the line (height ${wide.h} -> ${arched.h})`);
@@ -71,11 +71,11 @@ try {
   // ---- every built-in pack renders text
   const names = await page.locator('[data-testid=pack-item] b').allTextContents();
   for (const n of names.filter((x) => !/^Test/.test(x))) {
-    await page.locator('[data-testid=pack-item]', { hasText: n }).first().click();
+    await page.locator('[data-testid=pack-item]').filter({ has: page.locator('b', { hasText: new RegExp(`^${n}$`) }) }).click();
     const r = await inkPixels();
     ok(r.n > 500, `pack "${n}" renders (${r.n} ink px)`);
   }
-  await page.locator('[data-testid=pack-item]', { hasText: 'Bold Calligraphy' }).first().click();
+  await page.locator('[data-testid=pack-item]').filter({ has: page.locator('b', { hasText: /^Bold Calligraphy Alphabet White$/ }) }).click();
   await page.locator('[data-testid=text]').fill('NeonBrush\nStudio');
 
   // ---- transparent, cropped, hi-res PNG download

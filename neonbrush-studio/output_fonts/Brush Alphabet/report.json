@@ -1,0 +1,34 @@
+{
+ "family": "Brush Alphabet",
+ "chars": "ABCDEFGHIJKLMNOPQRSTUVWXYZ!',?",
+ "layout": {
+  "mode": "fit",
+  "scale": 0.8578431372549019,
+  "base_px": 921.0,
+  "top_px": 105.0,
+  "centered": true,
+  "cv": 0.044
+ },
+ "is_color": false,
+ "files": {
+  "ttf": "BrushAlphabet-Regular.ttf",
+  "otf": "BrushAlphabet-Regular.otf"
+ },
+ "glyph_report": {},
+ "notes": [],
+ "skipped": [],
+ "verify": [
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Brush Alphabet/BrushAlphabet-Regular.ttf",
+   "ok": true,
+   "errors": [],
+   "shaped": 44
+  },
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Brush Alphabet/BrushAlphabet-Regular.otf",
+   "ok": true,
+   "errors": [],
+   "shaped": 44
+  }
+ ]
+}

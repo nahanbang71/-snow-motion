@@ -1,0 +1,49 @@
+{
+ "family": "Alphabet V2 Smooth Ink",
+ "chars": "ABCDEFGHIJKLMNOPQRSTUVWXYZ!',?",
+ "layout": {
+  "mode": "align",
+  "scale": 1.2704174228675136,
+  "base_px": 705.0,
+  "top_px": 154.0,
+  "centered": false,
+  "cv": 0.116
+ },
+ "is_color": false,
+ "files": {
+  "ttf": "AlphabetV2SmoothInk-Regular.ttf",
+  "otf": "AlphabetV2SmoothInk-Regular.otf"
+ },
+ "glyph_report": {
+  "V": {
+   "removed_border": 0,
+   "removed_specks": 8,
+   "clipped": false,
+   "removed_groups": 2
+  },
+  "X": {
+   "removed_border": 0,
+   "removed_specks": 16,
+   "clipped": false,
+   "removed_groups": 2
+  }
+ },
+ "notes": [
+  "30 file labels remapped by pack_overrides.json"
+ ],
+ "skipped": [],
+ "verify": [
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Alphabet V2 Smooth Ink/AlphabetV2SmoothInk-Regular.ttf",
+   "ok": true,
+   "errors": [],
+   "shaped": 44
+  },
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Alphabet V2 Smooth Ink/AlphabetV2SmoothInk-Regular.otf",
+   "ok": true,
+   "errors": [],
+   "shaped": 44
+  }
+ ]
+}

@@ -1,0 +1,79 @@
+{
+ "family": "Alphabet V2 Wispy Feathered",
+ "chars": "ABCDEFGHIJKLMNOPQRSTUVWXYZ!',?",
+ "layout": {
+  "mode": "align",
+  "scale": 1.3725490196078431,
+  "base_px": 666.5,
+  "top_px": 156.5,
+  "centered": false,
+  "cv": 0.149
+ },
+ "is_color": false,
+ "files": {
+  "ttf": "AlphabetV2WispyFeathered-Regular.ttf",
+  "otf": "AlphabetV2WispyFeathered-Regular.otf"
+ },
+ "glyph_report": {
+  "D": {
+   "removed_border": 0,
+   "removed_specks": 22,
+   "clipped": false,
+   "removed_groups": 2
+  },
+  "W": {
+   "removed_border": 0,
+   "removed_specks": 22,
+   "clipped": false,
+   "removed_groups": 1
+  },
+  "!": {
+   "removed_border": 0,
+   "removed_specks": 8,
+   "clipped": false,
+   "removed_groups": 1
+  },
+  "?": {
+   "removed_border": 0,
+   "removed_specks": 23,
+   "clipped": false,
+   "removed_groups": 1
+  },
+  "P": {
+   "removed_border": 0,
+   "removed_specks": 32,
+   "clipped": false,
+   "removed_groups": 1
+  },
+  "R": {
+   "removed_border": 0,
+   "removed_specks": 28,
+   "clipped": false,
+   "removed_groups": 1
+  },
+  "X": {
+   "removed_border": 0,
+   "removed_specks": 24,
+   "clipped": false,
+   "removed_groups": 1
+  }
+ },
+ "notes": [
+  "30 file labels remapped by pack_overrides.json"
+ ],
+ "skipped": [],
+ "verify": [
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Alphabet V2 Wispy Feathered/AlphabetV2WispyFeathered-Regular.ttf",
+   "ok": true,
+   "errors": [],
+   "shaped": 44
+  },
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Alphabet V2 Wispy Feathered/AlphabetV2WispyFeathered-Regular.otf",
+   "ok": true,
+   "errors": [],
+   "shaped": 44
+  }
+ ]
+}

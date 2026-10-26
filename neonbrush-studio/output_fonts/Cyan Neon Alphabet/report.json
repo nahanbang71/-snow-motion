@@ -1,0 +1,42 @@
+{
+ "family": "Cyan Neon Alphabet",
+ "chars": "ABCDEFGHIJKLMNOPQRSTUVWXYZ!',?",
+ "layout": {
+  "mode": "fit",
+  "scale": 0.8668730650154799,
+  "base_px": 916.0,
+  "top_px": 108.5,
+  "centered": true,
+  "cv": 0.005
+ },
+ "is_color": true,
+ "files": {
+  "ttf": "CyanNeonAlphabet-Regular.ttf",
+  "otf": "CyanNeonAlphabet-Regular.otf",
+  "color": "CyanNeonAlphabet-Color.otf"
+ },
+ "glyph_report": {},
+ "notes": [],
+ "skipped": [],
+ "verify": [
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Cyan Neon Alphabet/CyanNeonAlphabet-Regular.ttf",
+   "ok": true,
+   "errors": [],
+   "shaped": 44
+  },
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Cyan Neon Alphabet/CyanNeonAlphabet-Regular.otf",
+   "ok": true,
+   "errors": [],
+   "shaped": 44
+  },
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Cyan Neon Alphabet/CyanNeonAlphabet-Color.otf",
+   "ok": true,
+   "errors": [],
+   "shaped": 44,
+   "svg_docs": 30
+  }
+ ]
+}

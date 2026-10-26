@@ -1,0 +1,205 @@
+{
+ "family": "Alphabet V2 Rough Grunge",
+ "chars": "ABCDEFGHIJKLMNOPQRSTUVWXYZ!\"'?",
+ "layout": {
+  "mode": "align",
+  "scale": 1.1400651465798046,
+  "base_px": 767.0,
+  "top_px": 153.0,
+  "centered": false,
+  "cv": 0.061
+ },
+ "is_color": false,
+ "files": {
+  "ttf": "AlphabetV2RoughGrunge-Regular.ttf",
+  "otf": "AlphabetV2RoughGrunge-Regular.otf"
+ },
+ "glyph_report": {
+  "Z": {
+   "removed_border": 0,
+   "removed_specks": 108,
+   "clipped": false,
+   "removed_groups": 2
+  },
+  "Y": {
+   "removed_border": 0,
+   "removed_specks": 138,
+   "clipped": false,
+   "removed_groups": 14
+  },
+  "'": {
+   "removed_border": 0,
+   "removed_specks": 43,
+   "clipped": false,
+   "removed_groups": 6
+  },
+  "V": {
+   "removed_border": 0,
+   "removed_specks": 185,
+   "clipped": false,
+   "removed_groups": 32
+  },
+  "?": {
+   "removed_border": 0,
+   "removed_specks": 82,
+   "clipped": false,
+   "removed_groups": 10
+  },
+  "W": {
+   "removed_border": 0,
+   "removed_specks": 216,
+   "clipped": false,
+   "removed_groups": 12
+  },
+  "K": {
+   "removed_border": 0,
+   "removed_specks": 105,
+   "clipped": false,
+   "removed_groups": 15
+  },
+  "L": {
+   "removed_border": 0,
+   "removed_specks": 133,
+   "clipped": false,
+   "removed_groups": 30
+  },
+  "M": {
+   "removed_border": 0,
+   "removed_specks": 135,
+   "clipped": false,
+   "removed_groups": 11
+  },
+  "N": {
+   "removed_border": 0,
+   "removed_specks": 154,
+   "clipped": false,
+   "removed_groups": 19
+  },
+  "O": {
+   "removed_border": 0,
+   "removed_specks": 141,
+   "clipped": false,
+   "removed_groups": 14
+  },
+  "A": {
+   "removed_border": 0,
+   "removed_specks": 106,
+   "clipped": false,
+   "removed_groups": 26
+  },
+  "B": {
+   "removed_border": 0,
+   "removed_specks": 116,
+   "clipped": false,
+   "removed_groups": 23
+  },
+  "C": {
+   "removed_border": 0,
+   "removed_specks": 78,
+   "clipped": false,
+   "removed_groups": 43
+  },
+  "D": {
+   "removed_border": 0,
+   "removed_specks": 100,
+   "clipped": false,
+   "removed_groups": 36
+  },
+  "E": {
+   "removed_border": 0,
+   "removed_specks": 67,
+   "clipped": false,
+   "removed_groups": 8
+  },
+  "F": {
+   "removed_border": 0,
+   "removed_specks": 177,
+   "clipped": false,
+   "removed_groups": 5
+  },
+  "G": {
+   "removed_border": 0,
+   "removed_specks": 185,
+   "clipped": false,
+   "removed_groups": 22
+  },
+  "X": {
+   "removed_border": 0,
+   "removed_specks": 131,
+   "clipped": false,
+   "removed_groups": 15
+  },
+  "H": {
+   "removed_border": 0,
+   "removed_specks": 242,
+   "clipped": false,
+   "removed_groups": 21
+  },
+  "I": {
+   "removed_border": 0,
+   "removed_specks": 186,
+   "clipped": false,
+   "removed_groups": 38
+  },
+  "J": {
+   "removed_border": 0,
+   "removed_specks": 76,
+   "clipped": false,
+   "removed_groups": 9
+  },
+  "P": {
+   "removed_border": 0,
+   "removed_specks": 134,
+   "clipped": false,
+   "removed_groups": 4
+  },
+  "Q": {
+   "removed_border": 0,
+   "removed_specks": 185,
+   "clipped": false,
+   "removed_groups": 26
+  },
+  "R": {
+   "removed_border": 0,
+   "removed_specks": 188,
+   "clipped": false,
+   "removed_groups": 26
+  },
+  "S": {
+   "removed_border": 0,
+   "removed_specks": 168,
+   "clipped": false,
+   "removed_groups": 27
+  },
+  "T": {
+   "removed_border": 0,
+   "removed_specks": 141,
+   "clipped": false,
+   "removed_groups": 8
+  },
+  "U": {
+   "removed_border": 0,
+   "removed_specks": 128,
+   "clipped": false,
+   "removed_groups": 4
+  }
+ },
+ "notes": [
+  "30 file labels remapped by pack_overrides.json"
+ ],
+ "skipped": [],
+ "verify": [
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Alphabet V2 Rough Grunge/AlphabetV2RoughGrunge-Regular.ttf",
+   "ok": true,
+   "errors": [],
+   "shaped": 44
+  },
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Alphabet V2 Rough Grunge/AlphabetV2RoughGrunge-Regular.otf",
+   "ok": true,
+   "errors": [],
+   "shaped": 44
+  }
+ ]
+}

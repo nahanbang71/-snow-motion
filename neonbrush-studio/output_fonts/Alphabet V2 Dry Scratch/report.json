@@ -1,0 +1,133 @@
+{
+ "family": "Alphabet V2 Dry Scratch",
+ "chars": "ABCDEFGHIJKLMNOPQRSTUVWXYZ!',?",
+ "layout": {
+  "mode": "align",
+  "scale": 1.2048192771084338,
+  "base_px": 734.0,
+  "top_px": 153.0,
+  "centered": false,
+  "cv": 0.162
+ },
+ "is_color": false,
+ "files": {
+  "ttf": "AlphabetV2DryScratch-Regular.ttf",
+  "otf": "AlphabetV2DryScratch-Regular.otf"
+ },
+ "glyph_report": {
+  "P": {
+   "removed_border": 0,
+   "removed_specks": 20,
+   "clipped": false,
+   "removed_groups": 1
+  },
+  "Q": {
+   "removed_border": 0,
+   "removed_specks": 25,
+   "clipped": false,
+   "removed_groups": 1
+  },
+  "R": {
+   "removed_border": 0,
+   "removed_specks": 39,
+   "clipped": false,
+   "removed_groups": 5
+  },
+  "S": {
+   "removed_border": 0,
+   "removed_specks": 35,
+   "clipped": false,
+   "removed_groups": 3
+  },
+  "V": {
+   "removed_border": 0,
+   "removed_specks": 36,
+   "clipped": false,
+   "removed_groups": 1
+  },
+  "W": {
+   "removed_border": 0,
+   "removed_specks": 53,
+   "clipped": false,
+   "removed_groups": 2
+  },
+  "X": {
+   "removed_border": 0,
+   "removed_specks": 21,
+   "clipped": false,
+   "removed_groups": 1
+  },
+  "Y": {
+   "removed_border": 0,
+   "removed_specks": 19,
+   "clipped": false,
+   "removed_groups": 2
+  },
+  "D": {
+   "removed_border": 0,
+   "removed_specks": 8,
+   "clipped": false,
+   "removed_groups": 2
+  },
+  "G": {
+   "removed_border": 0,
+   "removed_specks": 13,
+   "clipped": false,
+   "removed_groups": 1
+  },
+  "I": {
+   "removed_border": 0,
+   "removed_specks": 7,
+   "clipped": false,
+   "removed_groups": 4
+  },
+  "K": {
+   "removed_border": 0,
+   "removed_specks": 6,
+   "clipped": false,
+   "removed_groups": 1
+  },
+  "L": {
+   "removed_border": 0,
+   "removed_specks": 11,
+   "clipped": false,
+   "removed_groups": 3
+  },
+  "M": {
+   "removed_border": 0,
+   "removed_specks": 27,
+   "clipped": false,
+   "removed_groups": 1
+  },
+  "N": {
+   "removed_border": 0,
+   "removed_specks": 23,
+   "clipped": false,
+   "removed_groups": 1
+  },
+  "O": {
+   "removed_border": 0,
+   "removed_specks": 29,
+   "clipped": false,
+   "removed_groups": 1
+  }
+ },
+ "notes": [
+  "30 file labels remapped by pack_overrides.json"
+ ],
+ "skipped": [],
+ "verify": [
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Alphabet V2 Dry Scratch/AlphabetV2DryScratch-Regular.ttf",
+   "ok": true,
+   "errors": [],
+   "shaped": 44
+  },
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Alphabet V2 Dry Scratch/AlphabetV2DryScratch-Regular.otf",
+   "ok": true,
+   "errors": [],
+   "shaped": 44
+  }
+ ]
+}

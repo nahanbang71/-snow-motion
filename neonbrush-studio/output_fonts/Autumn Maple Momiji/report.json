@@ -1,0 +1,44 @@
+{
+ "family": "Autumn Maple Momiji",
+ "chars": "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!',?",
+ "layout": {
+  "mode": "fit",
+  "scale": 1.046337817638266,
+  "base_px": 847.0,
+  "top_px": 178.0,
+  "centered": true,
+  "cv": 0.051
+ },
+ "is_color": true,
+ "files": {
+  "ttf": "AutumnMapleMomiji-Regular.ttf",
+  "otf": "AutumnMapleMomiji-Regular.otf",
+  "color": "AutumnMapleMomiji-Color.otf"
+ },
+ "glyph_report": {},
+ "notes": [],
+ "skipped": [
+  "10.png"
+ ],
+ "verify": [
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Autumn Maple Momiji/AutumnMapleMomiji-Regular.ttf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54
+  },
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Autumn Maple Momiji/AutumnMapleMomiji-Regular.otf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54
+  },
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Autumn Maple Momiji/AutumnMapleMomiji-Color.otf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54,
+   "svg_docs": 40
+  }
+ ]
+}

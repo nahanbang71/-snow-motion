@@ -1,0 +1,34 @@
+{
+ "family": "Calligraphy Alphabet",
+ "chars": "ABCDEFGHIJKLMNOPQRSTUVWXYZ!',?",
+ "layout": {
+  "mode": "canvas",
+  "scale": 0.8728179551122195,
+  "base_px": 913.0,
+  "top_px": 111.0,
+  "centered": true,
+  "cv": 0.117
+ },
+ "is_color": false,
+ "files": {
+  "ttf": "CalligraphyAlphabet-Regular.ttf",
+  "otf": "CalligraphyAlphabet-Regular.otf"
+ },
+ "glyph_report": {},
+ "notes": [],
+ "skipped": [],
+ "verify": [
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Calligraphy Alphabet/CalligraphyAlphabet-Regular.ttf",
+   "ok": true,
+   "errors": [],
+   "shaped": 44
+  },
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Calligraphy Alphabet/CalligraphyAlphabet-Regular.otf",
+   "ok": true,
+   "errors": [],
+   "shaped": 44
+  }
+ ]
+}

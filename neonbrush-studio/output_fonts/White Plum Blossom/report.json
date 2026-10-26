@@ -1,0 +1,36 @@
+{
+ "family": "White Plum Blossom",
+ "chars": "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!',?",
+ "layout": {
+  "mode": "canvas",
+  "scale": 0.8805031446540881,
+  "base_px": 909.5,
+  "top_px": 114.5,
+  "centered": true,
+  "cv": 0.073
+ },
+ "is_color": false,
+ "files": {
+  "ttf": "WhitePlumBlossom-Regular.ttf",
+  "otf": "WhitePlumBlossom-Regular.otf"
+ },
+ "glyph_report": {},
+ "notes": [],
+ "skipped": [
+  "10.png"
+ ],
+ "verify": [
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/White Plum Blossom/WhitePlumBlossom-Regular.ttf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54
+  },
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/White Plum Blossom/WhitePlumBlossom-Regular.otf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54
+  }
+ ]
+}

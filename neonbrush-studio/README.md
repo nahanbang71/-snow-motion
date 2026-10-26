@@ -41,8 +41,8 @@ cd webapp && npm install && npm run build          # (선택) 웹앱 다시 빌�
 | 팩 | 문제 | 처리 |
 |---|---|---|
 | ALPHABET_V2 (4개 스타일) | **파일명과 실제 글자가 다름** (예: `A.png`에 K/P/Z가 들어 있음), 타일 안에 **옆 글자 조각**이 섞임, 숫자(0-9)·`&`·`@` 없음 | `packs/pack_overrides.json`에 파일→실제 글자 보정표 기록(눈으로 확인), `clean: neighbors`로 조각 제거, `layout: align`으로 기준선 정렬 |
-| autumn_maple / bold_calligraphy / plum_blossom | 정상. `10.png`는 글자 하나가 아니라 "10" 이라 폰트에서 제외 | — |
-| 모든 글자 팩 | **`&`, `@`는 어느 팩에도 없음** (A-Z, 숫자, `, ' ! ?` 만 수록) | `AMP.png`/`AT.png`를 추가하면 자동 반영 |
+| autumn_maple / bold_calligraphy / plum_blossom / brush / calligraphy(검정·흰색) / candy_neon / cyan_neon | 정상(파일명=내용). autumn·plum·candy의 `10.png`는 글자 하나가 아니라 "10" 이라 폰트에서 제외. `calligraphy_alphabet`(검정 잉크)은 어두운 글자라 웹앱 미리보기 배경을 '밝게'로 | — |
+| 모든 글자 팩 | **`&`, `@`는 어느 팩에도 없음**. 숫자 0-9는 autumn·plum·candy 팩만 있음(나머지는 A-Z와 `, ' ! ?` 만 수록) | `AMP.png`/`AT.png`를 추가하면 자동 반영 |
 | BRSh 워터마크 2팩 | 글자 팩이 아님(2000×1000 워터마크 8종×2) | 워터마크 탭에 내장 |
 
 새 팩의 파일명이 어긋나 있으면 `output_fonts/<이름>/specimen.png`에서 바로 보이므로(순서가 뒤섞여 보임),
@@ -53,6 +53,10 @@ cd webapp && npm install && npm run build          # (선택) 웹앱 다시 빌�
     "options": { "clean": "neighbors", "layout": "align", "threshold": 40 } } }
 ```
 `options`: `clean`(`neighbors` = 타일 안 옆 글자 조각 제거) · `layout`(`auto`/`canvas`/`fit`/`align`) · `threshold`(알파 임계값, 가는 선 팩은 낮게) · `mono_source`(`white` = 컬러 장식 제외하고 흰 획만 벡터화).
+
+## 현재 변환된 폰트 (`output_fonts/`)
+Alphabet V2 (Dry Scratch · Rough Grunge · Smooth Ink · Wispy Feathered) · Autumn Maple Momiji (+Color) · Bold Calligraphy Alphabet White ·
+Brush Alphabet · Calligraphy Alphabet · Calligraphy Alphabet White · Candy Neon Pastel (+Color) · Cyan Neon Alphabet (+Color) · White Plum Blossom — 총 12개, 컬러(OpenType-SVG) 3개.
 
 ## 설치해서 쓰기
 - **.ttf** : 윈도우/맥 어디서나 (더블클릭 → 설치). 한 가지 색(프로그램의 글자색)으로 나옵니다.

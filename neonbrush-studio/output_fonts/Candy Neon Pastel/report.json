@@ -1,0 +1,44 @@
+{
+ "family": "Candy Neon Pastel",
+ "chars": "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!',?",
+ "layout": {
+  "mode": "fit",
+  "scale": 0.8383233532934131,
+  "base_px": 931.5,
+  "top_px": 96.5,
+  "centered": true,
+  "cv": 0.047
+ },
+ "is_color": true,
+ "files": {
+  "ttf": "CandyNeonPastel-Regular.ttf",
+  "otf": "CandyNeonPastel-Regular.otf",
+  "color": "CandyNeonPastel-Color.otf"
+ },
+ "glyph_report": {},
+ "notes": [],
+ "skipped": [
+  "10.png"
+ ],
+ "verify": [
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Candy Neon Pastel/CandyNeonPastel-Regular.ttf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54
+  },
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Candy Neon Pastel/CandyNeonPastel-Regular.otf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54
+  },
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Candy Neon Pastel/CandyNeonPastel-Color.otf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54,
+   "svg_docs": 40
+  }
+ ]
+}
