@@ -38,7 +38,7 @@ def convert_one(p, o):
                 specimen.color(r['arrays'], r['place'], os.path.join(outdir, 'specimen_color.png'))
             if o['webpacks']:
                 os.makedirs(o['webpacks'], exist_ok=True)
-                webpack.write_webpack(os.path.join(o['webpacks'], p.slug + '.zip'), p.name, r['arrays'], r['boxes'], r['place'], r['is_color'], p.source)
+                webpack.write_webpack(os.path.join(o['webpacks'], p.slug + '.zip'), p.name, r['arrays'], r['boxes'], r['place'], r['is_color'], p.source, o.get('web_px', 768))
             ok = all(c['ok'] for c in checks)
             rep = {k: v for k, v in r.items() if k not in ('arrays', 'place', 'boxes')}
             rep['files'] = {k: os.path.basename(v) for k, v in rep['files'].items()}
@@ -73,8 +73,9 @@ def main(argv=None):
                     help='OpenType-SVG colour .otf: auto = only for colourful packs')
     ap.add_argument('--no-lower', action='store_true', help='do not map a-z to the capital glyphs')
     ap.add_argument('--only', default='', help='only packs whose name contains this text')
-    ap.add_argument('--svg-px', type=int, default=512, help='max size of the PNG embedded per colour glyph')
+    ap.add_argument('--svg-px', type=int, default=384, help='max size of the PNG embedded per colour glyph')
     ap.add_argument('-j', '--jobs', type=int, default=min(4, os.cpu_count() or 1), help='packs converted in parallel')
+    ap.add_argument('--web-px', type=int, default=768, help='max glyph image size inside the web packs')
     ap.add_argument('--webpacks', default=None, help='also write normalised web pack zips for the web app here')
     ap.add_argument('--watermarks', default=None, help='copy watermark images found in packs here')
     a = ap.parse_args(argv)
@@ -115,7 +116,7 @@ def main(argv=None):
                 p.name = f'{base_name} {n}'; n += 1
             used_names.add(p.name)
             tasks.append(p)
-    opts = dict(out=a.out, color=a.color, svg_px=a.svg_px, lower=not a.no_lower, webpacks=a.webpacks)
+    opts = dict(web_px=a.web_px, out=a.out, color=a.color, svg_px=a.svg_px, lower=not a.no_lower, webpacks=a.webpacks)
     if a.jobs > 1 and len(tasks) > 1:
         from concurrent.futures import ProcessPoolExecutor
         with ProcessPoolExecutor(max_workers=a.jobs) as ex:

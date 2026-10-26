@@ -40,15 +40,15 @@ def prepare(pack):
 
 
 def is_color_pack(arrays):
-    """True when a noticeable share of opaque pixels is chromatic (neon / multi-colour art)."""
+    """True when a noticeable share of opaque pixels is chromatic (neon / multi-colour art; white/black/grey packs score 0)."""
     tot = col = 0
     for rgba in arrays.values():
         m = rgba[..., 3] > 200
         rgb = rgba[..., :3][m].astype(int)
         if len(rgb):
             tot += len(rgb)
-            col += int(((rgb.max(1) - rgb.min(1)) > 60).sum())
-    return tot > 0 and col / tot > 0.02
+            col += int(((rgb.max(1) - rgb.min(1)) > 30).sum())
+    return tot > 0 and col / tot > 0.01
 
 
 # ---------------------------------------------------------------- outlines
@@ -145,7 +145,7 @@ def _assemble(kind, family, style, chars, glyphs, adv, svg_docs=None, lower=True
 
 
 # ---------------------------------------------------------------- colour (OpenType-SVG)
-def svg_documents(arrays, place, svg_px=512):
+def svg_documents(arrays, place, svg_px=384):
     """Returns f(order) -> {gid: svg document} with the original PNG embedded as a data URI."""
     def build(order):
         docs = {}
@@ -174,7 +174,7 @@ def svg_documents(arrays, place, svg_px=512):
 
 
 # ---------------------------------------------------------------- driver
-def build_pack(pack, outdir, color='auto', svg_px=512, lower=True, log=print):
+def build_pack(pack, outdir, color='auto', svg_px=384, lower=True, log=print):
     """Build every font for one pack. Returns a report dict."""
     arrays, boxes, rep = prepare(pack)
     if not arrays:

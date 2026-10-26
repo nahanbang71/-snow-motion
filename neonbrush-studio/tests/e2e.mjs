@@ -32,7 +32,7 @@ try {
   await page.waitForFunction(() => document.querySelectorAll('[data-testid=pack-item]').length >= 1, null, { timeout: 60000 });
   await page.waitForFunction(() => /준비 완료/.test(document.querySelector('[data-testid=status]').textContent), null, { timeout: 120000 });
   const builtin = await page.locator('[data-testid=pack-item]').count();
-  ok(builtin >= 7, `built-in library loaded (${builtin} fonts)`);
+  ok(builtin >= 20, `built-in font list loaded (${builtin} fonts, downloaded lazily)`);
 
   // ---- drag&drop style loading of raw zips (the same input the drop zone uses)
   await page.setInputFiles('[data-testid=zip-input]', [join(ROOT, 'samples/TestMono.zip'), join(ROOT, 'samples/TestNeon.zip')]);
@@ -72,6 +72,11 @@ try {
   const names = await page.locator('[data-testid=pack-item] b').allTextContents();
   for (const n of names.filter((x) => !/^Test/.test(x))) {
     await page.locator('[data-testid=pack-item]').filter({ has: page.locator('b', { hasText: new RegExp(`^${n}$`) }) }).click();
+    await page.waitForFunction((name) => {                 // the clicked font is selected, downloaded and drawn
+      const li = document.querySelector('[data-testid=pack-item].on');
+      return li && li.querySelector('b').textContent === name && !/불러오는/.test(li.textContent) && document.querySelector('[data-testid=preview]');
+    }, n, { timeout: 60000 });
+    await page.waitForTimeout(400);
     const r = await inkPixels();
     ok(r.n > 500, `pack "${n}" renders (${r.n} ink px)`);
   }

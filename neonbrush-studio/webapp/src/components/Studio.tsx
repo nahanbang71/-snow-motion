@@ -4,6 +4,18 @@ import { Align, TypeOptions, canvasToPngBlob, defaultOptions, draw, layout, meas
 import { safeName, saveBlob } from '../lib/download';
 
 type Bg = 'checker' | 'dark' | 'light' | 'custom';
+
+/** a font in the list; built-in packs are only downloaded when they are selected */
+interface Item {
+  key: string;
+  name: string;
+  isColor: boolean;
+  glyphs: number;
+  origin: 'builtin' | 'webpack' | 'raw';
+  file?: string;
+  pack?: FontPack;
+  loading?: boolean;
+}
 const base = import.meta.env.BASE_URL;
 
 function Slider(p: { label: string; value: number; min: number; max: number; step?: number; onChange: (v: number) => void; suffix?: string; id: string }) {
@@ -18,7 +30,7 @@ function Slider(p: { label: string; value: number; min: number; max: number; ste
 }
 
 export default function Studio() {
-  const [packs, setPacks] = useState<FontPack[]>([]);
+  const [items, setItems] = useState<Item[]>([]);
   const [sel, setSel] = useState<string>('');
   const [opt, setOpt] = useState<TypeOptions>(defaultOptions);
   const [bg, setBg] = useState<Bg>('checker');
@@ -32,7 +44,8 @@ export default function Studio() {
   const taRef = useRef<HTMLTextAreaElement>(null);
   const [stageSize, setStageSize] = useState({ w: 800, h: 400 });
 
-  const pack = useMemo(() => packs.find((p) => p.id === sel) ?? null, [packs, sel]);
+  const pack = useMemo(() => items.find((i) => i.key === sel)?.pack ?? null, [items, sel]);
+  const current = items.find((i) => i.key === sel);
   const set = <K extends keyof TypeOptions>(k: K, v: TypeOptions[K]) => setOpt((o) => ({ ...o, [k]: v }));
 
   const addZips = useCallback(async (files: File[] | { name: string; data: Blob }[]) => {
@@ -47,25 +60,42 @@ export default function Studio() {
       }
     }
     if (added.length) {
-      setPacks((p) => [...p, ...added]);
+      setItems((it) => [...it, ...added.map((p): Item => ({ key: p.id, name: p.name, isColor: p.isColor, glyphs: p.glyphs.size, origin: p.origin, pack: p }))]);
       setSel((s) => s || added[0].id);
       setStatus(`${added.length}개 글꼴 추가됨`);
     }
     return added;
   }, []);
 
-  // built-in library (normalised web packs produced by pipeline/build_fonts.py)
+  /** select a font, downloading a built-in pack on first use */
+  const choose = useCallback(async (key: string, list?: Item[]) => {
+    setSel(key);
+    const it = (list ?? items).find((i) => i.key === key);
+    if (!it || it.pack || it.loading || !it.file) return;
+    setItems((cur) => cur.map((i) => (i.key === key ? { ...i, loading: true } : i)));
+    setStatus(`${it.name} 불러오는 중…`);
+    try {
+      const blob = await (await fetch(`${base}packs/${it.file}`)).blob();
+      const [p] = await loadPacksFromZip(blob, it.file);
+      setItems((cur) => cur.map((i) => (i.key === key ? { ...i, pack: p, loading: false } : i)));
+      setStatus(`${it.name} 준비 완료 — 키보드로 바로 입력하세요`);
+    } catch (e) {
+      setItems((cur) => cur.map((i) => (i.key === key ? { ...i, loading: false } : i)));
+      setStatus(`${it.name}: 불러오기 실패 (${(e as Error).message})`);
+    }
+  }, [items]);
+
+  // built-in library: only the list (index.json) is fetched up front; each pack downloads when selected
   useEffect(() => {
     let dead = false;
     (async () => {
       try {
-        const list: string[] = await (await fetch(`${base}packs/index.json`)).json();
-        const loaded: { name: string; data: Blob }[] = [];
-        for (const f of list) loaded.push({ name: f, data: await (await fetch(`${base}packs/${f}`)).blob() });
-        if (!dead) {
-          const added = await addZips(loaded);
-          setStatus(added.length ? `${added.length}개 내장 글꼴 준비 완료 — 키보드로 바로 입력하세요` : '내장 글꼴이 없습니다. .zip 팩을 끌어다 놓으세요');
-        }
+        const list: { file: string; name: string; isColor: boolean; glyphs: number }[] = await (await fetch(`${base}packs/index.json`)).json();
+        if (dead) return;
+        const its: Item[] = list.map((e) => ({ key: 'builtin:' + e.file, name: e.name, isColor: e.isColor, glyphs: e.glyphs, origin: 'builtin', file: e.file }));
+        setItems((cur) => [...its, ...cur]);
+        if (its.length) await choose(its[0].key, its);
+        else setStatus('내장 글꼴이 없습니다. .zip 팩을 끌어다 놓으세요');
       } catch {
         if (!dead) setStatus('.zip 글자 팩을 화면에 끌어다 놓으세요');
       }
@@ -73,7 +103,8 @@ export default function Studio() {
     return () => {
       dead = true;
     };
-  }, [addZips]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // keep the preview stage size
   useEffect(() => {
@@ -138,11 +169,11 @@ export default function Studio() {
       <aside className="side">
         <h2>글꼴 목록</h2>
         <ul className="packs" data-testid="pack-list">
-          {packs.map((p) => (
-            <li key={p.id} className={p.id === sel ? 'on' : ''} onClick={() => setSel(p.id)} data-testid="pack-item">
+          {items.map((p) => (
+            <li key={p.key} className={p.key === sel ? 'on' : ''} onClick={() => choose(p.key)} data-testid="pack-item">
               <b>{p.name}</b>
               <small>
-                {p.glyphs.size}자 {p.isColor ? '· 컬러' : '· 단색'} {p.origin === 'raw' ? '· 원본' : ''}
+                {p.glyphs}자 {p.isColor ? '· 컬러' : '· 단색'} {p.origin === 'raw' ? '· 원본' : ''} {p.loading ? '· 불러오는 중…' : ''}
               </small>
             </li>
           ))}
@@ -151,7 +182,7 @@ export default function Studio() {
           <input type="file" accept=".zip" multiple hidden data-testid="zip-input" onChange={(e) => e.target.files && addZips([...e.target.files])} />
           <span>+ .zip 글꼴 팩을 끌어다 놓거나 클릭</span>
         </label>
-        {pack?.notes.map((n, i) => (
+        {current?.pack?.notes.map((n, i) => (
           <p className="note" key={i}>{n}</p>
         ))}
       </aside>

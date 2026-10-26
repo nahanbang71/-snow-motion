@@ -34,7 +34,7 @@ cd webapp && npm install && npm run build          # (선택) 웹앱 다시 빌�
 6. 모든 폰트를 검증(cmap · HarfBuzz 타이핑 시뮬레이션 · 컬러 SVG 문서 검사)하고 `specimen.png`/`report.json` 저장.
 7. `--webpacks DIR`이면 웹앱용 정규화 팩(`pack.json` + 정리된 PNG)도 만든다.
 
-옵션: `-o 출력폴더` · `--only 이름일부` · `--color auto|all|none` · `--no-lower`(소문자를 대문자 글리프에 연결하지 않음) · `--svg-px 512` · `--overrides 파일` · `--webpacks 폴더` · `--watermarks 폴더`
+옵션: `-j N`(동시에 변환할 팩 수, 기본 4) · `--web-px 768`(웹앱 팩 글자 이미지 최대 크기) · `-o 출력폴더` · `--only 이름일부` · `--color auto|all|none` · `--no-lower`(소문자를 대문자 글리프에 연결하지 않음) · `--svg-px 384` · `--overrides 파일` · `--webpacks 폴더` · `--watermarks 폴더`
 
 ## ⚠️ 받은 팩에서 발견된 문제와 처리 방법
 
@@ -90,4 +90,4 @@ node tests/e2e.mjs                                   # 브라우저: 내장글�
 - 벡터화는 알파 채널을 potrace(potracer)로 따라 그립니다. 손맛이 있는 브러시(거친 가장자리, 가는 깃털 선)는 윤곽이 많아져 폰트 용량이 큽니다.
 - 글자 크기·기준선은 팩 전체에서 하나로 계산합니다(`layout.py`): `canvas`(PNG 안 위치 유지) · `fit`(모든 글자를 같은 높이로) · `align`(한 크기 + 바닥 정렬). 기본 `auto`.
 - 커닝 쌍(kern/GPOS)은 만들지 않습니다(글자 사이는 균일한 좌우 여백 + 앱의 자간 슬라이더).
-- 컬러 폰트는 글리프마다 원본 PNG(최대 512px)를 SVG 안에 data URI로 포함합니다. 큰 글자로 쓰면 해상도가 부족할 수 있어 `--svg-px 1024`로 올릴 수 있습니다(파일 용량 증가).
+- 컬러 폰트는 글리프마다 원본 PNG(기본 최대 384px)를 SVG 안에 data URI로 포함합니다. 큰 글자로 쓰면 해상도가 부족할 수 있어 `--svg-px 1024`로 올릴 수 있습니다(파일 용량 증가).
