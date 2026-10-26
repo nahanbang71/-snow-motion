@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Character Builder 3D</title>
+<style>
+  html,body{margin:0;height:100%;overflow:hidden;font-family:Helvetica,Arial,sans-serif;color:#2b2b2b}
+  #bg{position:fixed;inset:0;transition:background .6s}
+  canvas#c{position:fixed;inset:0;width:100%;height:100%;display:block}
+  #panel{position:fixed;top:0;right:0;width:300px;height:100%;box-sizing:border-box;padding:28px 30px;overflow:auto}
+  h1{margin:0 0 26px;font-size:26px;font-weight:800;letter-spacing:-.5px;opacity:.85}
+  .sub{font-size:11px;opacity:.6;margin:0}.name{font-size:16px;font-weight:700;margin:2px 0 18px}
+  label{display:block;font-size:13px;font-weight:600;margin-top:16px}
+  .range{display:flex;justify-content:space-between;font-size:10px;opacity:.55}
+  input[type=range]{width:100%;margin:6px 0 0;accent-color:#2b2b2b}
+  .sw{display:flex;gap:10px;margin-top:8px;flex-wrap:wrap}
+  .sw button{width:22px;height:22px;border-radius:50%;border:1px solid rgba(0,0,0,.25);cursor:pointer;padding:0}
+  .sw button.on{outline:2px solid #2b2b2b;outline-offset:2px}
+  .btn{display:block;width:100%;margin-top:10px;padding:8px;border-radius:18px;border:1px solid rgba(0,0,0,.4);background:transparent;cursor:pointer;font-size:12px;color:inherit}
+  .btn:hover{background:rgba(0,0,0,.07)}
+  select{width:100%;margin-top:6px;padding:5px;font-size:12px}
+  #hint{position:fixed;left:16px;bottom:14px;font-size:12px;opacity:.6}
+  body.shot #panel .tools{display:none}
+</style>
+</head>
+<body>
+<div id="bg"></div>
+<canvas id="c"></canvas>
+<div id="panel">
+  <h1>Character Builder</h1>
+  <p class="sub">Character Builder</p><p class="name" id="name">Nieve · 3D</p>
+  <label>Head size</label><input id="head" type="range" min="0.6" max="1.8" step="0.01" value="1"><div class="range"><span>Smaller</span><span>Bigger</span></div>
+  <label>Body shape</label><input id="body" type="range" min="0.7" max="1.5" step="0.01" value="1"><div class="range"><span>Lean</span><span>Stocky</span></div>
+  <label>Height</label><input id="height" type="range" min="0.8" max="1.25" step="0.01" value="1"><div class="range"><span>Shorter</span><span>Taller</span></div>
+  <label>Colour / lighting</label><div class="sw" id="lights"></div>
+  <label>Background</label><div class="sw" id="bgs"></div>
+  <button class="btn" id="reset">Back to original</button>
+  <div class="tools">
+    <label>Animation</label><select id="clips"></select>
+    <button class="btn" id="demo">▶ 자동 데모 (영상용 타임라인)</button>
+    <button class="btn" id="rec">⏺ 캔버스 녹화 (webm)</button>
+    <button class="btn" id="open">📂 .glb 모델 불러오기</button>
+    <input id="file" type="file" accept=".glb,.gltf" hidden>
+  </div>
+</div>
+<div id="hint" class="tools">.glb 파일을 화면에 끌어다 놓으면 모델이 바뀝니다 · 마우스 드래그: 회전 / 휠: 확대</div>
+
+<script type="importmap">{"imports":{"three":"./lib/three.module.js","three/addons/":"./lib/jsm/"}}</script>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+const $ = id => document.getElementById(id);
+const params = new URLSearchParams(location.search);
+if (params.has('shot')) document.body.classList.add('shot');
+
+// ---------- scene ----------
+const renderer = new THREE.WebGLRenderer({ canvas: $('c'), antialias: true, alpha: true, preserveDrawingBuffer: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+const scene = new THREE.Scene();
+scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.04).texture;
+scene.environmentIntensity = 0.55;
+const camera = new THREE.PerspectiveCamera(30, 1, 0.05, 100);
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true; controls.enablePan = false;
+
+const key = new THREE.DirectionalLight(0xffffff, 2.6); key.position.set(2.5, 4, 3); key.castShadow = true;
+key.shadow.mapSize.set(2048, 2048); key.shadow.camera.left = key.shadow.camera.bottom = -3; key.shadow.camera.right = key.shadow.camera.top = 3;
+key.shadow.bias = -0.0004; key.shadow.radius = 6;
+const rim = new THREE.DirectionalLight(0xffffff, 1.2); rim.position.set(-3, 2.5, -2.5);
+const hemi = new THREE.HemisphereLight(0xffffff, 0x998877, 0.5);
+scene.add(key, rim, hemi);
+const floor = new THREE.Mesh(new THREE.PlaneGeometry(30, 30), new THREE.ShadowMaterial({ opacity: 0.22 }));
+floor.rotation.x = -Math.PI / 2; floor.receiveShadow = true; scene.add(floor);
+
+// ---------- state / palettes ----------
+const DEFAULT = { head: 1, body: 1, height: 1, light: 0, bg: 0 };
+const state = { ...DEFAULT };
+const LIGHTS = ['#ffffff', '#ff9a3c', '#f6d04d', '#ff5fa2', '#9b6bff', '#4d8dff'];
+const BGS = ['#d9d1c5', '#ffffff', '#e8863a', '#1e7fe0', '#8fc7c9', '#7fb069', '#f2c14e'];
+const bgEl = $('bg');
+function applyBackground(c) { bgEl.style.background = `radial-gradient(ellipse at 35% 100%, rgba(255,255,255,.5), rgba(255,255,255,0) 60%), ${c}`; }
+LIGHTS.forEach((c, i) => { const b = document.createElement('button'); b.style.background = c; b.onclick = () => { setLight(i); stopDemo(); }; $('lights').append(b); });
+BGS.forEach((c, i) => { const b = document.createElement('button'); b.style.background = c; b.onclick = () => { setBg(i); stopDemo(); }; $('bgs').append(b); });
+function mark(id, i) { [...$(id).children].forEach((b, j) => b.classList.toggle('on', i === j)); }
+function setLight(i) {
+  state.light = i; mark('lights', i);
+  const c = new THREE.Color(LIGHTS[i]);
+  key.color.copy(c); rim.color.copy(c.clone().lerp(new THREE.Color(0xffffff), i ? 0.3 : 0));
+}
+function setBg(i) { state.bg = i; mark('bgs', i); applyBackground(BGS[i]); }
+
+// ---------- character ----------
+const holder = new THREE.Group();   // scaled for height / body shape, feet at y=0
+scene.add(holder);
+let model = null, headNode = null, headBase = new THREE.Vector3(1, 1, 1), mixer = null, clips = [], activeAction = null;
+let procedural = null;              // update(t) for built-in placeholder
+
+function mat(color, rough = .55, extra = {}) { return new THREE.MeshStandardMaterial({ color, roughness: rough, ...extra }); }
+
+function buildPlaceholder() {
+  const g = new THREE.Group(); g.name = 'Nieve';
+  const skin = mat('#f1c3a3', .6), hair = mat('#33241f', .45), hood = mat('#4a3b33', .85), pants = mat('#6b6a3c', .8),
+        shoe = mat('#e9e4dc', .6), sole = mat('#9a8f80', .8), cap = mat('#5a4036', .7), white = mat('#ffffff', .3), pupil = mat('#2a1a12', .2), blush = mat('#ef7078', .7, { transparent: true, opacity: .8 });
+  const add = (parent, geo, m, x = 0, y = 0, z = 0, sx = 1, sy = 1, sz = 1) => {
+    const o = new THREE.Mesh(geo, m); o.position.set(x, y, z); o.scale.set(sx, sy, sz); o.castShadow = true; parent.add(o); return o;
+  };
+  // legs & shoes
+  for (const s of [-1, 1]) {
+    add(g, new THREE.CapsuleGeometry(.075, .48, 8, 16), pants, s * .1, .43, 0);
+    add(g, new THREE.SphereGeometry(.11, 24, 16), shoe, s * .11, .06, .035, 1, .6, 1.5);
+  }
+  // torso (hoodie)
+  const torso = add(g, new THREE.CapsuleGeometry(.2, .26, 12, 24), hood, 0, .88, 0, 1, 1, .8);
+  add(g, new THREE.TorusGeometry(.12, .045, 12, 32), hood, 0, 1.12, 0, 1, 1, 1).rotation.x = Math.PI / 2.4;
+  // arms
+  const armL = new THREE.Group(); armL.position.set(-.25, 1.06, 0); g.add(armL);
+  add(armL, new THREE.CapsuleGeometry(.062, .3, 8, 16), hood, 0, -.2, 0); add(armL, new THREE.SphereGeometry(.06, 16, 12), skin, 0, -.42, 0);
+  const armR = new THREE.Group(); armR.position.set(.25, 1.06, 0); g.add(armR);
+  add(armR, new THREE.CapsuleGeometry(.062, .3, 8, 16), hood, 0, -.2, 0); add(armR, new THREE.SphereGeometry(.06, 16, 12), skin, 0, -.42, 0);
+  // head (pivot at neck)
+  const head = new THREE.Group(); head.name = 'Head'; head.position.set(0, 1.17, 0); head.scale.setScalar(1.25); g.add(head);
+  add(head, new THREE.SphereGeometry(.2, 40, 32), skin, 0, .2, 0, 1, 1.05, .98);
+  add(head, new THREE.SphereGeometry(.215, 40, 32, Math.PI - .7, Math.PI + 1.4, 0, Math.PI * .8), hair, 0, .21, -.02, 1, 1.06, 1);
+  for (const s of [-1, 1]) add(head, new THREE.CapsuleGeometry(.05, .12, 6, 12), hair, s * .19, .1, 0);
+  add(head, new THREE.SphereGeometry(.222, 40, 24, 0, Math.PI * 2, 0, Math.PI * .42), cap, 0, .235, 0, 1, 1, 1.02);
+  const brim = add(head, new THREE.CylinderGeometry(.14, .17, .02, 32, 1, false, -Math.PI / 2 - .9, 1.8), cap, 0, .275, .18, 1, 1, 1); brim.rotation.x = .1;
+  add(head, new THREE.SphereGeometry(.014, 12, 8), white, -.07, .38, .16);
+  const eyes = new THREE.Group(); head.add(eyes);
+  const eyeL = new THREE.Group(), eyeR = new THREE.Group(); eyes.add(eyeL, eyeR);
+  for (const [e, s] of [[eyeL, -1], [eyeR, 1]]) {
+    e.position.set(s * .075, .17, .165);
+    add(e, new THREE.SphereGeometry(.036, 24, 16), white, 0, 0, 0, 1, 1.15, .6);
+    add(e, new THREE.SphereGeometry(.024, 20, 14), pupil, 0, 0, .012, 1, 1.05, .6);
+    add(e, new THREE.SphereGeometry(.007, 10, 8), white, .008, .01, .026);
+    add(head, new THREE.SphereGeometry(.04, 20, 14), blush, s * .125, .1, .15, 1, .65, .35);
+  }
+  const mouth = add(head, new THREE.TorusGeometry(.03, .006, 8, 24, Math.PI), mat('#9d4a42', .5), 0, .095, .188); mouth.rotation.z = Math.PI;
+  const puff = add(head, new THREE.SphereGeometry(.014, 12, 10), mat('#c4584f', .5), 0, .09, .19, 1, 1.2, .5); puff.visible = false;
+  // procedural idle: breathing, head tilt, blink, wave (function of time only -> deterministic for video render)
+  procedural = t => {
+    torso.scale.y = 1 + Math.sin(t * 2.1) * .012;
+    head.rotation.z = Math.sin(t * 1.5) * .045; head.rotation.y = Math.sin(t * .9) * .15;
+    const blink = (t % 4) > 3.8 ? .1 : 1; eyeL.scale.y = eyeR.scale.y = blink;
+    armL.rotation.z = -.08 - Math.sin(t * 2.1) * .01;
+    const w = state.wave || 0;
+    armR.rotation.z = .08 + w * 2.4 + Math.sin(t * 9) * .2 * w; armR.rotation.x = 0;
+    mouth.visible = !state.puff; puff.visible = !!state.puff;
+  };
+  return g;
+}
+
+function findHead(root) {
+  let best = null;
+  root.traverse(o => {
+    if (/head/i.test(o.name) && !/top|end|nub/i.test(o.name) && (o.isBone || o.type === 'Object3D' || o.type === 'Group')) {
+      if (!best || /^(mixamorig:?)?head$/i.test(o.name)) best = o;
+    }
+  });
+  return best;
+}
+
+function setModel(obj, animations = [], label = 'Nieve · 3D') {
+  if (model) { holder.remove(model); }
+  model = obj; clips = animations; mixer = animations.length ? new THREE.AnimationMixer(obj) : null; activeAction = null;
+  holder.add(model);
+  // feet on floor, centred
+  model.updateWorldMatrix(true, true);
+  const box = new THREE.Box3().setFromObject(model);
+  model.position.x -= (box.min.x + box.max.x) / 2; model.position.z -= (box.min.z + box.max.z) / 2; model.position.y -= box.min.y;
+  const h = box.max.y - box.min.y;
+  camera.position.set(0, h * .55, h * 2.7); controls.target.set(0, h * .55, 0); controls.update();
+  key.shadow.camera.far = h * 12; key.shadow.camera.updateProjectionMatrix();
+  model.traverse(o => { if (o.isMesh) { o.castShadow = true; } });
+  headNode = findHead(model); if (headNode) headBase.copy(headNode.scale);
+  $('head').disabled = !headNode;
+  $('clips').innerHTML = animations.map((c, i) => `<option value="${i}">${c.name || 'clip ' + (i + 1)}</option>`).join('') || '<option>(내장 idle)</option>';
+  if (mixer) playClip(0);
+  $('name').textContent = label;
+}
+function playClip(i) {
+  if (!mixer || !clips[i]) return;
+  if (activeAction) activeAction.stop();
+  activeAction = mixer.clipAction(clips[i]); activeAction.play();
+}
+$('clips').onchange = e => playClip(+e.target.value);
+
+const loader = new GLTFLoader();
+async function loadGLB(buf, label) {
+  const gltf = await loader.parseAsync(buf, '');
+  procedural = null; setModel(gltf.scene, gltf.animations, label || 'Custom · 3D');
+}
+window.loadGLB = loadGLB;
+$('open').onclick = () => $('file').click();
+$('file').onchange = e => e.target.files[0] && e.target.files[0].arrayBuffer().then(b => loadGLB(b, e.target.files[0].name));
+addEventListener('dragover', e => e.preventDefault());
+addEventListener('drop', e => { e.preventDefault(); const f = e.dataTransfer.files[0]; if (f) f.arrayBuffer().then(b => loadGLB(b, f.name)); });
+if (params.get('model')) fetch(params.get('model')).then(r => r.arrayBuffer()).then(b => loadGLB(b, params.get('model')));
+else setModel(buildPlaceholder());
+
+// ---------- sliders ----------
+function pushUI() { $('head').value = state.head; $('body').value = state.body; $('height').value = state.height; }
+for (const k of ['head', 'body', 'height']) $(k).oninput = e => { state[k] = +e.target.value; stopDemo(); };
+$('reset').onclick = () => { stopDemo(); Object.assign(state, DEFAULT, { wave: 0, puff: false }); pushUI(); setLight(0); setBg(0); };
+
+// ---------- demo timeline (same story as the reference video, 20 s loop) ----------
+const DUR = 20;
+const lerp = (pts, p) => { // pts: [[pct, value]]
+  if (p <= pts[0][0]) return pts[0][1];
+  for (let i = 1; i < pts.length; i++) if (p <= pts[i][0]) {
+    const [a, va] = pts[i - 1], [b, vb] = pts[i], u = (p - a) / (b - a), e = u * u * (3 - 2 * u); return va + (vb - va) * e;
+  }
+  return pts[pts.length - 1][1];
+};
+const T = {
+  head: [[0, 1], [15, 1], [22, 1.5], [34, 1.5], [41, 1], [80, 1], [85, .8], [90, .8], [96, 1], [100, 1]],
+  height: [[0, 1], [42, 1], [50, 1.15], [62, 1.15], [70, 1], [100, 1]],
+  body: [[0, 1], [62, 1], [68, 1.3], [78, 1.3], [84, 1], [100, 1]],
+  wave: [[0, 0], [24, 0], [28, 1], [36, 1], [40, 0], [100, 0]],
+};
+const SCENES = [[0, 0, 0], [56, 2, 1], [74, 3, 3], [88, 4, 4], [97, 0, 0]]; // [pct, bg, light]
+let demo = false, demoStart = 0, seekT = null;
+function runDemo(t) {
+  const p = (t % DUR) / DUR * 100;
+  for (const k of ['head', 'height', 'body']) state[k] = lerp(T[k], p);
+  state.wave = lerp(T.wave, p); state.puff = p > 20 && p < 36;
+  let sc = SCENES[0]; for (const s of SCENES) if (p >= s[0]) sc = s;
+  if (sc[1] !== state.bg) setBg(sc[1]); if (sc[2] !== state.light) setLight(sc[2]);
+  pushUI();
+}
+function startDemo() { demo = true; demoStart = clock.getElapsedTime(); $('demo').textContent = '⏹ 데모 멈춤'; }
+function stopDemo() { if (!demo) return; demo = false; state.wave = 0; state.puff = false; $('demo').textContent = '▶ 자동 데모 (영상용 타임라인)'; }
+$('demo').onclick = () => demo ? stopDemo() : startDemo();
+
+// ---------- recording (canvas -> webm) ----------
+let rec = null, chunks = [];
+$('rec').onclick = () => {
+  if (rec) { rec.stop(); return; }
+  const stream = $('c').captureStream(30);
+  rec = new MediaRecorder(stream, { mimeType: 'video/webm;codecs=vp9', videoBitsPerSecond: 12e6 }); chunks = [];
+  rec.ondataavailable = e => chunks.push(e.data);
+  rec.onstop = () => { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob(chunks, { type: 'video/webm' })); a.download = 'character.webm'; a.click(); rec = null; $('rec').textContent = '⏺ 캔버스 녹화 (webm)'; };
+  rec.start(); $('rec').textContent = '⏹ 녹화 중지·저장';
+};
+
+// ---------- loop ----------
+const clock = new THREE.Clock();
+function resize() {
+  const w = innerWidth, h = innerHeight; renderer.setSize(w, h, false);
+  const panel = innerWidth > 700 ? 300 : 0;
+  camera.aspect = w / h; camera.setViewOffset(w, h, panel / 2, 0, w, h); camera.updateProjectionMatrix();
+}
+addEventListener('resize', resize); resize();
+let prevT = 0;
+function frame(t) {
+  if (demo && seekT === null) runDemo(t - demoStart);
+  holder.scale.set(state.body * state.height, state.height, state.body * state.height);
+  if (procedural) procedural(t);
+  if (mixer) { mixer.update(seekT === null ? t - prevT : 0); }
+  prevT = t;
+  if (headNode) headNode.scale.copy(headBase).multiplyScalar(state.head);
+  else if (procedural) { const h = model.getObjectByName('Head'); h.scale.setScalar(state.head); }
+  controls.update(); renderer.render(scene, camera);
+}
+renderer.setAnimationLoop(() => { if (seekT === null) frame(clock.getElapsedTime()); });
+// deterministic hook for tools/render_character3d.js
+window.__seek = t => { seekT = t; runDemo(t); if (mixer) mixer.setTime(t); frame(t); };
+pushUI(); setLight(0); setBg(0);
+</script>
+</body>
+</html>
