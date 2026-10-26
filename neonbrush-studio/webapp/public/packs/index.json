@@ -70,6 +70,20 @@
   "bytes": 2874789
  },
  {
+  "file": "CeladonBrush1CraneCloud.zip",
+  "name": "Celadon Brush 1 CraneCloud",
+  "isColor": true,
+  "glyphs": 67,
+  "bytes": 3076035
+ },
+ {
+  "file": "CeladonBrush4RedPlum.zip",
+  "name": "Celadon Brush 4 RedPlum",
+  "isColor": true,
+  "glyphs": 67,
+  "bytes": 3360626
+ },
+ {
   "file": "CyanNeonAlphabet.zip",
   "name": "Cyan Neon Alphabet",
   "isColor": true,

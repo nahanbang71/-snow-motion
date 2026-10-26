@@ -12,6 +12,8 @@
 | Calligraphy Alphabet | 30 | CalligraphyAlphabet-Regular.ttf, CalligraphyAlphabet-Regular.otf |
 | Calligraphy Alphabet White | 30 | CalligraphyAlphabetWhite-Regular.ttf, CalligraphyAlphabetWhite-Regular.otf |
 | Candy Neon Pastel | 40 | CandyNeonPastel-Regular.ttf, CandyNeonPastel-Regular.otf, CandyNeonPastel-Color.otf |
+| Celadon Brush 1 CraneCloud | 67 | CeladonBrush1CraneCloud-Regular.ttf, CeladonBrush1CraneCloud-Regular.otf, CeladonBrush1CraneCloud-Color.otf |
+| Celadon Brush 4 RedPlum | 67 | CeladonBrush4RedPlum-Regular.ttf, CeladonBrush4RedPlum-Regular.otf, CeladonBrush4RedPlum-Color.otf |
 | Cyan Neon Alphabet | 30 | CyanNeonAlphabet-Regular.ttf, CyanNeonAlphabet-Regular.otf, CyanNeonAlphabet-Color.otf |
 | Doubleline Lime Wash | 40 | DoublelineLimeWash-Regular.ttf, DoublelineLimeWash-Regular.otf, DoublelineLimeWash-Color.otf |
 | Grunge Cyan Splatter | 40 | GrungeCyanSplatter-Regular.ttf, GrungeCyanSplatter-Regular.otf, GrungeCyanSplatter-Color.otf |

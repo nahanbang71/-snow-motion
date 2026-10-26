@@ -1,0 +1,46 @@
+{
+ "family": "Celadon Brush 4 RedPlum",
+ "chars": "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!',.?",
+ "layout": {
+  "mode": "fit",
+  "scale": 0.9641873278236914,
+  "base_px": 882.0,
+  "top_px": 156.0,
+  "centered": true,
+  "cv": 0.051
+ },
+ "is_color": true,
+ "files": {
+  "ttf": "CeladonBrush4RedPlum-Regular.ttf",
+  "otf": "CeladonBrush4RedPlum-Regular.otf",
+  "color": "CeladonBrush4RedPlum-Color.otf"
+ },
+ "glyph_report": {},
+ "notes": [
+  "2 sub folders merged into one font (67 glyphs)"
+ ],
+ "skipped": [
+  "10.png"
+ ],
+ "verify": [
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Celadon Brush 4 RedPlum/CeladonBrush4RedPlum-Regular.ttf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54
+  },
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Celadon Brush 4 RedPlum/CeladonBrush4RedPlum-Regular.otf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54
+  },
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Celadon Brush 4 RedPlum/CeladonBrush4RedPlum-Color.otf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54,
+   "svg_docs": 67
+  }
+ ]
+}
