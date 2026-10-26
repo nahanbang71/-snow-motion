@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720">
+<style>@keyframes bg{0%{fill:#d9d1c5}50%{fill:#d9d1c5}56%{fill:#e8863a}68%{fill:#e8863a}74%{fill:#1e7fe0}84%{fill:#1e7fe0}88%{fill:#8fc7c9}94%{fill:#8fc7c9}99%{fill:#d9d1c5}100%{fill:#d9d1c5}}@keyframes hood{0%{fill:#4a3b33}50%{fill:#4a3b33}56%{fill:#6a3a24}68%{fill:#6a3a24}74%{fill:#17407a}84%{fill:#17407a}88%{fill:#4a3b33}100%{fill:#4a3b33}}@keyframes head{0%{transform:scale(1)}15%{transform:scale(1)}22%{transform:scale(1.45)}34%{transform:scale(1.45)}41%{transform:scale(1)}80%{transform:scale(1)}85%{transform:scale(0.85)}90%{transform:scale(0.85)}96%{transform:scale(1)}100%{transform:scale(1)}}@keyframes tall{0%{transform:scale(1)}42%{transform:scale(1)}50%{transform:scale(1.12)}62%{transform:scale(1.12)}70%{transform:scale(1)}100%{transform:scale(1)}}@keyframes wide{0%{transform:scaleX(1)}62%{transform:scaleX(1)}68%{transform:scaleX(1.25)}78%{transform:scaleX(1.25)}84%{transform:scaleX(1)}100%{transform:scaleX(1)}}@keyframes k_head{0%{transform:translateX(85.8px)}15%{transform:translateX(85.8px)}22%{transform:translateX(215.8px)}34%{transform:translateX(215.8px)}41%{transform:translateX(85.8px)}80%{transform:translateX(85.8px)}85%{transform:translateX(44.2px)}90%{transform:translateX(44.2px)}96%{transform:translateX(85.8px)}100%{transform:translateX(85.8px)}}@keyframes k_body{0%{transform:translateX(85.8px)}62%{transform:translateX(85.8px)}68%{transform:translateX(195.0px)}78%{transform:translateX(195.0px)}84%{transform:translateX(85.8px)}100%{transform:translateX(85.8px)}}@keyframes k_tall{0%{transform:translateX(104.0px)}42%{transform:translateX(104.0px)}50%{transform:translateX(195.0px)}62%{transform:translateX(195.0px)}70%{transform:translateX(104.0px)}100%{transform:translateX(104.0px)}}@keyframes r_beige{0%{opacity:1}52%{opacity:1}56%{opacity:0}96%{opacity:0}99%{opacity:1}100%{opacity:1}}@keyframes r_orange{0%{opacity:0}55%{opacity:0}58%{opacity:1}70%{opacity:1}73%{opacity:0}100%{opacity:0}}@keyframes r_blue{0%{opacity:0}73%{opacity:0}76%{opacity:1}85%{opacity:1}87%{opacity:0}100%{opacity:0}}@keyframes r_teal{0%{opacity:0}87%{opacity:0}89%{opacity:1}95%{opacity:1}97%{opacity:0}100%{opacity:0}}@keyframes m_smile{0%{opacity:1}19%{opacity:1}21%{opacity:0}35%{opacity:0}37%{opacity:1}68%{opacity:1}70%{opacity:0}88%{opacity:0}90%{opacity:1}100%{opacity:1}}@keyframes m_puff{0%{opacity:0}19%{opacity:0}21%{opacity:1}35%{opacity:1}37%{opacity:0}100%{opacity:0}}@keyframes m_smirk{0%{opacity:0}68%{opacity:0}70%{opacity:1}88%{opacity:1}90%{opacity:0}100%{opacity:0}}@keyframes blush{0%{opacity:0.55}20%{opacity:0.55}24%{opacity:1}34%{opacity:1}40%{opacity:0.55}100%{opacity:0.55}}@keyframes arm{0%{transform:rotate(-8deg)}24%{transform:rotate(-8deg)}28%{transform:rotate(-125deg)}30%{transform:rotate(-105deg)}32%{transform:rotate(-125deg)}34%{transform:rotate(-105deg)}36%{transform:rotate(-125deg)}40%{transform:rotate(-8deg)}100%{transform:rotate(-8deg)}}@keyframes blink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}@keyframes breathe{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.018)}}@keyframes tilt{0%,100%{transform:rotate(-2.5deg)}50%{transform:rotate(2.5deg)}}@keyframes look{0%,100%{transform:translateX(-2px)}50%{transform:translateX(3px)}}@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}.bg{animation:bg 20s linear infinite}.hood{animation:hood 20s linear infinite}.tall{transform-origin:400px 640px;animation:tall 20s ease-in-out infinite}.wide{transform-origin:400px 450px;animation:wide 20s ease-in-out infinite}.head{transform-origin:400px 300px;animation:head 20s ease-in-out infinite}.tilt{transform-origin:400px 300px;animation:tilt 4s ease-in-out infinite}.breathe{transform-origin:400px 640px;animation:breathe 3s ease-in-out infinite}.bob{animation:bob 3s ease-in-out infinite}.arm{transform-origin:480px 312px;animation:arm 20s ease-in-out infinite}.eye{transform-origin:0 0;animation:blink 4s ease-in-out infinite}.look{animation:look 6s ease-in-out infinite}.blush{animation:blush 20s ease-in-out infinite}.k_head{animation:k_head 20s ease-in-out infinite}.k_body{animation:k_body 20s ease-in-out infinite}.k_tall{animation:k_tall 20s ease-in-out infinite}.r_beige{animation:r_beige 20s linear infinite}.r_orange{animation:r_orange 20s linear infinite}.r_blue{animation:r_blue 20s linear infinite}.r_teal{animation:r_teal 20s linear infinite}.m_smile{animation:m_smile 20s linear infinite}.m_puff{animation:m_puff 20s linear infinite}.m_smirk{animation:m_smirk 20s linear infinite}text{font-family:Helvetica,Arial,sans-serif;fill:#3a3a3a}</style>
+<defs><radialGradient id="floor" cx=".3" cy=".95" r=".6"><stop offset="0" stop-color="#fff" stop-opacity=".45"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient></defs>
+<rect class="bg" width="1280" height="720" fill="#d9d1c5"/>
+<rect width="1280" height="720" fill="url(#floor)"/>
+
+<ellipse cx="400" cy="640" rx="130" ry="14" fill="#000" opacity=".18"/>
+<g class="tall"><g class="breathe">
+  <g class="wide">
+    <!-- legs -->
+    <path d="M350 440h46v180h-52z" fill="#6b6a3c"/><path d="M404 440h46l8 180h-52z" fill="#6b6a3c"/>
+    <rect x="352" y="520" width="34" height="28" rx="5" fill="#5c5b33"/><rect x="414" y="520" width="34" height="28" rx="5" fill="#5c5b33"/>
+    <ellipse cx="338" cy="628" rx="34" ry="14" fill="#e8e4dc"/><ellipse cx="470" cy="628" rx="34" ry="14" fill="#e8e4dc"/>
+    <rect x="310" y="618" width="52" height="8" rx="4" fill="#9a8f80"/><rect x="444" y="618" width="52" height="8" rx="4" fill="#9a8f80"/>
+    <!-- left arm (hand in pocket) -->
+    <path class="hood" d="M324 316c-26 8-30 60-20 120l34 8c-2-40 4-80 14-110z"/>
+    <!-- hoodie -->
+    <rect class="hood" x="320" y="290" width="160" height="170" rx="46"/>
+    <path d="M360 292q40 34 80 0l6 14q-46 44-92 0z" fill="#000" opacity=".18"/>
+    <path d="M388 330v46M412 330v46" stroke="#e9dfd2" stroke-width="3" stroke-linecap="round"/>
+    <path d="M340 410q60 30 120 0v30q-60 26-120 0z" fill="#000" opacity=".12"/>
+  </g>
+  <!-- right arm: waves -->
+  <g class="arm">
+    <rect class="hood" x="466" y="296" width="38" height="132" rx="19"/>
+    <circle cx="485" cy="440" r="19" fill="#f3c8a8"/>
+  </g>
+  <!-- head -->
+  <g class="bob"><g class="tilt"><g class="head">
+    <rect x="388" y="262" width="24" height="44" fill="#e3b494"/>
+    <path d="M318 215c-4-70 40-104 82-104s86 34 82 104c4 40 0 80 10 96-24 14-52 8-62-14H370c-10 22-38 28-62 14 10-16 6-56 10-96z" fill="#3a2a24"/>
+    <ellipse cx="400" cy="214" rx="74" ry="82" fill="#f3c8a8"/>
+    <!-- bangs -->
+    <path d="M326 190c20-28 52-36 74-34 30 0 56 12 74 38-22-8-46-12-74-10-30 0-52 4-74 6z" fill="#3a2a24"/>
+    <!-- cap -->
+    <path d="M326 168c-4-56 34-84 76-84s80 28 74 84c-26-12-50-16-76-16s-50 4-74 16z" fill="#5a4036"/>
+    <path d="M318 170q82-26 164 0l-6 12q-76-20-152 0z" fill="#3e2b24"/>
+    <circle cx="372" cy="128" r="7" fill="#e9dfd2" opacity=".85"/>
+    <!-- eyes -->
+    <g class="look">
+      <g transform="translate(366 218)"><g class="eye"><ellipse rx="13" ry="15" fill="#fff"/><circle r="9" fill="#3a2418"/><circle cx="3" cy="-4" r="3" fill="#fff"/></g></g>
+      <g transform="translate(434 218)"><g class="eye"><ellipse rx="13" ry="15" fill="#fff"/><circle r="9" fill="#3a2418"/><circle cx="3" cy="-4" r="3" fill="#fff"/></g></g>
+    </g>
+    <path d="M350 196q16-10 32 0M418 196q16-10 32 0" stroke="#3a2a24" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <g class="blush"><ellipse cx="346" cy="250" rx="20" ry="13" fill="#ef6f78"/><ellipse cx="454" cy="250" rx="20" ry="13" fill="#ef6f78"/></g>
+    <!-- mouths -->
+    <path class="m_smile" d="M384 262q16 14 32 0" stroke="#a0463e" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <ellipse class="m_puff" cx="400" cy="266" rx="7" ry="9" fill="#c4584f"/>
+    <path class="m_smirk" d="M384 266q20 8 34-6" stroke="#a0463e" stroke-width="4" fill="none" stroke-linecap="round"/>
+  </g></g></g>
+</g></g>
+<g><text x="880" y="70" font-size="30" font-weight="800" opacity=".85">Magnific</text><text x="880" y="150" font-size="11" opacity=".6">Character Builder</text><text x="880" y="170" font-size="16" font-weight="700">Nieve · 2D</text><text x="880" y="198" font-size="14" font-weight="600">Head size</text>
+<rect x="880" y="210" width="260" height="4" rx="2" fill="#3a3a3a" opacity=".35"/>
+<circle class="k_head" cx="880" cy="212" r="8" fill="#3a3a3a"/>
+<text x="880" y="234" font-size="11" opacity=".6">Smaller</text>
+<text x="1140" y="234" font-size="11" opacity=".6" text-anchor="end">Bigger</text><text x="880" y="278" font-size="14" font-weight="600">Body shape</text>
+<rect x="880" y="290" width="260" height="4" rx="2" fill="#3a3a3a" opacity=".35"/>
+<circle class="k_body" cx="880" cy="292" r="8" fill="#3a3a3a"/>
+<text x="880" y="314" font-size="11" opacity=".6">Lean</text>
+<text x="1140" y="314" font-size="11" opacity=".6" text-anchor="end">Stocky</text><text x="880" y="358" font-size="14" font-weight="600">Height</text>
+<rect x="880" y="370" width="260" height="4" rx="2" fill="#3a3a3a" opacity=".35"/>
+<circle class="k_tall" cx="880" cy="372" r="8" fill="#3a3a3a"/>
+<text x="880" y="394" font-size="11" opacity=".6">Shorter</text>
+<text x="1140" y="394" font-size="11" opacity=".6" text-anchor="end">Taller</text><text x="880" y="438" font-size="13" font-weight="600">Colour / lighting</text><circle cx="890" cy="460" r="11" fill="#ffffff" stroke="#3a3a3a" stroke-opacity=".2"/><circle cx="924" cy="460" r="11" fill="#f28c28" stroke="#3a3a3a" stroke-opacity=".2"/><circle cx="958" cy="460" r="11" fill="#f6c945" stroke="#3a3a3a" stroke-opacity=".2"/><circle cx="992" cy="460" r="11" fill="#ec4899" stroke="#3a3a3a" stroke-opacity=".2"/><circle cx="1026" cy="460" r="11" fill="#8b5cf6" stroke="#3a3a3a" stroke-opacity=".2"/><circle cx="1060" cy="460" r="11" fill="#3b82f6" stroke="#3a3a3a" stroke-opacity=".2"/><text x="880" y="508" font-size="13" font-weight="600">Background</text><circle cx="890" cy="530" r="11" fill="#d9d1c5" stroke="#3a3a3a" stroke-opacity=".2"/><circle class="r_beige" cx="890" cy="530" r="15" fill="none" stroke="#3a3a3a" stroke-width="2"/><circle cx="924" cy="530" r="11" fill="#ffffff" stroke="#3a3a3a" stroke-opacity=".2"/><circle cx="958" cy="530" r="11" fill="#e8863a" stroke="#3a3a3a" stroke-opacity=".2"/><circle class="r_orange" cx="958" cy="530" r="15" fill="none" stroke="#3a3a3a" stroke-width="2"/><circle cx="992" cy="530" r="11" fill="#1e7fe0" stroke="#3a3a3a" stroke-opacity=".2"/><circle class="r_blue" cx="992" cy="530" r="15" fill="none" stroke="#3a3a3a" stroke-width="2"/><circle cx="1026" cy="530" r="11" fill="#8fc7c9" stroke="#3a3a3a" stroke-opacity=".2"/><circle class="r_teal" cx="1026" cy="530" r="15" fill="none" stroke="#3a3a3a" stroke-width="2"/><circle cx="1060" cy="530" r="11" fill="#7fb069" stroke="#3a3a3a" stroke-opacity=".2"/><circle cx="1094" cy="530" r="11" fill="#f2c14e" stroke="#3a3a3a" stroke-opacity=".2"/><rect x="880" y="580" width="260" height="30" rx="15" fill="none" stroke="#3a3a3a" stroke-opacity=".5"/><text x="1010" y="600" font-size="12" text-anchor="middle">Back to original</text></g>
+</svg>
