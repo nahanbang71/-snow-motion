@@ -5,7 +5,7 @@
 
 ```
 neonbrush-studio/
-├─ packs/                 원본 .zip 글자 팩 + pack_overrides.json(파일명/내용 불일치 보정표)
+├─ packs/                 pack_overrides.json(파일명/내용 불일치 보정표). 원본 .zip은 용량 때문에 삭제함(아래 '원본 zip 복구' 참고)
 ├─ pipeline/              Part 1: PNG → 폰트 변환 파이프라인 (Python)
 │   ├─ build_fonts.py       ← 한 번에 전부 변환하는 배치 스크립트
 │   └─ nbfont/              naming · packs · clean · layout · vector · build · verify · specimen · webpack
@@ -15,6 +15,14 @@ neonbrush-studio/
 ├─ samples/               테스트용 샘플 PNG/zip 생성기
 └─ tests/                 test_pipeline.py (단위/빌드 검증) · e2e.mjs (브라우저 전체 시나리오)
 ```
+
+## 원본 zip 복구
+원본 글자 팩 zip(46개)은 작업이 끝난 뒤 작업 폴더에서 삭제했습니다. 변환 결과(`output_fonts/`, `webapp/public/packs/`)는 그대로 있고,
+원본이 다시 필요하면 git 기록에서 꺼낼 수 있습니다(마지막으로 모두 들어 있던 커밋 `be1f373`):
+```bash
+git checkout be1f373 -- neonbrush-studio/packs      # packs/*.zip 복원
+```
+새 팩은 평소처럼 `packs/`에 넣고 변환하면 됩니다. 폰트를 다시 만들 때는 원본 zip이 필요하고, `ALPHABET_V2.zip`은 `pack_overrides.json`과 함께 있어야 합니다.
 
 ## 빠른 시작 (새 zip 5개를 받을 때마다 이 순서)
 
