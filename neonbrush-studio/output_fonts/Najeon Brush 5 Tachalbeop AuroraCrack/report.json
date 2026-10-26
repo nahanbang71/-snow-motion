@@ -1,0 +1,46 @@
+{
+ "family": "Najeon Brush 5 Tachalbeop AuroraCrack",
+ "chars": "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!#$%&'()*+,-./:=?@~₩",
+ "layout": {
+  "mode": "fit",
+  "scale": 0.9688581314878892,
+  "base_px": 875.0,
+  "top_px": 152.5,
+  "centered": true,
+  "cv": 0.012
+ },
+ "is_color": true,
+ "files": {
+  "ttf": "NajeonBrush5TachalbeopAuroraCrack-Regular.ttf",
+  "otf": "NajeonBrush5TachalbeopAuroraCrack-Regular.otf",
+  "color": "NajeonBrush5TachalbeopAuroraCrack-Color.otf"
+ },
+ "glyph_report": {},
+ "notes": [
+  "3 sub folders merged into one font (82 glyphs)"
+ ],
+ "skipped": [
+  "10.png"
+ ],
+ "verify": [
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Najeon Brush 5 Tachalbeop AuroraCrack/NajeonBrush5TachalbeopAuroraCrack-Regular.ttf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54
+  },
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Najeon Brush 5 Tachalbeop AuroraCrack/NajeonBrush5TachalbeopAuroraCrack-Regular.otf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54
+  },
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Najeon Brush 5 Tachalbeop AuroraCrack/NajeonBrush5TachalbeopAuroraCrack-Color.otf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54,
+   "svg_docs": 82
+  }
+ ]
+}

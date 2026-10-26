@@ -1,0 +1,46 @@
+{
+ "family": "Najeon Brush 3 Kkeuneumjil Geometric",
+ "chars": "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!#$%&'()*+,-./:=?@~₩",
+ "layout": {
+  "mode": "fit",
+  "scale": 0.9556313993174061,
+  "base_px": 879.75,
+  "top_px": 147.25,
+  "centered": true,
+  "cv": 0.045
+ },
+ "is_color": true,
+ "files": {
+  "ttf": "NajeonBrush3KkeuneumjilGeometric-Regular.ttf",
+  "otf": "NajeonBrush3KkeuneumjilGeometric-Regular.otf",
+  "color": "NajeonBrush3KkeuneumjilGeometric-Color.otf"
+ },
+ "glyph_report": {},
+ "notes": [
+  "3 sub folders merged into one font (82 glyphs)"
+ ],
+ "skipped": [
+  "10.png"
+ ],
+ "verify": [
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Najeon Brush 3 Kkeuneumjil Geometric/NajeonBrush3KkeuneumjilGeometric-Regular.ttf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54
+  },
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Najeon Brush 3 Kkeuneumjil Geometric/NajeonBrush3KkeuneumjilGeometric-Regular.otf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54
+  },
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Najeon Brush 3 Kkeuneumjil Geometric/NajeonBrush3KkeuneumjilGeometric-Color.otf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54,
+   "svg_docs": 82
+  }
+ ]
+}

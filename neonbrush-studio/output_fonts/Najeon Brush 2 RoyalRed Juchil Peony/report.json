@@ -1,0 +1,46 @@
+{
+ "family": "Najeon Brush 2 RoyalRed Juchil Peony",
+ "chars": "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!#$%&'()*+,-./:=?@~₩",
+ "layout": {
+  "mode": "fit",
+  "scale": 0.9497964721845319,
+  "base_px": 885.75,
+  "top_px": 148.75,
+  "centered": true,
+  "cv": 0.033
+ },
+ "is_color": true,
+ "files": {
+  "ttf": "NajeonBrush2RoyalRedJuchilPeony-Regular.ttf",
+  "otf": "NajeonBrush2RoyalRedJuchilPeony-Regular.otf",
+  "color": "NajeonBrush2RoyalRedJuchilPeony-Color.otf"
+ },
+ "glyph_report": {},
+ "notes": [
+  "3 sub folders merged into one font (82 glyphs)"
+ ],
+ "skipped": [
+  "10.png"
+ ],
+ "verify": [
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Najeon Brush 2 RoyalRed Juchil Peony/NajeonBrush2RoyalRedJuchilPeony-Regular.ttf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54
+  },
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Najeon Brush 2 RoyalRed Juchil Peony/NajeonBrush2RoyalRedJuchilPeony-Regular.otf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54
+  },
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Najeon Brush 2 RoyalRed Juchil Peony/NajeonBrush2RoyalRedJuchilPeony-Color.otf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54,
+   "svg_docs": 82
+  }
+ ]
+}

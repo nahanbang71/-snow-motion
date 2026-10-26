@@ -147,6 +147,34 @@
   "bytes": 1797736
  },
  {
+  "file": "NajeonBrush1BlackLacquerSipjangsaeng.zip",
+  "name": "Najeon Brush 1 BlackLacquer Sipjangsaeng",
+  "isColor": true,
+  "glyphs": 82,
+  "bytes": 4712564
+ },
+ {
+  "file": "NajeonBrush2RoyalRedJuchilPeony.zip",
+  "name": "Najeon Brush 2 RoyalRed Juchil Peony",
+  "isColor": true,
+  "glyphs": 82,
+  "bytes": 4114778
+ },
+ {
+  "file": "NajeonBrush3KkeuneumjilGeometric.zip",
+  "name": "Najeon Brush 3 Kkeuneumjil Geometric",
+  "isColor": true,
+  "glyphs": 82,
+  "bytes": 4495456
+ },
+ {
+  "file": "NajeonBrush5TachalbeopAuroraCrack.zip",
+  "name": "Najeon Brush 5 Tachalbeop AuroraCrack",
+  "isColor": true,
+  "glyphs": 82,
+  "bytes": 4386565
+ },
+ {
   "file": "NeonbrushSample1DualCyanPink.zip",
   "name": "Neonbrush Sample1 Dual Cyan Pink",
   "isColor": true,

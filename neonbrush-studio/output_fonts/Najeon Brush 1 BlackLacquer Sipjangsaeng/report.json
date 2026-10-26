@@ -1,0 +1,46 @@
+{
+ "family": "Najeon Brush 1 BlackLacquer Sipjangsaeng",
+ "chars": "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!#$%&'()*+,-./:=?@~₩",
+ "layout": {
+  "mode": "fit",
+  "scale": 0.9491525423728814,
+  "base_px": 880.75,
+  "top_px": 143.25,
+  "centered": true,
+  "cv": 0.017
+ },
+ "is_color": true,
+ "files": {
+  "ttf": "NajeonBrush1BlackLacquerSipjangsaeng-Regular.ttf",
+  "otf": "NajeonBrush1BlackLacquerSipjangsaeng-Regular.otf",
+  "color": "NajeonBrush1BlackLacquerSipjangsaeng-Color.otf"
+ },
+ "glyph_report": {},
+ "notes": [
+  "3 sub folders merged into one font (82 glyphs)"
+ ],
+ "skipped": [
+  "10.png"
+ ],
+ "verify": [
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Najeon Brush 1 BlackLacquer Sipjangsaeng/NajeonBrush1BlackLacquerSipjangsaeng-Regular.ttf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54
+  },
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Najeon Brush 1 BlackLacquer Sipjangsaeng/NajeonBrush1BlackLacquerSipjangsaeng-Regular.otf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54
+  },
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Najeon Brush 1 BlackLacquer Sipjangsaeng/NajeonBrush1BlackLacquerSipjangsaeng-Color.otf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54,
+   "svg_docs": 82
+  }
+ ]
+}

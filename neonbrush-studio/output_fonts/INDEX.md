@@ -23,6 +23,10 @@
 | Kstyle2 Dancheong Hanok Eaves | 40 | Kstyle2DancheongHanokEaves-Regular.ttf, Kstyle2DancheongHanokEaves-Regular.otf, Kstyle2DancheongHanokEaves-Color.otf |
 | Kstyle4 Celadon Outline Full41 | 40 | Kstyle4CeladonOutlineFull41-Regular.ttf, Kstyle4CeladonOutlineFull41-Regular.otf, Kstyle4CeladonOutlineFull41-Color.otf |
 | Kstyle4 Goryeo Celadon Crane Cloud | 40 | Kstyle4GoryeoCeladonCraneCloud-Regular.ttf, Kstyle4GoryeoCeladonCraneCloud-Regular.otf, Kstyle4GoryeoCeladonCraneCloud-Color.otf |
+| Najeon Brush 1 BlackLacquer Sipjangsaeng | 82 | NajeonBrush1BlackLacquerSipjangsaeng-Regular.ttf, NajeonBrush1BlackLacquerSipjangsaeng-Regular.otf, NajeonBrush1BlackLacquerSipjangsaeng-Color.otf |
+| Najeon Brush 2 RoyalRed Juchil Peony | 82 | NajeonBrush2RoyalRedJuchilPeony-Regular.ttf, NajeonBrush2RoyalRedJuchilPeony-Regular.otf, NajeonBrush2RoyalRedJuchilPeony-Color.otf |
+| Najeon Brush 3 Kkeuneumjil Geometric | 82 | NajeonBrush3KkeuneumjilGeometric-Regular.ttf, NajeonBrush3KkeuneumjilGeometric-Regular.otf, NajeonBrush3KkeuneumjilGeometric-Color.otf |
+| Najeon Brush 5 Tachalbeop AuroraCrack | 82 | NajeonBrush5TachalbeopAuroraCrack-Regular.ttf, NajeonBrush5TachalbeopAuroraCrack-Regular.otf, NajeonBrush5TachalbeopAuroraCrack-Color.otf |
 | Neonbrush Sample1 Dual Cyan Pink | 40 | NeonbrushSample1DualCyanPink-Regular.ttf, NeonbrushSample1DualCyanPink-Regular.otf, NeonbrushSample1DualCyanPink-Color.otf |
 | Neonbrush Sample2 Tube Splatter | 40 | NeonbrushSample2TubeSplatter-Regular.ttf, NeonbrushSample2TubeSplatter-Regular.otf, NeonbrushSample2TubeSplatter-Color.otf |
 | Neonbrush Sample4 Prism Rainbow | 40 | NeonbrushSample4PrismRainbow-Regular.ttf, NeonbrushSample4PrismRainbow-Regular.otf, NeonbrushSample4PrismRainbow-Color.otf |
