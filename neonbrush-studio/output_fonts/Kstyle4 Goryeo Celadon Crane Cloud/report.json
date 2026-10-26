@@ -1,0 +1,44 @@
+{
+ "family": "Kstyle4 Goryeo Celadon Crane Cloud",
+ "chars": "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!',?",
+ "layout": {
+  "mode": "canvas",
+  "scale": 0.9866102889358703,
+  "base_px": 872.0,
+  "top_px": 162.5,
+  "centered": true,
+  "cv": 0.079
+ },
+ "is_color": true,
+ "files": {
+  "ttf": "Kstyle4GoryeoCeladonCraneCloud-Regular.ttf",
+  "otf": "Kstyle4GoryeoCeladonCraneCloud-Regular.otf",
+  "color": "Kstyle4GoryeoCeladonCraneCloud-Color.otf"
+ },
+ "glyph_report": {},
+ "notes": [],
+ "skipped": [
+  "10.png"
+ ],
+ "verify": [
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Kstyle4 Goryeo Celadon Crane Cloud/Kstyle4GoryeoCeladonCraneCloud-Regular.ttf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54
+  },
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Kstyle4 Goryeo Celadon Crane Cloud/Kstyle4GoryeoCeladonCraneCloud-Regular.otf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54
+  },
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Kstyle4 Goryeo Celadon Crane Cloud/Kstyle4GoryeoCeladonCraneCloud-Color.otf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54,
+   "svg_docs": 40
+  }
+ ]
+}

@@ -1,0 +1,44 @@
+{
+ "family": "Kstyle1 Najeonchilgi Mother Of Pearl",
+ "chars": "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!&',?@",
+ "layout": {
+  "mode": "fit",
+  "scale": 0.9728978457261988,
+  "base_px": 872.75,
+  "top_px": 153.25,
+  "centered": true,
+  "cv": 0.019
+ },
+ "is_color": true,
+ "files": {
+  "ttf": "Kstyle1NajeonchilgiMotherOfPearl-Regular.ttf",
+  "otf": "Kstyle1NajeonchilgiMotherOfPearl-Regular.otf",
+  "color": "Kstyle1NajeonchilgiMotherOfPearl-Color.otf"
+ },
+ "glyph_report": {},
+ "notes": [],
+ "skipped": [
+  "10.png"
+ ],
+ "verify": [
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Kstyle1 Najeonchilgi Mother Of Pearl/Kstyle1NajeonchilgiMotherOfPearl-Regular.ttf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54
+  },
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Kstyle1 Najeonchilgi Mother Of Pearl/Kstyle1NajeonchilgiMotherOfPearl-Regular.otf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54
+  },
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Kstyle1 Najeonchilgi Mother Of Pearl/Kstyle1NajeonchilgiMotherOfPearl-Color.otf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54,
+   "svg_docs": 42
+  }
+ ]
+}

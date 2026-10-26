@@ -1,0 +1,44 @@
+{
+ "family": "Kstyle4 Celadon Outline Full41",
+ "chars": "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!',?",
+ "layout": {
+  "mode": "fit",
+  "scale": 0.9655172413793104,
+  "base_px": 878.75,
+  "top_px": 153.75,
+  "centered": true,
+  "cv": 0.039
+ },
+ "is_color": true,
+ "files": {
+  "ttf": "Kstyle4CeladonOutlineFull41-Regular.ttf",
+  "otf": "Kstyle4CeladonOutlineFull41-Regular.otf",
+  "color": "Kstyle4CeladonOutlineFull41-Color.otf"
+ },
+ "glyph_report": {},
+ "notes": [],
+ "skipped": [
+  "10.png"
+ ],
+ "verify": [
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Kstyle4 Celadon Outline Full41/Kstyle4CeladonOutlineFull41-Regular.ttf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54
+  },
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Kstyle4 Celadon Outline Full41/Kstyle4CeladonOutlineFull41-Regular.otf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54
+  },
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Kstyle4 Celadon Outline Full41/Kstyle4CeladonOutlineFull41-Color.otf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54,
+   "svg_docs": 40
+  }
+ ]
+}
