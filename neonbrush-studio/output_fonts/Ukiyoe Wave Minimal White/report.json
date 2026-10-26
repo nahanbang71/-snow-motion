@@ -1,0 +1,36 @@
+{
+ "family": "Ukiyoe Wave Minimal White",
+ "chars": "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!',?",
+ "layout": {
+  "mode": "canvas",
+  "scale": 0.9289980092899801,
+  "base_px": 888.75,
+  "top_px": 135.25,
+  "centered": true,
+  "cv": 0.057
+ },
+ "is_color": false,
+ "files": {
+  "ttf": "UkiyoeWaveMinimalWhite-Regular.ttf",
+  "otf": "UkiyoeWaveMinimalWhite-Regular.otf"
+ },
+ "glyph_report": {},
+ "notes": [],
+ "skipped": [
+  "10.png"
+ ],
+ "verify": [
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Ukiyoe Wave Minimal White/UkiyoeWaveMinimalWhite-Regular.ttf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54
+  },
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Ukiyoe Wave Minimal White/UkiyoeWaveMinimalWhite-Regular.otf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54
+  }
+ ]
+}

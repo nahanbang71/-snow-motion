@@ -1,0 +1,34 @@
+{
+ "family": "Sumi Brush Alphabet White",
+ "chars": "ABCDEFGHIJKLMNOPQRSTUVWXYZ!',?",
+ "layout": {
+  "mode": "fit",
+  "scale": 0.8717310087173101,
+  "base_px": 913.0,
+  "top_px": 110.0,
+  "centered": true,
+  "cv": 0.026
+ },
+ "is_color": false,
+ "files": {
+  "ttf": "SumiBrushAlphabetWhite-Regular.ttf",
+  "otf": "SumiBrushAlphabetWhite-Regular.otf"
+ },
+ "glyph_report": {},
+ "notes": [],
+ "skipped": [],
+ "verify": [
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Sumi Brush Alphabet White/SumiBrushAlphabetWhite-Regular.ttf",
+   "ok": true,
+   "errors": [],
+   "shaped": 44
+  },
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Sumi Brush Alphabet White/SumiBrushAlphabetWhite-Regular.otf",
+   "ok": true,
+   "errors": [],
+   "shaped": 44
+  }
+ ]
+}

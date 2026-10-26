@@ -1,0 +1,36 @@
+{
+ "family": "Slanted Bamboo White",
+ "chars": "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!',?",
+ "layout": {
+  "mode": "canvas",
+  "scale": 0.9523809523809523,
+  "base_px": 879.5,
+  "top_px": 144.5,
+  "centered": true,
+  "cv": 0.063
+ },
+ "is_color": false,
+ "files": {
+  "ttf": "SlantedBambooWhite-Regular.ttf",
+  "otf": "SlantedBambooWhite-Regular.otf"
+ },
+ "glyph_report": {},
+ "notes": [],
+ "skipped": [
+  "10.png"
+ ],
+ "verify": [
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Slanted Bamboo White/SlantedBambooWhite-Regular.ttf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54
+  },
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Slanted Bamboo White/SlantedBambooWhite-Regular.otf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54
+  }
+ ]
+}

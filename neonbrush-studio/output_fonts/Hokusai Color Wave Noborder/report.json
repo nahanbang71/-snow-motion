@@ -1,0 +1,44 @@
+{
+ "family": "Hokusai Color Wave Noborder",
+ "chars": "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!',?",
+ "layout": {
+  "mode": "canvas",
+  "scale": 0.933955970647098,
+  "base_px": 886.25,
+  "top_px": 136.75,
+  "centered": true,
+  "cv": 0.07
+ },
+ "is_color": true,
+ "files": {
+  "ttf": "HokusaiColorWaveNoborder-Regular.ttf",
+  "otf": "HokusaiColorWaveNoborder-Regular.otf",
+  "color": "HokusaiColorWaveNoborder-Color.otf"
+ },
+ "glyph_report": {},
+ "notes": [],
+ "skipped": [
+  "10.png"
+ ],
+ "verify": [
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Hokusai Color Wave Noborder/HokusaiColorWaveNoborder-Regular.ttf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54
+  },
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Hokusai Color Wave Noborder/HokusaiColorWaveNoborder-Regular.otf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54
+  },
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Hokusai Color Wave Noborder/HokusaiColorWaveNoborder-Color.otf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54,
+   "svg_docs": 40
+  }
+ ]
+}

@@ -1,0 +1,37 @@
+{
+ "family": "Sporty Doublebar Inline",
+ "chars": "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!',?",
+ "layout": {
+  "mode": "fit",
+  "scale": 0.9032258064516129,
+  "base_px": 899.5,
+  "top_px": 124.5,
+  "centered": true,
+  "cv": 0.046
+ },
+ "is_color": false,
+ "files": {
+  "ttf": "SportyDoublebarInline-Regular.ttf",
+  "otf": "SportyDoublebarInline-Regular.otf"
+ },
+ "glyph_report": {},
+ "notes": [],
+ "skipped": [
+  "10.png",
+  "11.png"
+ ],
+ "verify": [
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Sporty Doublebar Inline/SportyDoublebarInline-Regular.ttf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54
+  },
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Sporty Doublebar Inline/SportyDoublebarInline-Regular.otf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54
+  }
+ ]
+}

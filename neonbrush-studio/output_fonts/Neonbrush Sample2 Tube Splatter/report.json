@@ -1,0 +1,44 @@
+{
+ "family": "Neonbrush Sample2 Tube Splatter",
+ "chars": "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!',?",
+ "layout": {
+  "mode": "canvas",
+  "scale": 0.8647313156269302,
+  "base_px": 915.5,
+  "top_px": 106.0,
+  "centered": false,
+  "cv": 0.061
+ },
+ "is_color": true,
+ "files": {
+  "ttf": "NeonbrushSample2TubeSplatter-Regular.ttf",
+  "otf": "NeonbrushSample2TubeSplatter-Regular.otf",
+  "color": "NeonbrushSample2TubeSplatter-Color.otf"
+ },
+ "glyph_report": {},
+ "notes": [],
+ "skipped": [
+  "10.png"
+ ],
+ "verify": [
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Neonbrush Sample2 Tube Splatter/NeonbrushSample2TubeSplatter-Regular.ttf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54
+  },
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Neonbrush Sample2 Tube Splatter/NeonbrushSample2TubeSplatter-Regular.otf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54
+  },
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Neonbrush Sample2 Tube Splatter/NeonbrushSample2TubeSplatter-Color.otf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54,
+   "svg_docs": 40
+  }
+ ]
+}

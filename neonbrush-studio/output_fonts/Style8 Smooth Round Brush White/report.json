@@ -1,0 +1,36 @@
+{
+ "family": "Style8 Smooth Round Brush White",
+ "chars": "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!',?",
+ "layout": {
+  "mode": "canvas",
+  "scale": 1.0263929618768328,
+  "base_px": 853.25,
+  "top_px": 171.25,
+  "centered": true,
+  "cv": 0.125
+ },
+ "is_color": false,
+ "files": {
+  "ttf": "Style8SmoothRoundBrushWhite-Regular.ttf",
+  "otf": "Style8SmoothRoundBrushWhite-Regular.otf"
+ },
+ "glyph_report": {},
+ "notes": [],
+ "skipped": [
+  "10.png"
+ ],
+ "verify": [
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Style8 Smooth Round Brush White/Style8SmoothRoundBrushWhite-Regular.ttf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54
+  },
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Style8 Smooth Round Brush White/Style8SmoothRoundBrushWhite-Regular.otf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54
+  }
+ ]
+}

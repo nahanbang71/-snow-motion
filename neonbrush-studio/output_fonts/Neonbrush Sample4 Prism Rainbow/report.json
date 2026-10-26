@@ -1,0 +1,44 @@
+{
+ "family": "Neonbrush Sample4 Prism Rainbow",
+ "chars": "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!',?",
+ "layout": {
+  "mode": "canvas",
+  "scale": 0.9289980092899801,
+  "base_px": 887.5,
+  "top_px": 134.0,
+  "centered": false,
+  "cv": 0.059
+ },
+ "is_color": true,
+ "files": {
+  "ttf": "NeonbrushSample4PrismRainbow-Regular.ttf",
+  "otf": "NeonbrushSample4PrismRainbow-Regular.otf",
+  "color": "NeonbrushSample4PrismRainbow-Color.otf"
+ },
+ "glyph_report": {},
+ "notes": [],
+ "skipped": [
+  "10.png"
+ ],
+ "verify": [
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Neonbrush Sample4 Prism Rainbow/NeonbrushSample4PrismRainbow-Regular.ttf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54
+  },
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Neonbrush Sample4 Prism Rainbow/NeonbrushSample4PrismRainbow-Regular.otf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54
+  },
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Neonbrush Sample4 Prism Rainbow/NeonbrushSample4PrismRainbow-Color.otf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54,
+   "svg_docs": 40
+  }
+ ]
+}

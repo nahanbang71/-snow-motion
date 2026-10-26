@@ -1,0 +1,36 @@
+{
+ "family": "Style9 Sharp Slash Brush White",
+ "chars": "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!',?",
+ "layout": {
+  "mode": "fit",
+  "scale": 0.812536273940801,
+  "base_px": 942.75,
+  "top_px": 81.25,
+  "centered": true,
+  "cv": 0.035
+ },
+ "is_color": false,
+ "files": {
+  "ttf": "Style9SharpSlashBrushWhite-Regular.ttf",
+  "otf": "Style9SharpSlashBrushWhite-Regular.otf"
+ },
+ "glyph_report": {},
+ "notes": [],
+ "skipped": [
+  "10.png"
+ ],
+ "verify": [
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Style9 Sharp Slash Brush White/Style9SharpSlashBrushWhite-Regular.ttf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54
+  },
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Style9 Sharp Slash Brush White/Style9SharpSlashBrushWhite-Regular.otf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54
+  }
+ ]
+}

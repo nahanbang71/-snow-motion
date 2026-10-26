@@ -1,0 +1,44 @@
+{
+ "family": "Katana Sword Wind Neon Star",
+ "chars": "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!',?",
+ "layout": {
+  "mode": "canvas",
+  "scale": 0.8866371120962635,
+  "base_px": 906.75,
+  "top_px": 117.25,
+  "centered": true,
+  "cv": 0.065
+ },
+ "is_color": true,
+ "files": {
+  "ttf": "KatanaSwordWindNeonStar-Regular.ttf",
+  "otf": "KatanaSwordWindNeonStar-Regular.otf",
+  "color": "KatanaSwordWindNeonStar-Color.otf"
+ },
+ "glyph_report": {},
+ "notes": [],
+ "skipped": [
+  "10.png"
+ ],
+ "verify": [
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Katana Sword Wind Neon Star/KatanaSwordWindNeonStar-Regular.ttf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54
+  },
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Katana Sword Wind Neon Star/KatanaSwordWindNeonStar-Regular.otf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54
+  },
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Katana Sword Wind Neon Star/KatanaSwordWindNeonStar-Color.otf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54,
+   "svg_docs": 40
+  }
+ ]
+}

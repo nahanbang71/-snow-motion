@@ -1,0 +1,36 @@
+{
+ "family": "Katana Sword Wind White",
+ "chars": "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!',?",
+ "layout": {
+  "mode": "canvas",
+  "scale": 0.899165061014772,
+  "base_px": 901.25,
+  "top_px": 122.75,
+  "centered": true,
+  "cv": 0.068
+ },
+ "is_color": false,
+ "files": {
+  "ttf": "KatanaSwordWindWhite-Regular.ttf",
+  "otf": "KatanaSwordWindWhite-Regular.otf"
+ },
+ "glyph_report": {},
+ "notes": [],
+ "skipped": [
+  "10.png"
+ ],
+ "verify": [
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Katana Sword Wind White/KatanaSwordWindWhite-Regular.ttf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54
+  },
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Katana Sword Wind White/KatanaSwordWindWhite-Regular.otf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54
+  }
+ ]
+}

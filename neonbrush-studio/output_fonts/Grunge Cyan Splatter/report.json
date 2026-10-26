@@ -1,0 +1,44 @@
+{
+ "family": "Grunge Cyan Splatter",
+ "chars": "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!',?",
+ "layout": {
+  "mode": "canvas",
+  "scale": 0.8860759493670886,
+  "base_px": 909.0,
+  "top_px": 119.0,
+  "centered": false,
+  "cv": 0.041
+ },
+ "is_color": true,
+ "files": {
+  "ttf": "GrungeCyanSplatter-Regular.ttf",
+  "otf": "GrungeCyanSplatter-Regular.otf",
+  "color": "GrungeCyanSplatter-Color.otf"
+ },
+ "glyph_report": {},
+ "notes": [],
+ "skipped": [
+  "10.png"
+ ],
+ "verify": [
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Grunge Cyan Splatter/GrungeCyanSplatter-Regular.ttf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54
+  },
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Grunge Cyan Splatter/GrungeCyanSplatter-Regular.otf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54
+  },
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Grunge Cyan Splatter/GrungeCyanSplatter-Color.otf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54,
+   "svg_docs": 40
+  }
+ ]
+}

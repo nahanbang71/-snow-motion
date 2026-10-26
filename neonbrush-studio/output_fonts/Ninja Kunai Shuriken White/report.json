@@ -1,0 +1,36 @@
+{
+ "family": "Ninja Kunai Shuriken White",
+ "chars": "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!',?",
+ "layout": {
+  "mode": "canvas",
+  "scale": 0.9608785175017158,
+  "base_px": 876.25,
+  "top_px": 147.75,
+  "centered": true,
+  "cv": 0.08
+ },
+ "is_color": false,
+ "files": {
+  "ttf": "NinjaKunaiShurikenWhite-Regular.ttf",
+  "otf": "NinjaKunaiShurikenWhite-Regular.otf"
+ },
+ "glyph_report": {},
+ "notes": [],
+ "skipped": [
+  "10.png"
+ ],
+ "verify": [
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Ninja Kunai Shuriken White/NinjaKunaiShurikenWhite-Regular.ttf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54
+  },
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Ninja Kunai Shuriken White/NinjaKunaiShurikenWhite-Regular.otf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54
+  }
+ ]
+}

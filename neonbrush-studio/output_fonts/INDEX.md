@@ -13,4 +13,21 @@
 | Calligraphy Alphabet White | 30 | CalligraphyAlphabetWhite-Regular.ttf, CalligraphyAlphabetWhite-Regular.otf |
 | Candy Neon Pastel | 40 | CandyNeonPastel-Regular.ttf, CandyNeonPastel-Regular.otf, CandyNeonPastel-Color.otf |
 | Cyan Neon Alphabet | 30 | CyanNeonAlphabet-Regular.ttf, CyanNeonAlphabet-Regular.otf, CyanNeonAlphabet-Color.otf |
+| Doubleline Lime Wash | 40 | DoublelineLimeWash-Regular.ttf, DoublelineLimeWash-Regular.otf, DoublelineLimeWash-Color.otf |
+| Grunge Cyan Splatter | 40 | GrungeCyanSplatter-Regular.ttf, GrungeCyanSplatter-Regular.otf, GrungeCyanSplatter-Color.otf |
+| Hokusai Color Wave Noborder | 40 | HokusaiColorWaveNoborder-Regular.ttf, HokusaiColorWaveNoborder-Regular.otf, HokusaiColorWaveNoborder-Color.otf |
+| Hokusai Sculpted Wave White | 40 | HokusaiSculptedWaveWhite-Regular.ttf, HokusaiSculptedWaveWhite-Regular.otf |
+| Katana Sword Wind Neon Star | 40 | KatanaSwordWindNeonStar-Regular.ttf, KatanaSwordWindNeonStar-Regular.otf, KatanaSwordWindNeonStar-Color.otf |
+| Katana Sword Wind White | 40 | KatanaSwordWindWhite-Regular.ttf, KatanaSwordWindWhite-Regular.otf |
+| Neonbrush Sample1 Dual Cyan Pink | 40 | NeonbrushSample1DualCyanPink-Regular.ttf, NeonbrushSample1DualCyanPink-Regular.otf, NeonbrushSample1DualCyanPink-Color.otf |
+| Neonbrush Sample2 Tube Splatter | 40 | NeonbrushSample2TubeSplatter-Regular.ttf, NeonbrushSample2TubeSplatter-Regular.otf, NeonbrushSample2TubeSplatter-Color.otf |
+| Neonbrush Sample4 Prism Rainbow | 40 | NeonbrushSample4PrismRainbow-Regular.ttf, NeonbrushSample4PrismRainbow-Regular.otf, NeonbrushSample4PrismRainbow-Color.otf |
+| Ninja Kunai Shuriken White | 40 | NinjaKunaiShurikenWhite-Regular.ttf, NinjaKunaiShurikenWhite-Regular.otf |
+| Pink Coral Plum Blossom | 40 | PinkCoralPlumBlossom-Regular.ttf, PinkCoralPlumBlossom-Regular.otf, PinkCoralPlumBlossom-Color.otf |
+| Slanted Bamboo White | 40 | SlantedBambooWhite-Regular.ttf, SlantedBambooWhite-Regular.otf |
+| Sporty Doublebar Inline | 40 | SportyDoublebarInline-Regular.ttf, SportyDoublebarInline-Regular.otf |
+| Style8 Smooth Round Brush White | 40 | Style8SmoothRoundBrushWhite-Regular.ttf, Style8SmoothRoundBrushWhite-Regular.otf |
+| Style9 Sharp Slash Brush White | 40 | Style9SharpSlashBrushWhite-Regular.ttf, Style9SharpSlashBrushWhite-Regular.otf |
+| Sumi Brush Alphabet White | 30 | SumiBrushAlphabetWhite-Regular.ttf, SumiBrushAlphabetWhite-Regular.otf |
+| Ukiyoe Wave Minimal White | 40 | UkiyoeWaveMinimalWhite-Regular.ttf, UkiyoeWaveMinimalWhite-Regular.otf |
 | White Plum Blossom | 40 | WhitePlumBlossom-Regular.ttf, WhitePlumBlossom-Regular.otf |

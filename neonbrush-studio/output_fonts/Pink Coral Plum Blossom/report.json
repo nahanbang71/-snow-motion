@@ -1,0 +1,44 @@
+{
+ "family": "Pink Coral Plum Blossom",
+ "chars": "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!',?",
+ "layout": {
+  "mode": "canvas",
+  "scale": 1.0286554004408524,
+  "base_px": 852.25,
+  "top_px": 171.75,
+  "centered": true,
+  "cv": 0.091
+ },
+ "is_color": true,
+ "files": {
+  "ttf": "PinkCoralPlumBlossom-Regular.ttf",
+  "otf": "PinkCoralPlumBlossom-Regular.otf",
+  "color": "PinkCoralPlumBlossom-Color.otf"
+ },
+ "glyph_report": {},
+ "notes": [],
+ "skipped": [
+  "10.png"
+ ],
+ "verify": [
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Pink Coral Plum Blossom/PinkCoralPlumBlossom-Regular.ttf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54
+  },
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Pink Coral Plum Blossom/PinkCoralPlumBlossom-Regular.otf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54
+  },
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Pink Coral Plum Blossom/PinkCoralPlumBlossom-Color.otf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54,
+   "svg_docs": 40
+  }
+ ]
+}

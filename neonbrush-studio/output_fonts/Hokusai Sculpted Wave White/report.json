@@ -1,0 +1,36 @@
+{
+ "family": "Hokusai Sculpted Wave White",
+ "chars": "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!',?",
+ "layout": {
+  "mode": "canvas",
+  "scale": 0.9427609427609428,
+  "base_px": 883.25,
+  "top_px": 140.75,
+  "centered": true,
+  "cv": 0.073
+ },
+ "is_color": false,
+ "files": {
+  "ttf": "HokusaiSculptedWaveWhite-Regular.ttf",
+  "otf": "HokusaiSculptedWaveWhite-Regular.otf"
+ },
+ "glyph_report": {},
+ "notes": [],
+ "skipped": [
+  "10.png"
+ ],
+ "verify": [
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Hokusai Sculpted Wave White/HokusaiSculptedWaveWhite-Regular.ttf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54
+  },
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Hokusai Sculpted Wave White/HokusaiSculptedWaveWhite-Regular.otf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54
+  }
+ ]
+}

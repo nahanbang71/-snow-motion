@@ -1,0 +1,44 @@
+{
+ "family": "Doubleline Lime Wash",
+ "chars": "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!',?",
+ "layout": {
+  "mode": "fit",
+  "scale": 0.8130081300813008,
+  "base_px": 942.75,
+  "top_px": 81.75,
+  "centered": true,
+  "cv": 0.01
+ },
+ "is_color": true,
+ "files": {
+  "ttf": "DoublelineLimeWash-Regular.ttf",
+  "otf": "DoublelineLimeWash-Regular.otf",
+  "color": "DoublelineLimeWash-Color.otf"
+ },
+ "glyph_report": {},
+ "notes": [],
+ "skipped": [
+  "10.png"
+ ],
+ "verify": [
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Doubleline Lime Wash/DoublelineLimeWash-Regular.ttf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54
+  },
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Doubleline Lime Wash/DoublelineLimeWash-Regular.otf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54
+  },
+  {
+   "file": "/home/user/-snow-motion/neonbrush-studio/output_fonts/Doubleline Lime Wash/DoublelineLimeWash-Color.otf",
+   "ok": true,
+   "errors": [],
+   "shaped": 54,
+   "svg_docs": 40
+  }
+ ]
+}
