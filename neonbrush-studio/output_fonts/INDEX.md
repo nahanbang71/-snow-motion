@@ -21,7 +21,6 @@
 | Katana Sword Wind White | 40 | KatanaSwordWindWhite-Regular.ttf, KatanaSwordWindWhite-Regular.otf |
 | Kstyle1 Najeonchilgi Mother Of Pearl | 42 | Kstyle1NajeonchilgiMotherOfPearl-Regular.ttf, Kstyle1NajeonchilgiMotherOfPearl-Regular.otf, Kstyle1NajeonchilgiMotherOfPearl-Color.otf |
 | Kstyle2 Dancheong Hanok Eaves | 40 | Kstyle2DancheongHanokEaves-Regular.ttf, Kstyle2DancheongHanokEaves-Regular.otf, Kstyle2DancheongHanokEaves-Color.otf |
-| Kstyle4 Celadon Outline 26letters | 26 | Kstyle4CeladonOutline26letters-Regular.ttf, Kstyle4CeladonOutline26letters-Regular.otf, Kstyle4CeladonOutline26letters-Color.otf |
 | Kstyle4 Celadon Outline Full41 | 40 | Kstyle4CeladonOutlineFull41-Regular.ttf, Kstyle4CeladonOutlineFull41-Regular.otf, Kstyle4CeladonOutlineFull41-Color.otf |
 | Kstyle4 Goryeo Celadon Crane Cloud | 40 | Kstyle4GoryeoCeladonCraneCloud-Regular.ttf, Kstyle4GoryeoCeladonCraneCloud-Regular.otf, Kstyle4GoryeoCeladonCraneCloud-Color.otf |
 | Neonbrush Sample1 Dual Cyan Pink | 40 | NeonbrushSample1DualCyanPink-Regular.ttf, NeonbrushSample1DualCyanPink-Regular.otf, NeonbrushSample1DualCyanPink-Color.otf |
