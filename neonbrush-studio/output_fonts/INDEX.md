@@ -33,6 +33,8 @@
 | Neonbrush Sample2 Tube Splatter | 40 | NeonbrushSample2TubeSplatter-Regular.ttf, NeonbrushSample2TubeSplatter-Regular.otf, NeonbrushSample2TubeSplatter-Color.otf |
 | Neonbrush Sample4 Prism Rainbow | 40 | NeonbrushSample4PrismRainbow-Regular.ttf, NeonbrushSample4PrismRainbow-Regular.otf, NeonbrushSample4PrismRainbow-Color.otf |
 | Ninja Kunai Shuriken White | 40 | NinjaKunaiShurikenWhite-Regular.ttf, NinjaKunaiShurikenWhite-Regular.otf |
+| Phoenix Brush 1 CrystalPrism | 82 | PhoenixBrush1CrystalPrism-Regular.ttf, PhoenixBrush1CrystalPrism-Regular.otf, PhoenixBrush1CrystalPrism-Color.otf |
+| Phoenix Brush 2 ArcaneMagentaGold | 82 | PhoenixBrush2ArcaneMagentaGold-Regular.ttf, PhoenixBrush2ArcaneMagentaGold-Regular.otf, PhoenixBrush2ArcaneMagentaGold-Color.otf |
 | Pink Coral Plum Blossom | 40 | PinkCoralPlumBlossom-Regular.ttf, PinkCoralPlumBlossom-Regular.otf, PinkCoralPlumBlossom-Color.otf |
 | Slanted Bamboo White | 40 | SlantedBambooWhite-Regular.ttf, SlantedBambooWhite-Regular.otf |
 | Sporty Doublebar Inline | 40 | SportyDoublebarInline-Regular.ttf, SportyDoublebarInline-Regular.otf |

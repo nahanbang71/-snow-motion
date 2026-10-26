@@ -217,6 +217,20 @@
   "bytes": 1146130
  },
  {
+  "file": "PhoenixBrush1CrystalPrism.zip",
+  "name": "Phoenix Brush 1 CrystalPrism",
+  "isColor": true,
+  "glyphs": 82,
+  "bytes": 4880939
+ },
+ {
+  "file": "PhoenixBrush2ArcaneMagentaGold.zip",
+  "name": "Phoenix Brush 2 ArcaneMagentaGold",
+  "isColor": true,
+  "glyphs": 82,
+  "bytes": 3975461
+ },
+ {
   "file": "PinkCoralPlumBlossom.zip",
   "name": "Pink Coral Plum Blossom",
   "isColor": true,
