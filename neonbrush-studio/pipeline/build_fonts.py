@@ -127,10 +127,16 @@ def main(argv=None):
         failures += (not ok)
         if row:
             summary.append(row)
+    rows = []                                         # INDEX.md lists every font in the output folder, not only this run
+    for d in sorted(os.listdir(a.out)):
+        rp = os.path.join(a.out, d, 'report.json')
+        if os.path.exists(rp):
+            r = json.load(open(rp, encoding='utf-8'))
+            rows.append((r['family'], len(r['chars']), ', '.join(r['files'].values())))
     with open(os.path.join(a.out, 'INDEX.md'), 'w', encoding='utf-8') as f:
         f.write('# output_fonts\n\n| Font | Glyphs | Files |\n|---|---|---|\n')
-        for name, n, files, ok in summary:
-            f.write(f'| {name} | {n} | {", ".join(os.path.basename(v) for v in files.values())} |\n')
+        for name, n, files in rows:
+            f.write(f'| {name} | {n} | {files} |\n')
     print(f'\n{len(summary)} fonts built, {failures} failure(s) -> {a.out}')
     return 1 if failures else 0
 
