@@ -20,6 +20,19 @@ from nbfont import packs as pk, build, specimen, verify, webpack  # noqa: E402
 ROOT = os.path.dirname(HERE)
 
 
+def shrink_mark(data, limit=2000, to=1600):
+    """Very large stamps/emblems (> limit px wide) are scaled to `to` px for the web app; the originals stay in packs/."""
+    import io
+    from PIL import Image
+    im = Image.open(io.BytesIO(data))
+    if im.width <= limit:
+        return data
+    im = im.convert('RGBA').resize((to, round(im.height * to / im.width)), Image.LANCZOS)
+    buf = io.BytesIO()
+    im.save(buf, 'PNG', optimize=True)
+    return buf.getvalue()
+
+
 def convert_one(p, o):
     """Build + verify one pack. Returns (log text, ok, (name, n_glyphs, files, ok) | None). Runs in a worker process."""
     import io
@@ -28,6 +41,14 @@ def convert_one(p, o):
     buf = io.StringIO()
     with contextlib.redirect_stdout(buf):
         try:
+            if o.get('webpacks_only'):
+                from nbfont import layout as lay
+                arrays, boxes, _ = build.prepare(p)
+                info, place = lay.plan(boxes, p.options.get('layout', 'auto'))
+                os.makedirs(o['webpacks'], exist_ok=True)
+                webpack.write_webpack(os.path.join(o['webpacks'], p.slug + '.zip'), p.name, arrays, boxes, place, build.is_color_pack(arrays), p.source, o.get('web_px', 1024))
+                print(f'WEB {p.name:36s} {len(arrays):2d} glyphs  layout={info["mode"]}  ({time.time() - t0:.0f}s)')
+                return buf.getvalue().rstrip(), True, None
             outdir = os.path.join(o['out'], p.name)
             r = build.build_pack(p, outdir, color=o['color'], svg_px=o['svg_px'], lower=o['lower'])
             checks = [verify.verify(r['files']['ttf'], r['chars']), verify.verify(r['files']['otf'], r['chars'])]
@@ -38,7 +59,7 @@ def convert_one(p, o):
                 specimen.color(r['arrays'], r['place'], os.path.join(outdir, 'specimen_color.png'))
             if o['webpacks']:
                 os.makedirs(o['webpacks'], exist_ok=True)
-                webpack.write_webpack(os.path.join(o['webpacks'], p.slug + '.zip'), p.name, r['arrays'], r['boxes'], r['place'], r['is_color'], p.source, o.get('web_px', 768))
+                webpack.write_webpack(os.path.join(o['webpacks'], p.slug + '.zip'), p.name, r['arrays'], r['boxes'], r['place'], r['is_color'], p.source, o.get('web_px', 1024))
             ok = all(c['ok'] for c in checks)
             rep = {k: v for k, v in r.items() if k not in ('arrays', 'place', 'boxes')}
             rep['files'] = {k: os.path.basename(v) for k, v in rep['files'].items()}
@@ -75,7 +96,8 @@ def main(argv=None):
     ap.add_argument('--only', default='', help='only packs whose name contains this text')
     ap.add_argument('--svg-px', type=int, default=384, help='max size of the PNG embedded per colour glyph')
     ap.add_argument('-j', '--jobs', type=int, default=min(4, os.cpu_count() or 1), help='packs converted in parallel')
-    ap.add_argument('--web-px', type=int, default=768, help='max glyph image size inside the web packs')
+    ap.add_argument('--web-px', type=int, default=1024, help='max glyph image size inside the web packs')
+    ap.add_argument('--webpacks-only', action='store_true', help='skip font building, only (re)write the web app packs (fast)')
     ap.add_argument('--webpacks', default=None, help='also write normalised web pack zips for the web app here')
     ap.add_argument('--watermarks', default=None, help='copy watermark images found in packs here')
     a = ap.parse_args(argv)
@@ -104,7 +126,7 @@ def main(argv=None):
         if marks and a.watermarks:
             os.makedirs(a.watermarks, exist_ok=True)
             for rel, data in marks:
-                open(os.path.join(a.watermarks, os.path.basename(rel)), 'wb').write(data)
+                open(os.path.join(a.watermarks, os.path.basename(rel)), 'wb').write(shrink_mark(data))
             print(f'[{os.path.basename(src)}] {len(marks)} watermark images -> {a.watermarks}')
         elif marks:
             print(f'[{os.path.basename(src)}] {len(marks)} watermark images (use --watermarks DIR to export them)')
@@ -116,7 +138,7 @@ def main(argv=None):
                 p.name = f'{base_name} {n}'; n += 1
             used_names.add(p.name)
             tasks.append(p)
-    opts = dict(web_px=a.web_px, out=a.out, color=a.color, svg_px=a.svg_px, lower=not a.no_lower, webpacks=a.webpacks)
+    opts = dict(webpacks_only=a.webpacks_only, web_px=a.web_px, out=a.out, color=a.color, svg_px=a.svg_px, lower=not a.no_lower, webpacks=a.webpacks)
     if a.jobs > 1 and len(tasks) > 1:
         from concurrent.futures import ProcessPoolExecutor
         with ProcessPoolExecutor(max_workers=a.jobs) as ex:

@@ -53,7 +53,7 @@ export function cleanFamily(raw: string): string {
 }
 
 async function pngBlob(f: JSZip.JSZipObject): Promise<Blob> {
-  return new Blob([await f.async('arraybuffer')], { type: 'image/png' });
+  return new Blob([await f.async('arraybuffer')], { type: /\.webp$/i.test(f.name) ? 'image/webp' : 'image/png' });
 }
 
 async function toCanvas(blob: Blob): Promise<HTMLCanvasElement> {

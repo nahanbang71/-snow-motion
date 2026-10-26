@@ -1,4 +1,4 @@
-"""Normalised 'web pack' zips for NeonBrush Studio: trimmed, cleaned PNGs + pack.json with typographic metrics."""
+"""Normalised 'web pack' zips for NeonBrush Studio: trimmed, cleaned WebP images + pack.json with typographic metrics."""
 import io
 import json
 import zipfile
@@ -9,7 +9,7 @@ from . import layout as lay
 from .naming import glyph_name
 
 
-def write_webpack(path, name, arrays, boxes, place, is_color, source='', max_px=768):
+def write_webpack(path, name, arrays, boxes, place, is_color, source='', max_px=1024):
     meta = {'format': 'neonbrush-webpack', 'version': 1, 'name': name, 'source': source, 'upm': lay.UPM, 'cap': lay.CAP,
             'space': lay.SPACE, 'sideBearing': lay.SB, 'isColor': bool(is_color), 'glyphs': {}}
     with zipfile.ZipFile(path, 'w', zipfile.ZIP_STORED) as z:       # PNGs are already compressed
@@ -23,8 +23,9 @@ def write_webpack(path, name, arrays, boxes, place, is_color, source='', max_px=
             if max(im.size) > max_px:                      # metrics are in font units, so the image can be downsampled freely
                 r = max_px / max(im.size)
                 im = im.resize((max(1, round(im.width * r)), max(1, round(im.height * r))), Image.LANCZOS)
-            im.save(buf, 'PNG', optimize=True)
-            fn = glyph_name(ch) + '.png'
+            # WebP keeps the alpha channel at a fraction of the PNG size: lossless for flat single-colour art, q92 for colour art
+            im.save(buf, 'WEBP', lossless=not is_color, quality=92, alpha_quality=100, method=6)
+            fn = glyph_name(ch) + '.webp'
             z.writestr(fn, buf.getvalue())
             p = place[ch]
             ks = p['scale']
